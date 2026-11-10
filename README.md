@@ -20,6 +20,75 @@
 - Concrete asset and vehicle research links, download script, and licensing notes.
 - Component-to-library mapping, design tokens, architecture and acceptance criteria.
 
+## Live site and deployment
+
+| What | Where |
+| --- | --- |
+| Live site | https://odypslegend-blip.github.io/kalimeris-car-rentals/ |
+| Repository | https://github.com/odypslegend-blip/kalimeris-car-rentals |
+| `main` | The Next.js source (this branch). Never contains build output. |
+| `gh-pages` | The published static export only. Generated — do not edit by hand. |
+
+The site is a **static export** served by GitHub Pages under the base path
+`/kalimeris-car-rentals`, so all content is prerendered HTML with no server runtime.
+
+### Rebuild and republish
+
+```powershell
+$env:STATIC_EXPORT="1"
+$env:NEXT_PUBLIC_BASE_PATH="/kalimeris-car-rentals"
+$env:NEXT_PUBLIC_SITE_URL="https://odypslegend-blip.github.io/kalimeris-car-rentals"
+npm run build:pages
+```
+
+`npm run build:pages` (`scripts/build-pages.mjs`) temporarily holds `src/app/api`,
+`src/proxy.ts` and `src/app/[locale]/[...rest]` out of the tree — an export cannot contain
+middleware, route handlers or a catch-all without `generateStaticParams` — runs `next build`,
+restores them in a `finally` block, writes `out/.nojekyll`, restores the custom
+`public/404.html`, and fails if any required file is missing or `out/api` appears.
+
+Then publish `out/` to `gh-pages`:
+
+```powershell
+git checkout --orphan gh-pages   # only the first time; afterwards: git checkout gh-pages
+git rm -rf .
+Copy-Item out\* . -Recurse -Force
+Copy-Item out\.nojekyll . -Force
+Remove-Item out -Recurse -Force
+git add -A
+git commit -m "Deploy static site to GitHub Pages"
+git push origin gh-pages
+git checkout main
+```
+
+> **Do not edit `gh-pages` by hand.** It is a build artifact. Any manual change there is lost on
+> the next publish and makes the branch disagree with `main`.
+
+### Editing content
+
+| What you want to change | File |
+| --- | --- |
+| Any copy, label or heading (Greek) | `messages/el.json` |
+| Any copy, label or heading (English) | `messages/en.json` |
+| Vehicle list, specs, categories, image mapping | `src/lib/data/fleet.ts` |
+| Pickup/return locations | `src/lib/data/locations.ts` |
+| Vehicle and hero photographs | `public/images/reference/` |
+| Design tokens (colour, spacing, type, radii, motion) | `design/tokens.json` → `src/app/globals.css` |
+
+After any change, rebuild with the command above and republish `out/` to `gh-pages`.
+
+### Static preview vs. server deployment
+
+The static export has **no `/api/*` route**, so on GitHub Pages the inquiry form is
+**deliberately disabled**: the submit button carries `aria-disabled="true"`, a visible Greek/English
+notice explains that online submission is unavailable, and nothing is sent. This is not a broken
+form — it is the honest state.
+
+The full server build (`npm run build` + `npm start`) keeps the real delivery adapter
+(`/api/inquiries`, Resend or webhook, see `docs/IMPLEMENTATION_STATUS.md` §7). To take real
+inquiries, deploy that build to a Node host and configure `RESEND_API_KEY` +
+`INQUIRY_FROM_EMAIL` + `INQUIRY_TO_EMAIL`, or `INQUIRY_WEBHOOK_URL`.
+
 ## Business identity verification
 
 A similarly named business appears at https://kalimeriscars.gr/ and has rental listings at https://kalimeris.car.gr/classifieds/ in Kozani. The user gave the brand name **Kalimeris Car Rentals**, but has not explicitly verified that the found sources belong to this exact client. Treat these as **possible sources**, not confirmed facts. Do not copy company logo, reviews, address, contact information, or photos without client confirmation and permissions.

@@ -1,0 +1,357 @@
+{
+  "baseUrl": "https://odypslegend-blip.github.io/kalimeris-car-rentals",
+  "checkedAt": "2026-11-10T12:31:56.692Z",
+  "totals": {
+    "checks": 57,
+    "passed": 57,
+    "failed": 0
+  },
+  "screenshots": [
+    "screenshots/live/home-1440.png",
+    "screenshots/live/fleet-1440.png",
+    "screenshots/live/request-1440.png",
+    "screenshots/live/home-390.png"
+  ],
+  "checks": [
+    {
+      "name": "root redirects to /el/",
+      "pass": true,
+      "detail": "https://odypslegend-blip.github.io/kalimeris-car-rentals/el/"
+    },
+    {
+      "name": "Greek home H1 is Greek",
+      "pass": true,
+      "detail": "Νοικιάστε με σιγουριά."
+    },
+    {
+      "name": "Greek home html[lang]=el",
+      "pass": true,
+      "detail": "el"
+    },
+    {
+      "name": "home images decoded (4 visible)",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "home: no non-prefetch 404s",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "home: no page errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "home: no failed requests",
+      "pass": true,
+      "detail": {
+        "realFailures": [],
+        "aborted": 1
+      }
+    },
+    {
+      "name": "home: no console errors beyond prefetch 404s",
+      "pass": true,
+      "detail": {
+        "other": [],
+        "resource404": 1
+      }
+    },
+    {
+      "name": "home: prefetch 404 count recorded",
+      "pass": true,
+      "detail": {
+        "count": 1,
+        "urls": [
+          "https://odypslegend-blip.github.io/kalimeris-car-rentals/el/__next.$d$locale.__PAGE__.txt?_rsc=oi0UXfeaIBpvYUcy"
+        ]
+      }
+    },
+    {
+      "name": "GET /el/cars/ is 200",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "fleet lists 6 vehicle cards",
+      "pass": true,
+      "detail": 6
+    },
+    {
+      "name": "fleet H1 is Greek",
+      "pass": true,
+      "detail": "Ο στόλος μας"
+    },
+    {
+      "name": "SUV filter yields exactly 2 cards",
+      "pass": true,
+      "detail": 2
+    },
+    {
+      "name": "SUV filter shows Peugeot 2008",
+      "pass": true,
+      "detail": "DEMO SUV Peugeot 2008 2026 Hybrid Style 110hp 5 θέσεις Αυτόματο Υβριδικό — Λεπτομέρειες | DEMO SUV Kia XCeed 2022 Mild-Hybrid 160hp 5 θέσεις Αυτόματο Υβριδικό —"
+    },
+    {
+      "name": "SUV filter shows Kia XCeed",
+      "pass": true,
+      "detail": "DEMO SUV Peugeot 2008 2026 Hybrid Style 110hp 5 θέσεις Αυτόματο Υβριδικό — Λεπτομέρειες | DEMO SUV Kia XCeed 2022 Mild-Hybrid 160hp 5 θέσεις Αυτόματο Υβριδικό —"
+    },
+    {
+      "name": "in-page filter: language href recorded (diagnostic)",
+      "pass": true,
+      "detail": {
+        "url": "https://odypslegend-blip.github.io/kalimeris-car-rentals/el/cars/?category=suv",
+        "href": "/kalimeris-car-rentals/en/cars/"
+      }
+    },
+    {
+      "name": "fleet: no non-prefetch 404s",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "fleet: no page errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "fleet: no console errors beyond prefetch 404s",
+      "pass": true,
+      "detail": {
+        "other": [],
+        "resource404": 2
+      }
+    },
+    {
+      "name": "fleet: prefetch 404 count recorded",
+      "pass": true,
+      "detail": {
+        "count": 2,
+        "urls": [
+          "https://odypslegend-blip.github.io/kalimeris-car-rentals/el/__next.$d$locale.__PAGE__.txt?_rsc=lBiz5I2GpXL4fUyo",
+          "https://odypslegend-blip.github.io/kalimeris-car-rentals/el/cars/__next.$d$locale.cars.__PAGE__.txt?_rsc=JSZNqrwaLJyrFfTE"
+        ]
+      }
+    },
+    {
+      "name": "GET /el/cars/?category=suv is 200",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "direct ?category=suv load shows 2 cards",
+      "pass": true,
+      "detail": 2
+    },
+    {
+      "name": "language switch preserves ?category=suv",
+      "pass": true,
+      "detail": {
+        "url": "https://odypslegend-blip.github.io/kalimeris-car-rentals/en/cars/?category=suv",
+        "href": "/kalimeris-car-rentals/en/cars/?category=suv"
+      }
+    },
+    {
+      "name": "English fleet H1 is not Greek",
+      "pass": true,
+      "detail": "Our fleet"
+    },
+    {
+      "name": "language switch: no non-prefetch 404s",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "language switch: no page errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "language switch: no console errors beyond prefetch 404s",
+      "pass": true,
+      "detail": {
+        "other": [],
+        "resource404": 4
+      }
+    },
+    {
+      "name": "language switch: prefetch 404 count recorded",
+      "pass": true,
+      "detail": {
+        "count": 4,
+        "urls": [
+          "https://odypslegend-blip.github.io/kalimeris-car-rentals/el/cars/__next.$d$locale.cars.__PAGE__.txt?category=suv&_rsc=JSZNqrwaLJyrFfTE",
+          "https://odypslegend-blip.github.io/kalimeris-car-rentals/el/__next.$d$locale.__PAGE__.txt?_rsc=lBiz5I2GpXL4fUyo",
+          "https://odypslegend-blip.github.io/kalimeris-car-rentals/en/__next.$d$locale.__PAGE__.txt?_rsc=gv8JpZIIMtGBbgR4",
+          "https://odypslegend-blip.github.io/kalimeris-car-rentals/en/cars/__next.$d$locale.cars.__PAGE__.txt?category=suv&_rsc=ycF7_yBRdBqqff1m"
+        ]
+      }
+    },
+    {
+      "name": "GET /el/cars/dacia-sandero-stepway/ is 200",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "vehicle detail H1",
+      "pass": true,
+      "detail": "Dacia Sandero Stepway"
+    },
+    {
+      "name": "vehicle detail has 2 gallery thumbnails",
+      "pass": true,
+      "detail": 2
+    },
+    {
+      "name": "vehicle detail images decoded (4 visible)",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "vehicle detail: no non-prefetch 404s",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "vehicle detail: no page errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "vehicle detail: prefetch 404 count recorded",
+      "pass": true,
+      "detail": 2
+    },
+    {
+      "name": "GET /el/request/ is 200",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "request summary names the vehicle",
+      "pass": true,
+      "detail": "ΑΙΤΗΜΑ\n\nΖητήστε προσφορά\n\nΣυμπληρώστε τα στοιχεία σας και θα επανέλθουμε με διαθεσιμότητα και όρους. Το αίτημα δεν αποτελεί κράτηση.\n\nΣύνοψη αιτήματος\nDEMO\n\nPeugeot 2008\n\n2026 Hybrid Style 110hp\n\nΔείτ"
+    },
+    {
+      "name": "request summary shows the date range",
+      "pass": true,
+      "detail": {
+        "from": "17 Νοε 2026",
+        "to": "20 Νοε 2026"
+      }
+    },
+    {
+      "name": "submit is aria-disabled (static preview)",
+      "pass": true,
+      "detail": "true"
+    },
+    {
+      "name": "form shows the not-configured alert in Greek",
+      "pass": true,
+      "detail": "Η online αποστολή δεν είναι ακόμη ενεργή.\n\nΔεν μπορούμε να παραλάβουμε το αίτημα online αυτή τη στιγμή. Δοκιμάστε ξανά αργότερα."
+    },
+    {
+      "name": "submitting sends no /api/ request",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "no success state is rendered",
+      "pass": true,
+      "detail": "absent"
+    },
+    {
+      "name": "request: no non-prefetch 404s",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "request: no page errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "request: prefetch 404 count recorded",
+      "pass": true,
+      "detail": 2
+    },
+    {
+      "name": "GET /en/ is 200",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "English home H1",
+      "pass": true,
+      "detail": "Rent with confidence."
+    },
+    {
+      "name": "English home html[lang]=en",
+      "pass": true,
+      "detail": "en"
+    },
+    {
+      "name": "en home: no non-prefetch 404s",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "en home: no page errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "en home: prefetch 404 count recorded",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "no horizontal overflow at 390",
+      "pass": true,
+      "detail": {
+        "scrollWidth": 390,
+        "clientWidth": 390
+      }
+    },
+    {
+      "name": "mobile home: no page errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "unknown path returns 404",
+      "pass": true,
+      "detail": 404
+    },
+    {
+      "name": "404 body is the custom HTML",
+      "pass": true,
+      "detail": 3889
+    },
+    {
+      "name": "404 H1 is bilingual",
+      "pass": true,
+      "detail": "Η σελίδα δεν βρέθηκε. / Page not found."
+    },
+    {
+      "name": "404 links recorded",
+      "pass": true,
+      "detail": [
+        {
+          "text": "Ελληνικά",
+          "href": "/kalimeris-car-rentals/el/",
+          "resolved": "https://odypslegend-blip.github.io/kalimeris-car-rentals/el/"
+        },
+        {
+          "text": "English",
+          "href": "/kalimeris-car-rentals/en/",
+          "resolved": "https://odypslegend-blip.github.io/kalimeris-car-rentals/en/"
+        }
+      ]
+    }
+  ],
+  "failed": []
+}

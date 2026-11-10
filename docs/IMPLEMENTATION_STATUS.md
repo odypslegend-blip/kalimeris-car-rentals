@@ -1,6 +1,7 @@
 # Implementation status — Kalimeris Car Rentals
 
-Last updated: 2026-11-10 · Status: implementation complete; launch blocked on client facts/approvals.
+Last updated: 2026-11-10 · Status: implementation complete; **published as a static preview on
+GitHub Pages**; launch still blocked on client facts/approvals.
 
 ---
 
@@ -495,3 +496,138 @@ The final gate asserts, against `next start -p 3350`:
 - **Email transport is untested without credentials** — only the webhook receiver used by the E2E
   suite has been exercised, not a real Resend account.
 - **`/` is a 307** redirect to `/el` unless a permanent `308` is chosen.
+
+## 13. GitHub Pages deployment (2026-11-10)
+
+The site is published as a **static preview** on GitHub Pages. This section is the runbook and the
+record of what was verified.
+
+### Locations and branch layout
+
+| What | Value |
+| --- | --- |
+| Live URL | https://odypslegend-blip.github.io/kalimeris-car-rentals/ |
+| Repository | https://github.com/odypslegend-blip/kalimeris-car-rentals (public) |
+| Base path | `/kalimeris-car-rentals` |
+| `main` | Next.js source. `f8ff0a0d28762987f3ad4474e8dd778e1560ce9c` |
+| `gh-pages` | Built static export only. `f3203f464792dcb6a0e143841cc0a7b8f557cc3e` |
+| Pages source | branch `gh-pages`, path `/`, `build_type: legacy`, HTTPS enforced, custom 404 |
+
+`main` never contains build output: `/node_modules`, `/.next/`, `/out/`, `/.data/`,
+`/test-results/` and `.env*` are gitignored, and the export's hidden `.nojekyll` is written by the
+build script (without it Jekyll would strip `_next/`).
+
+### Build command
+
+```powershell
+$env:STATIC_EXPORT="1"
+$env:NEXT_PUBLIC_BASE_PATH="/kalimeris-car-rentals"
+$env:NEXT_PUBLIC_SITE_URL="https://odypslegend-blip.github.io/kalimeris-car-rentals"
+npm run build:pages
+```
+
+`scripts/build-pages.mjs` holds `src/app/api`, `src/proxy.ts` and `src/app/[locale]/[...rest]` out of
+the tree for the duration of the export (an export rejects middleware, route handlers and a
+catch-all without `generateStaticParams`), restores them in a `finally` block, writes
+`out/.nojekyll`, restores `public/404.html` byte-for-byte, and validates the required output files
+plus the absence of `out/api`.
+
+Result for this deployment: exit 0, `out/` = 234 files (`_next/` 33, `el/` 90, `en/` 90, `images/` 9,
+`404.html`, `index.html`, `icon.svg`, `robots.txt`, `sitemap.xml`, `.nojekyll`), no `out/api`.
+
+### Publishing `out/` to `gh-pages`
+
+```powershell
+git checkout --orphan gh-pages      # first time only
+git rm -rf .
+Copy-Item out\* . -Recurse -Force
+Copy-Item out\.nojekyll . -Force
+Remove-Item out -Recurse -Force
+git add -A
+git commit -m "Deploy static site to GitHub Pages"
+git push origin gh-pages
+git checkout main
+```
+
+**Do not edit `gh-pages` by hand.** It is a build artifact: a manual change there is overwritten by
+the next publish and leaves the branch disagreeing with `main`. Change `main`, rebuild, republish.
+
+### Editing content
+
+| What to change | File |
+| --- | --- |
+| Copy, labels, headings (Greek) | `messages/el.json` |
+| Copy, labels, headings (English) | `messages/en.json` |
+| Vehicles, specs, categories, image mapping | `src/lib/data/fleet.ts` |
+| Pickup/return locations | `src/lib/data/locations.ts` |
+| Vehicle and hero photographs | `public/images/reference/` |
+| Colour/type/spacing/motion tokens | `design/tokens.json` → `src/app/globals.css` |
+
+After editing: run `npm run build:pages` with the three environment variables and republish `out/`
+to `gh-pages` as above.
+
+### Inquiry form on the static preview
+
+The export contains **no `/api/inquiries` route**, so `/el/request` and `/en/request` render with
+`transport = {configured: false, devSink: false}`. The submit button carries
+`aria-disabled="true"`, is described by a persistent bilingual "online submission is not active yet"
+notice, and `onSubmit` returns before any `fetch` — no `/api/` request is made and no success state
+can appear.
+
+The **server build is unchanged and keeps the real delivery adapter** (`Resend` → `webhook` →
+`dev-file`, see §7). Taking real inquiries means deploying the Node build and configuring the
+transport variables; the static preview is a public face, not a lead-capture channel.
+
+### Verification (executed, live)
+
+Source health before publishing:
+
+| Command | Result |
+| --- | --- |
+| `npx tsc --noEmit` | exit 0 |
+| `npm run lint` | exit 0 — no errors, no warnings |
+| `npm run build` | exit 0 — 36 routes generated |
+| `npm run test:e2e` | exit 0 — **13/13 tests pass** |
+
+Live acceptance (`node scripts/verify-live-pages.mjs`, against the built Pages site):
+**57/57 checks pass**, report at `screenshots/live/report.json`.
+
+| Check | Result |
+| --- | --- |
+| `/` → `/kalimeris-car-rentals/el/` within 5 s, Greek H1 "Νοικιάστε με σιγουριά.", `html[lang=el]` | pass |
+| `/el/cars/` → 6 vehicle cards; `?category=suv` → exactly 2 (Peugeot 2008, Kia XCeed) | pass |
+| `/el/cars/dacia-sandero-stepway/` → H1 + 2 gallery thumbnails | pass |
+| `/el/request/?vehicle=peugeot-2008&pickup=main&return=main&from=…&to=…` → summary (vehicle + Greek date range) + form | pass |
+| Submit: `aria-disabled="true"`, Greek not-configured alert, **0** `/api/` requests, no success state | pass |
+| `/en/` → "Rent with confidence.", `html[lang=en]` | pass |
+| Language switch from a loaded `/el/cars/?category=suv` → `/en/cars/?category=suv` | pass |
+| Every visible image decoded (`naturalWidth > 0`); no page errors; no failed requests | pass |
+| No 404s for `_next`/images; only App Router RSC **prefetch** payload 404s (1–4 per page) | pass (reported) |
+| `/el/nope` → custom 404 HTML with HTTP **404**, bilingual H1 | pass |
+| No horizontal overflow at 390 | pass |
+
+Screenshots: `screenshots/live/home-1440.png`, `fleet-1440.png`, `request-1440.png`,
+`home-390.png` (full page).
+
+Pages API after the final build: `status: built`, latest build `duration 109653 ms`,
+`error.message` empty, `html_url: https://odypslegend-blip.github.io/kalimeris-car-rentals/`.
+Live `/el/` was confirmed **byte-identical** to `origin/gh-pages:el/index.html`
+(git blob `7e996b569dadb1829d7aa168a043e0617a05f4a6`).
+
+### Operational notes and known gaps
+
+- **Do not trigger a second Pages build while one is in flight.** Requesting
+  `POST /repos/{owner}/{repo}/pages/builds` supersedes a running deployment ("Canceling since a
+  higher priority waiting request … exists") and leaves the legacy build record at
+  `status: errored` even though the artifact still deploys. One build, then wait.
+- **RSC prefetch 404s are expected.** With no server, the App Router's speculative
+  `__next.<…>.txt` requests 404; navigation and content are unaffected. Do not treat them as a
+  deployment failure.
+- **Language switch after an in-page filter click.** The switcher reads
+  `window.location.search` in an effect keyed by `pathname`. A filter click changes only the query,
+  so the header's `/en/` link keeps the previous (empty) query until a path change or reload. A
+  direct load of `/el/cars/?category=suv` is correct. Fixing it needs `useSearchParams` plus a
+  Suspense boundary (or a click-time read); not changed in this deployment pass.
+- **Static hosting cannot serve security headers.** The CSP, HSTS, `X-Frame-Options`, etc. in
+  `next.config.ts` apply to the server build only; GitHub Pages sends its own headers.
+- The form remains honestly disabled on Pages (§13 above, §7 for the server contract).
