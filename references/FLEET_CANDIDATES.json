@@ -1,0 +1,67 @@
+{
+  "status": "candidate-only-not-owner-confirmed",
+  "source": "https://kalimeris.car.gr/classifieds/",
+  "restrictions": [
+    "verify exact client identity",
+    "confirm each vehicle currently for rent",
+    "do not publish listing placeholder prices",
+    "do not download/reuse car.gr photos without authorization",
+    "do not infer current availability or location"
+  ],
+  "vehicles": [
+    {
+      "displayName": "Peugeot 2008",
+      "modelNote": "2026 Hybrid Style 110hp",
+      "researchUrl": "https://kalimeris.car.gr/classifieds/view/54783218/",
+      "suggestedCategory": "suv",
+      "imageStatus": "requires-client-approved-images",
+      "bookingStatus": "unverified",
+      "pricingStatus": "not-approved"
+    },
+    {
+      "displayName": "Dacia Sandero Stepway",
+      "modelNote": "2026 Eco-G 120 Expression",
+      "researchUrl": "https://kalimeris.car.gr/classifieds/view/57447027/",
+      "suggestedCategory": "compact",
+      "imageStatus": "requires-client-approved-images",
+      "bookingStatus": "unverified",
+      "pricingStatus": "not-approved"
+    },
+    {
+      "displayName": "Dacia Jogger",
+      "modelNote": "2023 LPG 7 seats",
+      "researchUrl": "https://kalimeris.car.gr/classifieds/view/56448188/",
+      "suggestedCategory": "family",
+      "imageStatus": "requires-client-approved-images",
+      "bookingStatus": "unverified",
+      "pricingStatus": "not-approved"
+    },
+    {
+      "displayName": "Opel Vivaro",
+      "modelNote": "2021 2.0D 144hp",
+      "researchUrl": "https://kalimeris.car.gr/classifieds/view/55340343/",
+      "suggestedCategory": "van",
+      "imageStatus": "requires-client-approved-images",
+      "bookingStatus": "unverified",
+      "pricingStatus": "not-approved"
+    },
+    {
+      "displayName": "Kia XCeed",
+      "modelNote": "2022 Mild-Hybrid 160hp",
+      "researchUrl": "https://kalimeris.car.gr/classifieds/view/54054010/",
+      "suggestedCategory": "suv",
+      "imageStatus": "requires-client-approved-images",
+      "bookingStatus": "unverified",
+      "pricingStatus": "not-approved"
+    },
+    {
+      "displayName": "Kia Rio",
+      "modelNote": "2021 101HP",
+      "researchUrl": "https://kalimeris.car.gr/classifieds/view/54735200/",
+      "suggestedCategory": "economy",
+      "imageStatus": "requires-client-approved-images",
+      "bookingStatus": "unverified",
+      "pricingStatus": "not-approved"
+    }
+  ]
+}

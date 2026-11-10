@@ -1,0 +1,41 @@
+final-gate 2026-11-10T07:30:24.506Z
+PASS  server: next start -p 3350 answers /api/health 200
+PASS  200 /el  (got 200)
+PASS  200 /en  (got 200)
+PASS  200 /el/cars  (got 200)
+PASS  200 /el/cars/peugeot-2008  (got 200)
+PASS  200 /el/request  (got 200)
+PASS  200 /el/faq  (got 200)
+PASS  200 /el/how-it-works  (got 200)
+PASS  200 /el/about  (got 200)
+PASS  200 /el/contact  (got 200)
+PASS  200 /el/privacy  (got 200)
+PASS  200 /el/rental-terms  (got 200)
+PASS  200 /en/faq  (got 200)
+PASS  200 /en/rental-terms  (got 200)
+PASS  404 /el/does-not-exist  (got 404)
+PASS  404 page <title> contains "404"  (404 — Η σελίδα δεν βρέθηκε · KALIMERIS CAR RENTALS)
+PASS  sitemap.xml answers 200  (got 200)
+PASS  sitemap.xml contains /el/cars/peugeot-2008
+PASS  sitemap.xml contains /el/faq
+PASS  robots.txt answers 200  (got 200)
+PASS  robots.txt contains "Sitemap:"
+PASS  robots.txt contains "Disallow: /el/request"
+PASS  home HTML contains "@type":"WebSite"
+PASS  home HTML does not contain LocalBusiness
+PASS  no €/EUR in body text of /el  (clean)
+PASS  no €/EUR in body text of /el/cars  (clean)
+PASS  no €/EUR in body text of /el/cars/peugeot-2008  (clean)
+PASS  no €/EUR in body text of /el/request  (clean)
+PASS  request HTML contains Greek not-configured alert
+PASS  request submit button has aria-disabled="true"
+PASS  port 3350 is free after shutdown
+
+31/31 checks passed
+
+--- server log ---
+▲ Next.js 16.4.6
+- Local:         http://localhost:3350
+- Network:       http://172.27.0.1:3350
+✓ Ready in 230ms
+✓ Running next.config.ts took 79ms

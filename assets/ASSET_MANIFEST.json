@@ -1,0 +1,113 @@
+{
+  "brand": "KALIMERIS CAR RENTALS",
+  "version": "2026-11-10",
+  "notes": [
+    "Exact source photo URLs; not included as binary files in ZIP",
+    "Refer to usage caveat and license on each source",
+    "Photo-specific rights, trademarks and model endorsement may require additional care",
+    "Use client-authorized actual fleet photos for production",
+    "Original generated screens are concept references, not assets of an actual fleet"
+  ],
+  "stockImages": [
+    {
+      "name": "hero-greece-delphi-road.jpg",
+      "kind": "photograph",
+      "status": "external-reference-not-bundled",
+      "sourcePage": "https://unsplash.com/photos/a-road-with-a-mountain-in-the-background-hlNAXkdNH3E",
+      "directImage": "https://images.unsplash.com/photo-1704922230180-71d7eff708d1?auto=format&fit=crop&w=2000&q=82",
+      "author": "Rohan Gangopadhyay",
+      "location": "Delphi, Greece",
+      "use": "Hero option A / scenic location-neutral mood photo",
+      "productionCaveat": "Photo depicts Delphi, not necessarily client operating location. Do not represent as Kozani.",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "suggestedDestination": "public/images/reference/hero-greece-delphi-road.jpg"
+    },
+    {
+      "name": "hero-greece-crete-coast.jpg",
+      "kind": "photograph",
+      "status": "external-reference-not-bundled",
+      "sourcePage": "https://unsplash.com/photos/a-car-driving-down-a-road-next-to-the-ocean-oS4WdXHNUo0",
+      "directImage": "https://images.unsplash.com/photo-1720261289352-28a7a4d4ccbd?auto=format&fit=crop&w=2000&q=82",
+      "author": "Tadeusz Zachwieja",
+      "location": "Crete, Greece",
+      "use": "Hero option B / visual concept only",
+      "productionCaveat": "Only use if a Mediterranean coastal travel theme makes sense for verified operating area.",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "suggestedDestination": "public/images/reference/hero-greece-crete-coast.jpg"
+    },
+    {
+      "name": "vehicle-interior-placeholder.jpg",
+      "kind": "photograph",
+      "status": "external-reference-not-bundled",
+      "sourcePage": "https://unsplash.com/photos/the-interior-of-a-car-with-a-steering-wheel-and-dashboard-vUvgfalQPK8",
+      "directImage": "https://images.unsplash.com/photo-1636763086312-3e0c99e8761e?auto=format&fit=crop&w=1200&q=82",
+      "author": "J Z",
+      "location": "unspecified",
+      "use": "Gallery layout test or editorial section only",
+      "productionCaveat": "Depicts a Mazda interior. Never imply this matches client rental fleet.",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "suggestedDestination": "public/images/reference/vehicle-interior-placeholder.jpg"
+    },
+    {
+      "name": "vehicle-suv-placeholder.jpg",
+      "kind": "photograph",
+      "status": "external-reference-not-bundled",
+      "sourcePage": "https://unsplash.com/photos/white-suv-parked-on-road-Lvnu1TEnHH0",
+      "directImage": "https://images.unsplash.com/photo-1547559418-8d7437f53b5b?auto=format&fit=crop&w=1200&q=82",
+      "author": "Karl Koehler",
+      "location": "Prague, Czech Republic",
+      "use": "Catalog card composition demo only",
+      "productionCaveat": "Depicts a Volvo XC40, not verified Kalimeris inventory.",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "suggestedDestination": "public/images/reference/vehicle-suv-placeholder.jpg"
+    }
+  ],
+  "originalAssets": [
+    {
+      "name": "kalimeris-logo-proposal.svg",
+      "path": "assets/brand/kalimeris-logo-proposal.svg",
+      "status": "original-proposed-identity-requires-approval",
+      "usage": "header / footer"
+    },
+    {
+      "name": "kalimeris-favicon-proposal.svg",
+      "path": "assets/brand/kalimeris-favicon-proposal.svg",
+      "status": "original-proposed-identity-requires-approval",
+      "usage": "favicon"
+    },
+    {
+      "name": "kalimeris-concept-board.png",
+      "path": "design/concepts/kalimeris-concept-board.png",
+      "status": "original-concept",
+      "usage": "moodboard and layout reference"
+    },
+    {
+      "name": "01-home-desktop.png",
+      "path": "design/concepts/01-home-desktop.png",
+      "status": "original-concept",
+      "usage": "home layout reference"
+    },
+    {
+      "name": "02-fleet-desktop.png",
+      "path": "design/concepts/02-fleet-desktop.png",
+      "status": "original-concept",
+      "usage": "fleet layout reference"
+    },
+    {
+      "name": "03-vehicle-desktop.png",
+      "path": "design/concepts/03-vehicle-desktop.png",
+      "status": "original-concept",
+      "usage": "detail layout reference"
+    },
+    {
+      "name": "04-home-mobile.png",
+      "path": "design/concepts/04-home-mobile.png",
+      "status": "original-concept",
+      "usage": "mobile layout reference"
+    }
+  ]
+}

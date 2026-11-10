@@ -1,0 +1,483 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — source of truth: design/tokens.json
+   Raw values live on :root (prefixed `--token-`) and are mapped to Tailwind
+   utilities through @theme inline (bg-surface, text-ink, rounded-card,
+   ease-brand, ...). Prefixing keeps the raw custom properties from colliding
+   with the theme names Tailwind generates.
+--------------------------------------------------------------------------- */
+:root {
+  --token-bg: #f7f8f7;
+  --token-surface: #ffffff;
+  --token-ink: #0e1720;
+  --token-muted: #58646b;
+  --token-brand: #087f78;
+  --token-brand-hover: #076861;
+  --token-brand-subtle: #e7f5f2;
+  --token-border: #e2e8e7;
+  --token-hairline: #edf0f0;
+  /* Form-control border: 3.5:1 on white, meets WCAG 1.4.11 non-text contrast. */
+  --token-control-border: #7f8b87;
+  --token-error: #b42318;
+
+  /* Amber notice: 7.1:1 on its own surface, used only for legal drafts. */
+  --token-notice: #fbf6e9;
+  --token-notice-border: #e6d8b0;
+  --token-notice-ink: #6b4e12;
+
+  --token-radius-input: 9px;
+  --token-radius-card: 14px;
+  --token-radius-hero: 18px;
+
+  --token-duration-fast: 140ms;
+  --token-duration-normal: 190ms;
+  --token-duration-slow: 250ms;
+  --token-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --token-container: 1240px;
+  --token-header-h: 60px;
+
+  --token-shadow-card: 0 8px 25px rgb(14 23 32 / 0.05);
+  --token-shadow-panel: 0 18px 45px rgb(14 23 32 / 0.1);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --token-header-h: 72px;
+  }
+}
+
+@theme inline {
+  --color-background: var(--token-bg);
+  --color-surface: var(--token-surface);
+  --color-ink: var(--token-ink);
+  --color-muted: var(--token-muted);
+  --color-brand: var(--token-brand);
+  --color-brand-hover: var(--token-brand-hover);
+  --color-brand-subtle: var(--token-brand-subtle);
+  --color-line: var(--token-border);
+  --color-control: var(--token-control-border);
+  --color-hairline: var(--token-hairline);
+  --color-danger: var(--token-error);
+  --color-notice: var(--token-notice);
+  --color-notice-border: var(--token-notice-border);
+  --color-notice-ink: var(--token-notice-ink);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, Arial, sans-serif;
+
+  --radius-field: var(--token-radius-input);
+  --radius-card: var(--token-radius-card);
+  --radius-hero: var(--token-radius-hero);
+
+  --shadow-card: var(--token-shadow-card);
+  --shadow-panel: var(--token-shadow-panel);
+
+  --ease-brand: var(--token-ease);
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--token-header-h) + 16px);
+  }
+
+  body {
+    background-color: var(--token-bg);
+    color: var(--token-ink);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  /* Visible 2px teal focus ring — 4.0:1 on #FFFFFF, 3.7:1 on #F7F8F7. */
+  :focus-visible {
+    outline: 2px solid var(--token-brand);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--token-brand-subtle);
+    color: var(--token-ink);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  img,
+  svg {
+    display: block;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Structural classes shared by every page
+--------------------------------------------------------------------------- */
+@layer components {
+  .page-shell {
+    width: 100%;
+    max-width: var(--token-container);
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .page-shell {
+      padding-inline: 32px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .page-shell {
+      padding-inline: 40px;
+    }
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 16px;
+    top: 8px;
+    z-index: 100;
+    transform: translateY(-200%);
+    border-radius: var(--token-radius-input);
+    background-color: var(--token-surface);
+    padding: 10px 16px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--token-ink);
+    box-shadow: 0 8px 25px rgb(14 23 32 / 0.09);
+    transition: transform var(--token-duration-fast) var(--token-ease);
+  }
+
+  .skip-link:focus-visible {
+    transform: translateY(0);
+  }
+
+  /* -------------------------------------------------------------------------
+     Long-form legal prose. Deliberately plugin-free: only the elements the
+     policy and terms pages render are styled.
+  ------------------------------------------------------------------------- */
+  .prose-legal {
+    color: var(--token-muted);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+  }
+
+  .prose-legal > * + * {
+    margin-top: 1rem;
+  }
+
+  .prose-legal h2 {
+    margin-top: 2.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--token-ink);
+    scroll-margin-top: calc(var(--token-header-h) + 20px);
+  }
+
+  .prose-legal h2:first-child {
+    margin-top: 0;
+  }
+
+  .prose-legal p {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+  }
+
+  .prose-legal ul {
+    margin-top: 0.75rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+
+  .prose-legal li {
+    margin-top: 0.5rem;
+    padding-left: 0.25rem;
+  }
+
+  .prose-legal li::marker {
+    color: var(--token-brand);
+  }
+
+  .prose-legal strong {
+    font-weight: 600;
+    color: var(--token-ink);
+  }
+
+  .prose-legal a {
+    color: var(--token-brand);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (min-width: 768px) {
+    .prose-legal p,
+    .prose-legal li {
+      font-size: 1rem;
+    }
+
+    .prose-legal h2 {
+      font-size: 1.375rem;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Radix dialog / mobile sheet motion
+   The sheet is a Dialog (focus trap + Escape) styled as a side panel.
+--------------------------------------------------------------------------- */
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.dialog-panel[data-state="open"] {
+  animation: dialog-in var(--token-duration-normal) var(--token-ease);
+}
+
+.dialog-overlay[data-state="open"] {
+  animation: overlay-in var(--token-duration-fast) var(--token-ease);
+}
+
+.sheet-panel[data-state="open"] {
+  animation: sheet-in var(--token-duration-slow) var(--token-ease);
+}
+
+/* ---------------------------------------------------------------------------
+   Radix accordion (hash-free FAQ)
+   Radix exposes the open content height as --radix-accordion-content-height.
+--------------------------------------------------------------------------- */
+@keyframes accordion-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+.accordion-content {
+  overflow: hidden;
+}
+
+.accordion-content[data-state="open"] {
+  animation: accordion-down var(--token-duration-normal) var(--token-ease);
+}
+
+.accordion-content[data-state="closed"] {
+  animation: accordion-up var(--token-duration-fast) var(--token-ease);
+}
+
+/* ---------------------------------------------------------------------------
+   DayPicker v10
+   The package ships unlayered CSS, so these overrides are deliberately
+   unlayered too and use `.rdp-root.kalimeris-calendar` specificity to win
+   regardless of stylesheet order.
+--------------------------------------------------------------------------- */
+.rdp-root.kalimeris-calendar {
+  --rdp-accent-color: var(--token-brand);
+  --rdp-accent-background-color: var(--token-brand-subtle);
+  --rdp-day-width: 44px;
+  --rdp-day-height: 44px;
+  --rdp-day_button-width: 44px;
+  --rdp-day_button-height: 44px;
+  --rdp-day_button-border: 0;
+  --rdp-day_button-border-radius: 9999px;
+  --rdp-selected-border: 0;
+  --rdp-disabled-opacity: 0.32;
+  --rdp-outside-opacity: 0.45;
+  --rdp-today-color: var(--token-brand);
+  --rdp-nav_button-width: 44px;
+  --rdp-nav_button-height: 44px;
+  --rdp-nav-height: 48px;
+  --rdp-weekday-opacity: 1;
+  --rdp-weekday-padding: 0.5rem 0;
+  --rdp-weekday-text-transform: uppercase;
+  --rdp-range_middle-background-color: var(--token-brand-subtle);
+  --rdp-range_middle-color: var(--token-ink);
+  --rdp-range_start-date-background-color: var(--token-brand);
+  --rdp-range_end-date-background-color: var(--token-brand);
+  --rdp-range_start-color: #ffffff;
+  --rdp-range_end-color: #ffffff;
+  font-size: 0.875rem;
+}
+
+.rdp-root.kalimeris-calendar .rdp-month_caption {
+  height: 48px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--token-ink);
+}
+
+.rdp-root.kalimeris-calendar .rdp-caption_label {
+  padding-inline-start: 4px;
+}
+
+.rdp-root.kalimeris-calendar .rdp-button_previous,
+.rdp-root.kalimeris-calendar .rdp-button_next {
+  border-radius: 9999px;
+  color: var(--token-ink);
+  transition: background-color var(--token-duration-fast) var(--token-ease);
+}
+
+.rdp-root.kalimeris-calendar .rdp-button_previous:hover,
+.rdp-root.kalimeris-calendar .rdp-button_next:hover {
+  background-color: var(--token-brand-subtle);
+}
+
+.rdp-root.kalimeris-calendar .rdp-chevron {
+  width: 18px;
+  height: 18px;
+  fill: var(--token-brand);
+}
+
+.rdp-root.kalimeris-calendar .rdp-weekday {
+  color: var(--token-muted);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.rdp-root.kalimeris-calendar .rdp-day_button {
+  color: var(--token-ink);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  transition: background-color var(--token-duration-fast) var(--token-ease);
+}
+
+.rdp-root.kalimeris-calendar .rdp-day_button:hover:not(:disabled) {
+  background-color: var(--token-brand-subtle);
+}
+
+.rdp-root.kalimeris-calendar .rdp-day_button:focus-visible {
+  outline: 2px solid var(--token-brand);
+  outline-offset: 2px;
+}
+
+.rdp-root.kalimeris-calendar .rdp-selected {
+  font-size: inherit;
+  font-weight: 600;
+}
+
+.rdp-root.kalimeris-calendar .rdp-selected .rdp-day_button,
+.rdp-root.kalimeris-calendar .rdp-range_start .rdp-day_button,
+.rdp-root.kalimeris-calendar .rdp-range_end .rdp-day_button {
+  border-radius: 9999px;
+  background-color: var(--token-brand);
+  color: #ffffff;
+}
+
+.rdp-root.kalimeris-calendar .rdp-range_middle .rdp-day_button {
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--token-ink);
+}
+
+.rdp-root.kalimeris-calendar .rdp-range_middle .rdp-day_button:hover {
+  background-color: transparent;
+}
+
+.rdp-root.kalimeris-calendar .rdp-footer {
+  padding-top: 0.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--token-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   320px-class phones
+   Seven 44px day columns plus the popover's padding/border make the calendar
+   334px wide, which overflows a 320px viewport (WCAG 1.4.10). 38px columns
+   keep every day button comfortably above the 24px WCAG 2.5.8 minimum while
+   the popover fits inside the viewport.
+--------------------------------------------------------------------------- */
+@media (max-width: 380px) {
+  .rdp-root.kalimeris-calendar {
+    --rdp-day-width: 38px;
+    --rdp-day-height: 38px;
+    --rdp-day_button-width: 38px;
+    --rdp-day_button-height: 38px;
+    --rdp-nav_button-width: 36px;
+    --rdp-nav_button-height: 36px;
+    --rdp-nav-height: 40px;
+  }
+
+  .rdp-root.kalimeris-calendar .rdp-month_caption {
+    height: 40px;
+    font-size: 0.875rem;
+  }
+}

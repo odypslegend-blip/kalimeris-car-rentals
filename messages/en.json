@@ -1,0 +1,574 @@
+{
+  "Meta": {
+    "brand": "KALIMERIS CAR RENTALS",
+    "title": "Kalimeris Car Rentals — Rent with confidence",
+    "description": "Car rental with plain information: choose a car, send a request, and agree the terms before anything is committed."
+  },
+  "Common": {
+    "brandName": "KALIMERIS",
+    "brandSuffix": "CAR RENTALS",
+    "comingSoon": "Coming soon",
+    "demo": "DEMO"
+  },
+  "Nav": {
+    "label": "Main navigation",
+    "home": "Home",
+    "cars": "Our cars",
+    "howItWorks": "How it works",
+    "faq": "FAQ",
+    "contact": "Contact"
+  },
+  "Footer": {
+    "tagline": "Rent with confidence.",
+    "status": "Fleet, photographs and terms are pending owner confirmation.",
+    "photoCredit": "Photographs: Unsplash and Pexels — temporary reference images, not this company's fleet.",
+    "rights": "All rights reserved.",
+    "disclosure": "The fleet is illustrative; photos, specifications, availability and terms await confirmation. No price is shown.",
+    "disclosureLabel": "Fleet note",
+    "explore": "Explore",
+    "information": "Information",
+    "links": {
+      "cars": "Our cars",
+      "howItWorks": "How it works",
+      "faq": "FAQ",
+      "about": "About",
+      "contact": "Contact",
+      "privacy": "Privacy",
+      "rentalTerms": "Rental terms"
+    }
+  },
+  "A11y": {
+    "skipToContent": "Skip to content",
+    "languageSwitcher": "Change language",
+    "switchTo": "Switch language to Greek",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menuTitle": "Menu",
+    "menuDescription": "Site navigation and language selection.",
+    "currentLanguage": "Current language: {language}",
+    "switchToLanguage": "Switch language to {language}",
+    "languageName": {
+      "el": "Greek",
+      "en": "English"
+    }
+  },
+  "Home": {
+    "title": "Rent with confidence.",
+    "subtitle": "A clear, practical way to choose your car and send a request — no pressure, no promises we cannot keep.",
+    "fleet": {
+      "eyebrow": "Car rental",
+      "title": "Our fleet",
+      "description": "Choose the car that fits your trip.",
+      "demo": "DEMO",
+      "note": "Illustrative fleet — photographs, specifications and availability await confirmation. No price is shown.",
+      "viewAll": "View all cars"
+    },
+    "steps": {
+      "eyebrow": "How it works",
+      "title": "Three steps, no pressure.",
+      "items": [
+        {
+          "title": "Choose a car",
+          "body": "Compare body type, seats and luggage space."
+        },
+        {
+          "title": "Send a request",
+          "body": "Tell us your dates and pickup preference."
+        },
+        {
+          "title": "Confirm together",
+          "body": "We reply with availability and the final terms before anything is committed."
+        }
+      ]
+    },
+    "trust": {
+      "eyebrow": "Terms",
+      "title": "Clear terms, no surprises.",
+      "body": "Vehicle availability, insurance, deposit and pickup details are confirmed with you in writing before a rental is agreed.",
+      "cta": "Contact",
+      "note": "We publish no phone number or address until they are confirmed."
+    }
+  },
+  "Booking": {
+    "pickup": "Pickup",
+    "return": "Return",
+    "dates": "Dates",
+    "findCar": "Find a car",
+    "sameAsPickup": "Same as pickup",
+    "chooseLocation": "Choose location",
+    "selectDates": "Select dates",
+    "helper": "Exact pickup address and operating area are pending confirmation.",
+    "calendar": {
+      "label": "Date selection calendar",
+      "chooseStart": "Choose a pickup date.",
+      "chooseEnd": "Choose a return date.",
+      "rangeSelected": "The date range is selected."
+    },
+    "errors": {
+      "pickupRequired": "Choose a pickup location.",
+      "returnRequired": "Choose a return location.",
+      "datesRequired": "Choose pickup and return dates.",
+      "pastDate": "Pickup cannot be in the past.",
+      "invalidRange": "Return must be after pickup."
+    }
+  },
+  "Fleet": {
+    "eyebrow": "Car rental",
+    "title": "Our fleet",
+    "description": "Choose the car that fits your trip. All details are illustrative until the owner confirms them.",
+    "metaTitle": "Our fleet — illustrative vehicles",
+    "metaDescription": "Choose the car that fits your trip. All details are illustrative until the owner confirms them.",
+    "filters": "Filters",
+    "category": "Category",
+    "transmission": "Transmission",
+    "seats": "Seats",
+    "all": "All",
+    "automatic": "Automatic",
+    "manual": "Manual",
+    "clear": "Clear filters",
+    "count": "{count, plural, =0 {No vehicles} one {# vehicle} other {# vehicles}}",
+    "emptyTitle": "No vehicles match these filters.",
+    "emptyBody": "Try another category or clear the filters.",
+    "demoNote": "Illustrative photos and details; not a confirmed fleet.",
+    "cardCta": "View details",
+    "seatsShort": "seats",
+    "seatsFive": "5+ seats",
+    "seatsSeven": "7+ seats"
+  },
+  "Vehicle": {
+    "breadcrumb": "Breadcrumb",
+    "requestTitle": "Request this car",
+    "requestNote": "A request, not a booking. We confirm availability and terms before anything is committed.",
+    "cta": "Send inquiry",
+    "tabsLabel": "Vehicle information",
+    "tabs": {
+      "overview": "Overview",
+      "specifications": "Specifications",
+      "conditions": "Rental conditions"
+    },
+    "labels": {
+      "make": "Make",
+      "model": "Model",
+      "version": "Version",
+      "year": "Year",
+      "category": "Category",
+      "seats": "Seats",
+      "luggage": "Luggage",
+      "transmission": "Transmission",
+      "fuel": "Fuel",
+      "power": "Power"
+    },
+    "galleryLabel": "Vehicle photographs",
+    "photoOf": "Photo {current} of {total}",
+    "previousImage": "Previous photograph",
+    "nextImage": "Next photograph",
+    "demoNote": "Specifications and photographs are illustrative and await owner confirmation.",
+    "powerValue": "{value} hp"
+  },
+  "Categories": {
+    "economy": "Economy",
+    "compact": "Compact",
+    "suv": "SUV",
+    "family": "Family",
+    "van": "Van"
+  },
+  "Transmission": {
+    "automatic": "Automatic",
+    "manual": "Manual"
+  },
+  "Fuel": {
+    "petrol": "Petrol",
+    "hybrid": "Hybrid",
+    "lpg": "LPG",
+    "diesel": "Diesel"
+  },
+  "Conditions": {
+    "title": "Rental conditions",
+    "body": "Final rental terms — driver documents, age, deposit, insurance and mileage — are confirmed in writing before the rental. We do not publish terms that have not been approved.",
+    "pending": "Pending confirmation"
+  },
+  "Request": {
+    "eyebrow": "Request",
+    "title": "Request a quote",
+    "subtitle": "Tell us what you need and we will come back with availability and terms. A request is not a booking.",
+    "requiredNote": "All fields are required except the vehicle preference and the message.",
+    "tripDetails": "Trip details",
+    "contactDetails": "Contact details",
+    "vehicle": "Vehicle",
+    "anyVehicle": "No particular preference",
+    "pickup": "Pickup",
+    "return": "Return",
+    "dates": "Dates",
+    "name": "Full name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message (optional)",
+    "consent": "I agree that my details may be used to answer my request.",
+    "submit": "Send request",
+    "submitting": "Sending…",
+    "successTitle": "Your request has been sent.",
+    "successBody": "We received your request. We will contact you about availability and terms. This is not a booking.",
+    "reference": "Reference",
+    "notConfiguredTitle": "Online sending is not active yet.",
+    "notConfiguredBody": "We cannot receive the request online right now. Please try again later.",
+    "devSink": "Development mode: the request is stored locally and is not emailed.",
+    "errors": {
+      "required": "Fill in this field.",
+      "name": "Enter your full name.",
+      "email": "Enter a valid email address.",
+      "phone": "Enter a valid phone number.",
+      "consent": "Your consent is required.",
+      "dates": "Choose valid dates.",
+      "pastDate": "Pickup cannot be in the past.",
+      "invalidRange": "Return must be after pickup.",
+      "message": "The message is too long.",
+      "vehicle": "Choose one of the available vehicles.",
+      "location": "Choose a valid location.",
+      "rateLimited": "Too many requests in a short time. Try again later.",
+      "deliveryFailed": "The request was not sent. Try again or contact us.",
+      "network": "Connection problem. Check your network and try again.",
+      "notConfigured": "Online sending is not active yet.",
+      "invalid": "Check your details and try again."
+    },
+    "summary": "Request summary",
+    "nextTitle": "What happens next",
+    "next1": "We check availability for your dates.",
+    "next2": "We come back with the terms and the final cost.",
+    "next3": "The rental is only completed after written confirmation.",
+    "notBooking": "A request, not a booking.",
+    "noPrice": "No price is shown before confirmation.",
+    "newSearch": "New search",
+    "viewVehicle": "View the vehicle",
+    "summaryAnyVehicle": "Any suitable car",
+    "anyVehicleNote": "We will suggest an available car for your dates.",
+    "fleetNote": "The fleet is illustrative; photographs and details await confirmation.",
+    "retry": "Try again",
+    "formLabel": "Request form",
+    "ratesNote": "No price is shown before confirmation."
+  },
+  "HowItWorks": {
+    "eyebrow": "How it works",
+    "title": "From choosing to confirmation.",
+    "intro": "Three steps, with clear terms at every stage.",
+    "metaTitle": "How it works — from choosing to confirmation",
+    "metaDescription": "Three steps: choose a car, send a request and confirm the terms in writing before anything is committed.",
+    "steps": [
+      {
+        "title": "Choose a car",
+        "body": "Compare category, seats, luggage and transmission. The fleet and specifications are illustrative until the owner confirms them."
+      },
+      {
+        "title": "Send a request",
+        "body": "Tell us your dates, pickup preference and contact details. No payment or card is required."
+      },
+      {
+        "title": "Confirm in writing",
+        "body": "We check availability and come back with the terms, the final cost and the documents required."
+      }
+    ],
+    "needs": {
+      "title": "What we need from you",
+      "items": [
+        "Pickup and return dates",
+        "Pickup location preference",
+        "Vehicle preference (optional)",
+        "Contact details",
+        "Driver details (confirmed later)"
+      ]
+    },
+    "not": {
+      "title": "What the request is not",
+      "items": [
+        "It is not a booking",
+        "It does not lock a price",
+        "It requires no payment"
+      ]
+    },
+    "ctaTitle": "Ready when you are.",
+    "ctaBody": "Choose a car or send a request with your dates.",
+    "ctaPrimary": "Send a request",
+    "ctaSecondary": "View the cars"
+  },
+  "Faq": {
+    "eyebrow": "FAQ",
+    "title": "Questions and answers.",
+    "intro": "Ten questions about the request, the fleet and the terms.",
+    "sectionTitle": "The questions",
+    "metaTitle": "FAQ — request, fleet, terms",
+    "metaDescription": "Ten answers about the request, prices, the fleet, documents, insurance and pickup.",
+    "items": [
+      {
+        "question": "Is a request a booking?",
+        "answer": "No. It is a quote request. The rental is completed only after we confirm availability, terms and the final cost in writing."
+      },
+      {
+        "question": "Why can't I see prices?",
+        "answer": "We do not publish prices before the owner approves them. You will receive the final cost together with the terms before anything is committed."
+      },
+      {
+        "question": "Can I choose a specific car?",
+        "answer": "You can state a preference. Availability of that exact vehicle is confirmed separately. The fleet, photographs and specifications are illustrative."
+      },
+      {
+        "question": "Where is pickup?",
+        "answer": "The location and exact address are pending confirmation. We do not publish an address that has not been verified."
+      },
+      {
+        "question": "What documents will I need?",
+        "answer": "Usually a driving licence and an identity document. Exact requirements — age, licence category, years held — are confirmed before the rental."
+      },
+      {
+        "question": "What about insurance and deposit?",
+        "answer": "Insurance terms, the deposit amount and any excess are confirmed in writing before anything is committed. We do not publish terms that have not been approved."
+      },
+      {
+        "question": "Does the request cost anything?",
+        "answer": "No. The request is free and requires no payment, card or deposit."
+      },
+      {
+        "question": "Can I change or cancel my request?",
+        "answer": "Contact us with the request reference. Cancellation terms will be published after approval."
+      },
+      {
+        "question": "Are the fleet cars real?",
+        "answer": "The fleet is illustrative. Photographs are licensed reference images and not necessarily the business's vehicles. The final list and photographs will be replaced after owner confirmation."
+      },
+      {
+        "question": "When will the site be complete?",
+        "answer": "We are preparing it. Contact details, terms and the final fleet will be published only after confirmation."
+      }
+    ],
+    "ctaTitle": "Didn't find what you were looking for?",
+    "ctaBody": "Send your question with a request; we will reply with availability and terms.",
+    "ctaPrimary": "Send a request"
+  },
+  "About": {
+    "eyebrow": "About",
+    "title": "A clear rental experience.",
+    "intro": "KALIMERIS CAR RENTALS is preparing a modern, practical car-rental service. The business identity, operating area and contact details are pending confirmation.",
+    "metaTitle": "About — a clear rental experience",
+    "metaDescription": "KALIMERIS CAR RENTALS is preparing a modern, practical car-rental service. Identity, operating area and contact details are pending confirmation.",
+    "principlesTitle": "Three principles",
+    "principles": [
+      {
+        "title": "Clarity",
+        "body": "We state what applies before anything is committed."
+      },
+      {
+        "title": "Honesty",
+        "body": "We do not publish prices, availability or terms that have not been approved."
+      },
+      {
+        "title": "Practicality",
+        "body": "You choose based on seats, luggage and transmission, not advertising slogans."
+      }
+    ],
+    "markNote": "The K mark is an original proposal pending approval.",
+    "identityTitle": "Identity pending confirmation",
+    "identityNote": "The business name, operating area and contact details have not been confirmed.",
+    "disclosure": "The fleet, photographs and business details are illustrative and await confirmation. We do not publish prices."
+  },
+  "Contact": {
+    "eyebrow": "Contact details",
+    "title": "Contact",
+    "intro": "Contact details — phone, email and address — are pending confirmation and are not published yet.",
+    "metaTitle": "Contact",
+    "metaDescription": "Contact details are pending confirmation. The only live channel is the request form.",
+    "channelTitle": "How can we get in touch now?",
+    "channelBody": "Send a request through the form. We will reply to the email or phone number you provide.",
+    "cta": "Send a request",
+    "pendingTitle": "What is not published yet",
+    "pendingItems": ["Phone", "Email", "Address"],
+    "pendingValue": "Pending confirmation",
+    "hours": "Opening hours: not confirmed."
+  },
+  "Privacy": {
+    "eyebrow": "Legal",
+    "title": "Privacy policy",
+    "intro": "How we collect and use the data you send us with a request.",
+    "metaTitle": "Privacy policy (draft)",
+    "metaDescription": "Draft privacy policy: data, purpose, legal basis, retention, sharing, cookies, rights and security.",
+    "notice": "Draft — pending legal review and owner confirmation.",
+    "contents": "On this page",
+    "sections": [
+      {
+        "id": "data-collected",
+        "title": "Data we collect",
+        "paragraphs": [
+          "Through the request form we collect only what you provide: name, email, phone, dates, pickup and vehicle preference and, optionally, a message.",
+          "The hosting platform may keep standard technical logs (IP address, timestamp, requested URL and response status) for security and reliability. The application does not log the content of your request."
+        ],
+        "bullets": [
+          "We do not collect payment data; the form does not ask for a card.",
+          "We do not request identity documents through the form."
+        ]
+      },
+      {
+        "id": "purpose",
+        "title": "Purpose",
+        "paragraphs": [
+          "The data is used only to answer your request, check availability and agree the terms before anything is committed.",
+          "It is not used for advertising or automated decision-making."
+        ]
+      },
+      {
+        "id": "legal-basis",
+        "title": "Legal basis",
+        "paragraphs": [
+          "Processing is based on your consent, given when you submit the request.",
+          "You can withdraw it at any time; withdrawal does not affect processing that has already taken place."
+        ]
+      },
+      {
+        "id": "retention",
+        "title": "Retention",
+        "paragraphs": [
+          "The retention period is pending owner confirmation. Until it is set, requests are kept only as long as needed to answer them.",
+          "Once the period is set, it will be published on this page."
+        ]
+      },
+      {
+        "id": "sharing",
+        "title": "Sharing",
+        "paragraphs": [
+          "Data is shared only with the delivery provider that transmits the request (email or webhook).",
+          "It is not sold and not passed to third parties for advertising."
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "Cookies",
+        "paragraphs": [
+          "We do not use analytics or advertising cookies, and no analytics tool is currently active.",
+          "If a technical cookie becomes necessary for the page to work, it will be strictly essential."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Your rights",
+        "paragraphs": [
+          "You have the right to access, rectify, erase, restrict processing, portability and object.",
+          "You may also lodge a complaint with the supervisory authority. In Greece this is the Hellenic Data Protection Authority."
+        ]
+      },
+      {
+        "id": "security",
+        "title": "Security",
+        "paragraphs": ["The following measures are in place:"],
+        "bullets": [
+          "Server-side validation of incoming data.",
+          "Rate limiting per IP address and a global limit.",
+          "Restricted access to the data."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Contact",
+        "paragraphs": [
+          "Contact details for data-protection matters are pending confirmation and are not published yet. Until then, use the request form."
+        ]
+      }
+    ]
+  },
+  "RentalTerms": {
+    "eyebrow": "Legal",
+    "title": "Rental terms",
+    "intro": "The terms below are a draft. Every topic will be confirmed in writing before the rental.",
+    "metaTitle": "Rental terms (draft)",
+    "metaDescription": "Draft rental terms: driver, documents, deposit, insurance, fuel, mileage, cancellation, damage, pickup and vehicle substitution.",
+    "notice": "Draft — pending legal review and owner confirmation.",
+    "contents": "On this page",
+    "sections": [
+      {
+        "id": "driver-eligibility",
+        "title": "Driver eligibility",
+        "paragraphs": [
+          "The minimum age, the licence required and the years of experience will be confirmed in writing before the rental.",
+          "We do not publish numbers that have not been approved."
+        ]
+      },
+      {
+        "id": "documents",
+        "title": "Required documents",
+        "paragraphs": [
+          "Usually a driving licence and an identity document are required. The exact list will be confirmed in writing before the rental."
+        ]
+      },
+      {
+        "id": "deposit",
+        "title": "Deposit",
+        "paragraphs": [
+          "The deposit amount and payment method will be confirmed in writing before the rental.",
+          "We do not publish amounts."
+        ]
+      },
+      {
+        "id": "insurance",
+        "title": "Insurance",
+        "paragraphs": [
+          "Coverage, excess and any optional extras will be confirmed in writing before the rental.",
+          "We do not publish coverage terms that have not been approved."
+        ]
+      },
+      {
+        "id": "fuel",
+        "title": "Fuel",
+        "paragraphs": [
+          "The fuel policy at pickup and return will be confirmed in writing before the rental."
+        ]
+      },
+      {
+        "id": "mileage",
+        "title": "Mileage",
+        "paragraphs": [
+          "The mileage limit or policy will be confirmed in writing before the rental.",
+          "We do not publish limits."
+        ]
+      },
+      {
+        "id": "cancellation",
+        "title": "Cancellation",
+        "paragraphs": [
+          "The request is free. The rental's cancellation terms will be confirmed in writing before the rental."
+        ]
+      },
+      {
+        "id": "damage",
+        "title": "Damage",
+        "paragraphs": [
+          "The damage reporting process and any charges will be confirmed in writing before the rental.",
+          "We do not publish amounts."
+        ]
+      },
+      {
+        "id": "pickup-return",
+        "title": "Pickup and return",
+        "paragraphs": [
+          "The location, exact address and pickup and return hours are pending confirmation. They will be given in writing before the rental."
+        ]
+      },
+      {
+        "id": "vehicle-substitution",
+        "title": "Vehicle substitution",
+        "paragraphs": [
+          "If the vehicle you requested is unavailable, we will propose an alternative category and agree the terms in writing before anything is committed."
+        ]
+      }
+    ]
+  },
+  "NotFound": {
+    "eyebrow": "Error 404",
+    "metaTitle": "404 — Page not found",
+    "title": "Page not found.",
+    "body": "The link may be old or the page may have moved.",
+    "home": "Home",
+    "cars": "Our cars"
+  },
+  "Error": {
+    "eyebrow": "Error",
+    "title": "Something went wrong.",
+    "body": "Try again. If the problem continues, come back later.",
+    "retry": "Try again",
+    "home": "Home"
+  }
+}

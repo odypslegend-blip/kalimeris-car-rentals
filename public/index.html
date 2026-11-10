@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="el">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KALIMERIS CAR RENTALS</title>
+    <!--
+      Static-export entry point. GitHub Pages has no middleware, so the locale
+      redirect that `src/proxy.ts` performs on the server build is done here.
+      Both links are relative, so they keep working under the repository
+      sub-path (`/kalimeris-car-rentals/`). No dependencies, no tracking.
+    -->
+    <meta http-equiv="refresh" content="0; url=./el/" />
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f7f8f7;
+        color: #0e1720;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        padding: 24px;
+      }
+      main {
+        max-width: 34rem;
+        text-align: center;
+      }
+      p.brand {
+        margin: 0 0 12px;
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #087f78;
+      }
+      h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+      }
+      p.lead {
+        margin: 12px 0 0;
+        color: #58646b;
+        font-size: 0.9375rem;
+        line-height: 1.6;
+      }
+      ul {
+        margin: 24px 0 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+      }
+      a {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        padding: 0 20px;
+        border-radius: 9px;
+        border: 1px solid #087f78;
+        background: #087f78;
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 0.9375rem;
+        text-decoration: none;
+      }
+      a.secondary {
+        background: #ffffff;
+        color: #087f78;
+      }
+      a:focus-visible {
+        outline: 3px solid #076861;
+        outline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="brand">KALIMERIS CAR RENTALS</p>
+      <h1>Επιλέξτε γλώσσα / Choose a language</h1>
+      <p class="lead">
+        Μεταφέρεστε αυτόματα στα ελληνικά. / Redirecting to the Greek site.
+      </p>
+      <ul>
+        <li><a href="./el/" lang="el" hreflang="el">Ελληνικά</a></li>
+        <li><a class="secondary" href="./en/" lang="en" hreflang="en">English</a></li>
+      </ul>
+    </main>
+    <script>
+      window.location.replace("./el/");
+    </script>
+  </body>
+</html>
