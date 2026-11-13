@@ -14,12 +14,17 @@ const withNextIntl = createNextIntlPlugin();
  */
 const isStatic = process.env.STATIC_EXPORT === "1";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+// Fail closed: only an explicit development environment gets dev-only relaxations,
+// so an unset/unknown NODE_ENV still ships the strict production policy.
+const isDev = process.env.NODE_ENV === "development";
 
 /**
  * Security headers applied to every route.
  *
  * - `script-src` allows `'unsafe-inline'` because Next's App Router bootstrap
  *   and RSC payload scripts are inline; no nonce/hash pipeline is set up here.
+ *   `'unsafe-eval'` is appended in development only (Fast Refresh compiles with
+ *   `eval`), so the production policy stays strict.
  * - `img-src` allows `data:`/`blob:` for the optimized image pipeline.
  * - HSTS is production-only so local `next start` over plain HTTP is unaffected.
  */
@@ -32,7 +37,9 @@ const securityHeaders: {key: string; value: string}[] = [
   {
     key: "Content-Security-Policy",
     value:
-      "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data: blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'"
+      "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data: blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'" +
+      (isDev ? " 'unsafe-eval'" : "") +
+      "; connect-src 'self'"
   }
 ];
 
