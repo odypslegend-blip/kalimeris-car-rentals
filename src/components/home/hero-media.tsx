@@ -1,66 +1,87 @@
 "use client";
 
 import Image from "next/image";
-import {useEffect, useRef, useState, useSyncExternalStore} from "react";
+import {useEffect, useRef, useState} from "react";
 import {assetPath} from "@/lib/base-path";
 import {cn} from "@/lib/utils";
 
 type HeroMediaProps = {
   posterSrc: string;
   videoSrc?: string | null;
+  webmSrc?: string | null;
   alt?: string;
   className?: string;
 };
 
-const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+type VideoSource = {
+  src: string;
+  type: string;
+};
 
-function subscribeReducedMotion(onStoreChange: () => void) {
-  const query = window.matchMedia(REDUCED_MOTION_QUERY);
-  query.addEventListener("change", onStoreChange);
-  return () => query.removeEventListener("change", onStoreChange);
+function resolveSources(
+  webmSrc?: string | null,
+  videoSrc?: string | null
+): VideoSource[] {
+  const sources: VideoSource[] = [];
+
+  if (webmSrc) {
+    sources.push({src: assetPath(webmSrc), type: "video/webm"});
+  }
+
+  if (videoSrc) {
+    const resolved = assetPath(videoSrc);
+    sources.push({
+      src: resolved,
+      type: resolved.toLowerCase().endsWith(".webm")
+        ? "video/webm"
+        : "video/mp4"
+    });
+  }
+
+  return sources;
 }
 
-function getReducedMotionSnapshot() {
-  return window.matchMedia(REDUCED_MOTION_QUERY).matches;
-}
-
-function getReducedMotionServerSnapshot() {
-  return false;
-}
-
-/** Poster image is the LCP base layer & fallback; decorative car-driving video auto-plays above it unless reduced motion is requested. */
+/**
+ * Poster image is the LCP base layer & error fallback; decorative car-driving
+ * video auto-plays above it across both VP9 WebM (including Electron/Chromium
+ * builds without proprietary H.264) and H.264 MP4 browsers.
+ *
+ * Intentionally does NOT hide behind `prefers-reduced-motion: reduce`, because
+ * disabling Windows animation effects (`SPI_GETCLIENTAREAANIMATION=False`) flips
+ * that media query in desktop browsers and would replace the requested hero
+ * video with the static road photo.
+ */
 export function HeroMedia({
   posterSrc,
   videoSrc,
+  webmSrc,
   alt = "",
   className
 }: HeroMediaProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const reducedMotion = useSyncExternalStore(
-    subscribeReducedMotion,
-    getReducedMotionSnapshot,
-    getReducedMotionServerSnapshot
-  );
-  const [failedSrc, setFailedSrc] = useState<string | null>(null);
-  const resolvedVideoSrc = videoSrc ? assetPath(videoSrc) : null;
-  const errored = resolvedVideoSrc !== null && failedSrc === resolvedVideoSrc;
+  const sources = resolveSources(webmSrc, videoSrc);
+  const sourceKey = sources.map((item) => item.src).join("|");
+  const [failedKey, setFailedKey] = useState<string | null>(null);
+  const hasSources = sources.length > 0;
+  const errored = hasSources && failedKey === sourceKey;
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !resolvedVideoSrc) return;
+    if (!video || !hasSources) return;
 
     video.defaultMuted = true;
     video.muted = true;
 
-    const markFailed = () => setFailedSrc(resolvedVideoSrc);
-    if (video.error) {
+    const markFailed = () => setFailedKey(sourceKey);
+
+    if (video.error || video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
       queueMicrotask(markFailed);
       return;
     }
 
     const ensurePlay = () => {
-      if (reducedMotion || video.error) {
-        video.pause();
+      if (video.error) {
+        markFailed();
         return;
       }
       if (video.paused) {
@@ -74,15 +95,20 @@ export function HeroMedia({
     video.addEventListener("playing", ensurePlay);
     video.addEventListener("error", markFailed);
 
+    // `<source>` decode/404 errors do not bubble to `<video>`; monitor the final
+    // fallback `<source>` so we reveal the poster only when every source fails.
+    const sourceElements = video.querySelectorAll("source");
+    const lastSource = sourceElements[sourceElements.length - 1];
+    lastSource?.addEventListener("error", markFailed);
+
     return () => {
       video.removeEventListener("loadeddata", ensurePlay);
       video.removeEventListener("canplay", ensurePlay);
       video.removeEventListener("playing", ensurePlay);
       video.removeEventListener("error", markFailed);
+      lastSource?.removeEventListener("error", markFailed);
     };
-  }, [resolvedVideoSrc, reducedMotion]);
-
-  const showVideo = Boolean(resolvedVideoSrc) && !reducedMotion && !errored;
+  }, [hasSources, sourceKey]);
 
   return (
     <>
@@ -95,10 +121,10 @@ export function HeroMedia({
         sizes="100vw"
         className={className}
       />
-      {resolvedVideoSrc ? (
+      {hasSources ? (
         <video
+          key={sourceKey}
           ref={videoRef}
-          src={resolvedVideoSrc}
           aria-hidden="true"
           tabIndex={-1}
           autoPlay
@@ -106,13 +132,16 @@ export function HeroMedia({
           loop
           playsInline
           preload="auto"
-          onError={() => setFailedSrc(resolvedVideoSrc)}
           className={cn(
-            "motion-reduce:hidden absolute inset-0 size-full object-cover",
-            showVideo ? "opacity-100" : "hidden opacity-0",
+            "absolute inset-0 size-full object-cover",
+            errored ? "hidden opacity-0" : "opacity-100",
             className
           )}
-        />
+        >
+          {sources.map((item) => (
+            <source key={item.src} src={item.src} type={item.type} />
+          ))}
+        </video>
       ) : null}
     </>
   );

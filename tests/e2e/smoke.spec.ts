@@ -75,6 +75,54 @@ test.describe("Greek home", () => {
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
     expect(consoleErrors).toEqual([]);
   });
+
+  test("hero car-driving video stays visible and plays under reduced-motion", async ({
+    browser
+  }) => {
+    const context = await browser.newContext({
+      viewport: {width: 1440, height: 900},
+      reducedMotion: "reduce"
+    });
+    const page = await context.newPage();
+
+    try {
+      const response = await page.goto("/el");
+      expect(response?.status()).toBe(200);
+
+      const video = page.locator("video");
+      await expect(video).toBeVisible();
+      await expect(video.locator("source")).toHaveCount(2);
+
+      await expect
+        .poll(async () =>
+          video.evaluate((el: HTMLVideoElement) => ({
+            readyState: el.readyState,
+            paused: el.paused,
+            error: el.error?.code ?? null,
+            width: el.getBoundingClientRect().width,
+            height: el.getBoundingClientRect().height
+          }))
+        )
+        .toMatchObject({
+          paused: false,
+          error: null
+        });
+
+      const metrics = await video.evaluate((el: HTMLVideoElement) => ({
+        readyState: el.readyState,
+        width: el.getBoundingClientRect().width,
+        height: el.getBoundingClientRect().height,
+        currentSrc: el.currentSrc
+      }));
+
+      expect(metrics.readyState).toBeGreaterThanOrEqual(2);
+      expect(metrics.width).toBeGreaterThan(1000);
+      expect(metrics.height).toBeGreaterThan(400);
+      expect(metrics.currentSrc).toMatch(/hero-loop\.(webm|mp4)$/);
+    } finally {
+      await context.close();
+    }
+  });
 });
 
 test.describe("Fleet", () => {

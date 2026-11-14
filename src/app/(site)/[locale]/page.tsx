@@ -18,7 +18,7 @@ import {Button} from "@/components/ui/button";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/base-path";
 import {getVehicleName} from "@/lib/data/fleet";
-import {heroVideoSrc} from "@/lib/media";
+import {heroVideoSrc, heroVideoWebmSrc} from "@/lib/media";
 import {siteUrl} from "@/lib/seo";
 import {site} from "@/lib/site";
 import {getPublishedVehicles} from "@/lib/vehicles/store";
@@ -128,6 +128,7 @@ export default async function HomePage({params}: HomePageProps) {
           <HeroMedia
             posterSrc={assetPath("/images/reference/hero-greece-delphi-road.jpg")}
             videoSrc={heroVideoSrc}
+            webmSrc={heroVideoWebmSrc}
             className="object-cover object-[60%_78%] lg:object-[54%_76%]"
           />
           <div
