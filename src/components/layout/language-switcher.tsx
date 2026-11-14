@@ -2,7 +2,7 @@
 
 import {useEffect, useState} from "react";
 import {useLocale, useTranslations} from "next-intl";
-import {Link, usePathname} from "@/i18n/navigation";
+import {usePathname} from "@/i18n/navigation";
 import {routing} from "@/i18n/routing";
 import {cn} from "@/lib/utils";
 
@@ -71,10 +71,14 @@ export function LanguageSwitcher({
           : t("switchToLanguage", {language: languageName});
 
         return (
-          <Link
+          // Deliberate full navigation, not the client router: switching locale
+          // re-renders the root layout (which owns <html> and the theme
+          // bootstrap), and a hard load also guarantees every server component
+          // renders in the new locale.
+          <a
             key={locale}
-            href={`${pathname}${suffix}`}
-            locale={locale}
+            href={`/${locale}${pathname === "/" ? "" : pathname}${suffix}`}
+            hrefLang={locale}
             lang={locale}
             onClick={onNavigate}
             aria-current={isActive ? "true" : undefined}
@@ -87,7 +91,7 @@ export function LanguageSwitcher({
             )}
           >
             {locale}
-          </Link>
+          </a>
         );
       })}
     </nav>

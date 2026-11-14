@@ -1,7 +1,7 @@
 "use client";
 
 import {Toaster} from "sonner";
-import {useTheme} from "next-themes";
+import {useTheme} from "@/components/providers/theme-provider";
 
 /**
  * Transient network feedback only (e.g. the fetch itself failed).

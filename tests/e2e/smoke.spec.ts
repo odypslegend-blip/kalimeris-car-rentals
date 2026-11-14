@@ -70,7 +70,9 @@ test.describe("Fleet", () => {
     const response = await page.goto("/el/cars");
     expect(response?.status()).toBe(200);
 
-    const vehicleLinks = page.locator('a[href*="/cars/"]');
+    // Locale-prefixed vehicle links only: the footer also links to the
+    // external car.gr listing, whose URL contains "/cars/".
+    const vehicleLinks = page.locator('a[href^="/el/cars/"]');
     await expect(vehicleLinks).toHaveCount(6);
 
     await page.getByRole("link", {name: "SUV", exact: true}).click();
