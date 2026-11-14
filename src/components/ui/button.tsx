@@ -8,7 +8,7 @@ import {cn} from "@/lib/utils";
  * Every size keeps a >=44px tall hit area so touch targets stay compliant.
  */
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-field font-semibold transition-colors duration-[var(--token-duration-fast)] ease-brand disabled:pointer-events-none disabled:opacity-55 [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-field font-semibold transition-[background-color,color,border-color,transform,box-shadow] duration-[var(--token-duration-fast)] ease-brand active:scale-[0.985] disabled:pointer-events-none disabled:opacity-55 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:transition-transform [&_svg]:duration-[var(--token-duration-normal)] [&_svg]:ease-brand hover:[&_svg.lucide-arrow-right]:translate-x-0.5",
   {
     variants: {
       variant: {

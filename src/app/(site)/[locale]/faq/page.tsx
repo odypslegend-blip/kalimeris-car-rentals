@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import {ArrowRight} from "lucide-react";
 import {getTranslations, setRequestLocale} from "next-intl/server";
+import {Reveal} from "@/components/motion/reveal";
 import {PageHeader} from "@/components/sections/page-header";
 import {
   Accordion,
@@ -54,33 +55,37 @@ export default async function FaqPage({params}: FaqPageProps) {
         <div className="page-shell">
           <div className="max-w-[52rem]">
             <h2 className="sr-only">{t("sectionTitle")}</h2>
-            <Accordion
-              type="single"
-              collapsible
-              className="border-t border-line"
-            >
-              {items.map((item, index) => (
-                <AccordionItem key={item.question} value={`faq-${index}`}>
-                  <AccordionTrigger>{item.question}</AccordionTrigger>
-                  <AccordionContent>{item.answer}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+            <Reveal>
+              <Accordion
+                type="single"
+                collapsible
+                className="border-t border-line"
+              >
+                {items.map((item, index) => (
+                  <AccordionItem key={item.question} value={`faq-${index}`}>
+                    <AccordionTrigger>{item.question}</AccordionTrigger>
+                    <AccordionContent>{item.answer}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </Reveal>
 
-            <div className="mt-12 border-t border-line pt-8">
-              <h2 className="text-[1.25rem] font-semibold leading-snug tracking-[-0.01em] text-ink">
-                {t("ctaTitle")}
-              </h2>
-              <p className="mt-2 max-w-[56ch] text-[0.9375rem] leading-relaxed text-muted">
-                {t("ctaBody")}
-              </p>
-              <Button asChild size="lg" className="mt-6 w-full sm:w-auto">
-                <Link href="/request" prefetch={false}>
-                  {t("ctaPrimary")}
-                  <ArrowRight aria-hidden="true" />
-                </Link>
-              </Button>
-            </div>
+            <Reveal delay={90}>
+              <div className="mt-12 border-t border-line pt-8">
+                <h2 className="text-[1.25rem] font-semibold leading-snug tracking-[-0.01em] text-ink">
+                  {t("ctaTitle")}
+                </h2>
+                <p className="mt-2 max-w-[56ch] text-[0.9375rem] leading-relaxed text-muted">
+                  {t("ctaBody")}
+                </p>
+                <Button asChild size="lg" className="mt-6 w-full sm:w-auto">
+                  <Link href="/request" prefetch={false}>
+                    {t("ctaPrimary")}
+                    <ArrowRight aria-hidden="true" />
+                  </Link>
+                </Button>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>

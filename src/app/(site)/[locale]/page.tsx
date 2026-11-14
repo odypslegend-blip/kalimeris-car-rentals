@@ -1,3 +1,4 @@
+import type {CSSProperties} from "react";
 import Image from "next/image";
 import {
   ArrowRight,
@@ -11,7 +12,10 @@ import {
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {HeroSearch} from "@/components/booking/hero-search";
 import {HeroMedia} from "@/components/home/hero-media";
+import {AnimatedSteps} from "@/components/motion/animated-steps";
+import {HeroKineticHeading} from "@/components/motion/kinetic-heading";
 import {Reveal} from "@/components/motion/reveal";
+import {SpotlightCard} from "@/components/motion/spotlight-card";
 import {SectionHeading} from "@/components/sections/section-heading";
 import {Badge} from "@/components/ui/badge";
 import {Button} from "@/components/ui/button";
@@ -146,9 +150,7 @@ export default async function HomePage({params}: HomePageProps) {
                 text legible; from lg up the panel disappears and the hero is
                 photo-forward again. */}
             <div className="max-w-[34rem] rounded-card bg-background/[0.96] p-4 sm:p-5 lg:rounded-none lg:bg-transparent lg:p-0">
-              <h1 className="text-[2.375rem] font-extrabold leading-[1.07] tracking-[-0.03em] text-ink sm:text-[3rem] lg:text-[3.875rem] lg:leading-[1.04]">
-                {t("title")}
-              </h1>
+              <HeroKineticHeading>{t("title")}</HeroKineticHeading>
 
               <svg
                 aria-hidden="true"
@@ -161,17 +163,25 @@ export default async function HomePage({params}: HomePageProps) {
                   stroke="currentColor"
                   strokeWidth="4"
                   strokeLinecap="round"
+                  pathLength={1}
+                  className="hero-underline-path"
                 />
               </svg>
 
-              <p className="mt-5 max-w-[44ch] text-[1.0625rem] leading-relaxed text-ink">
+              <p
+                className="hero-load-rise mt-5 max-w-[44ch] text-[1.0625rem] leading-relaxed text-ink"
+                style={{"--hero-delay": "180ms"} as CSSProperties}
+              >
                 {t("subtitle")}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="page-shell relative z-10 mt-4 lg:-mt-20">
+        <div
+          className="hero-load-rise page-shell relative z-10 mt-4 lg:-mt-20"
+          style={{"--hero-delay": "280ms"} as CSSProperties}
+        >
           <HeroSearch helperText={bookingT("helper")} />
         </div>
       </section>
@@ -214,12 +224,13 @@ export default async function HomePage({params}: HomePageProps) {
 
               return (
                 <li key={vehicle.slug}>
-                  <Reveal delay={index * 70}>
-                    <Link
-                      href={`/cars/${vehicle.slug}`}
-                      prefetch={false}
-                      className="group block overflow-hidden rounded-card border border-line bg-surface shadow-card transition-[transform,box-shadow] duration-[var(--token-duration-normal)] ease-brand hover:-translate-y-0.5 hover:shadow-panel"
-                    >
+                  <Reveal delay={index * 70} variant="scale">
+                    <SpotlightCard className="h-full border border-line bg-surface shadow-card transition-shadow duration-[var(--token-duration-normal)] ease-brand hover:shadow-panel">
+                      <Link
+                        href={`/cars/${vehicle.slug}`}
+                        prefetch={false}
+                        className="group block h-full overflow-hidden rounded-card focus-visible:outline-offset-[-2px]"
+                      >
                       <div className="relative aspect-[4/3] overflow-hidden bg-background">
                         <Image
                           src={assetPath(vehicle.image)}
@@ -275,7 +286,8 @@ export default async function HomePage({params}: HomePageProps) {
                           <ArrowRight className="size-4" />
                         </span>
                       </div>
-                    </Link>
+                      </Link>
+                    </SpotlightCard>
                   </Reveal>
                 </li>
               );
@@ -305,23 +317,7 @@ export default async function HomePage({params}: HomePageProps) {
         <div className="page-shell">
           <SectionHeading eyebrow={t("steps.eyebrow")} title={t("steps.title")} />
 
-          <ol className="mt-10 grid gap-8 md:grid-cols-3 md:gap-10">
-            {steps.map((step, index) => (
-              <li key={step.title} className="border-t border-line pt-6">
-                <Reveal delay={index * 80}>
-                  <span className="text-[0.6875rem] font-bold tracking-[0.2em] text-brand">
-                    0{index + 1}
-                  </span>
-                  <h3 className="mt-3 text-[1.0625rem] font-semibold leading-snug text-ink">
-                    {step.title}
-                  </h3>
-                  <p className="mt-2.5 max-w-[40ch] text-[0.9375rem] leading-relaxed text-muted">
-                    {step.body}
-                  </p>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
+          <AnimatedSteps steps={steps} variant="home" headingLevel="h3" className="mt-10" />
         </div>
       </section>
 
@@ -354,21 +350,26 @@ export default async function HomePage({params}: HomePageProps) {
               const Icon = serviceIcons[index] ?? Wrench;
 
               return (
-                <li key={item.title} className="bg-surface p-6">
-                  <Reveal delay={index * 60}>
-                    <span
-                      aria-hidden="true"
-                      className="inline-flex size-10 items-center justify-center rounded-full bg-brand-subtle text-brand"
-                    >
-                      <Icon className="size-5" />
-                    </span>
-                    <h3 className="mt-4 text-[1.0625rem] font-semibold leading-snug text-ink">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">
-                      {item.body}
-                    </p>
-                  </Reveal>
+                <li key={item.title} className="bg-surface">
+                  <SpotlightCard
+                    tilt={false}
+                    className="h-full rounded-none bg-surface p-6"
+                  >
+                    <Reveal delay={index * 60}>
+                      <span
+                        aria-hidden="true"
+                        className="inline-flex size-10 items-center justify-center rounded-full bg-brand-subtle text-brand"
+                      >
+                        <Icon className="size-5" />
+                      </span>
+                      <h3 className="mt-4 text-[1.0625rem] font-semibold leading-snug text-ink">
+                        {item.title}
+                      </h3>
+                      <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">
+                        {item.body}
+                      </p>
+                    </Reveal>
+                  </SpotlightCard>
                 </li>
               );
             })}

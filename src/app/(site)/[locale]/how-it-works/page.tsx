@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import {ArrowRight, Check, Minus} from "lucide-react";
 import {getTranslations, setRequestLocale} from "next-intl/server";
+import {AnimatedSteps} from "@/components/motion/animated-steps";
 import {PageHeader} from "@/components/sections/page-header";
 import {Button} from "@/components/ui/button";
 import {Link} from "@/i18n/navigation";
@@ -66,24 +67,7 @@ export default async function HowItWorksPage({
       {/* Three steps as one equal-edge composition. */}
       <section className="py-12 md:py-16">
         <div className="page-shell">
-          <ol className="grid gap-px overflow-hidden rounded-card border border-line bg-line md:grid-cols-3">
-            {steps.map((step, index) => (
-              <li key={step.title} className="bg-surface p-6 md:p-8">
-                <span
-                  aria-hidden="true"
-                  className="text-[0.6875rem] font-bold tracking-[0.2em] text-brand"
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h2 className="mt-3 text-[1.125rem] font-semibold leading-snug tracking-[-0.01em] text-ink">
-                  {step.title}
-                </h2>
-                <p className="mt-2.5 max-w-[40ch] text-[0.9375rem] leading-relaxed text-muted">
-                  {step.body}
-                </p>
-              </li>
-            ))}
-          </ol>
+          <AnimatedSteps steps={steps} variant="page" headingLevel="h2" />
         </div>
       </section>
 

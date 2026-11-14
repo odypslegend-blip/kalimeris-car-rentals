@@ -111,7 +111,7 @@ export function HeroMedia({
   }, [hasSources, sourceKey]);
 
   return (
-    <>
+    <div className="hero-parallax-layer absolute inset-0 size-full">
       <Image
         src={posterSrc}
         alt={alt}
@@ -143,6 +143,6 @@ export function HeroMedia({
           ))}
         </video>
       ) : null}
-    </>
+    </div>
   );
 }

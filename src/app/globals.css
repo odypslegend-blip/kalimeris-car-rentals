@@ -56,7 +56,14 @@
   --token-duration-fast: 140ms;
   --token-duration-normal: 190ms;
   --token-duration-slow: 250ms;
+  --token-duration-reveal: 720ms;
   --token-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --token-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --token-ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --token-ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --token-ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --token-spotlight: rgb(8 127 120 / 0.08);
+  --token-spotlight-border: rgb(8 127 120 / 0.28);
 
   --token-container: 1240px;
   --token-header-h: 60px;
@@ -106,6 +113,8 @@
   --token-shadow-panel: 0 18px 45px rgb(0 0 0 / 0.62);
   --token-shadow-modal: 0 24px 70px rgb(0 0 0 / 0.66);
   --token-shadow-menu: 0 18px 45px rgb(0 0 0 / 0.58);
+  --token-spotlight: rgb(255 255 255 / 0.07);
+  --token-spotlight-border: rgb(255 255 255 / 0.24);
 }
 
 @media (min-width: 1024px) {
@@ -571,35 +580,175 @@
 }
 
 /* ---------------------------------------------------------------------------
+   EasyUI-inspired motion & interaction layers
+   Hero load sequence (< 1.2s), self-drawing underline, subtle parallax,
+   pointer-tracked spotlight cards, and phone-call button pulse rings.
+--------------------------------------------------------------------------- */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-stroke {
+  from {
+    stroke-dashoffset: 160;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes phone-ring {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.92);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.65);
+  }
+}
+
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+  transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(var(--lift-y, 0px));
+  transition: transform 240ms var(--token-ease-out), border-color var(--token-duration-normal) var(--token-ease);
+  will-change: transform;
+}
+
+.spotlight-card::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity var(--token-duration-normal) var(--token-ease);
+  background: radial-gradient(
+    420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    var(--token-spotlight),
+    transparent 70%
+  );
+}
+
+.spotlight-card::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 1px;
+  opacity: 0;
+  transition: opacity var(--token-duration-normal) var(--token-ease);
+  background: radial-gradient(
+    280px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    var(--token-spotlight-border),
+    transparent 70%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .spotlight-card:hover::before,
+  .spotlight-card:hover::after {
+    opacity: 1;
+  }
+
+  .book-call-btn:hover .call-wave,
+  .book-call-btn:focus-visible .call-wave {
+    animation: phone-ring 1.35s var(--token-ease-out) infinite;
+  }
+
+  .book-call-btn:hover .call-wave-delay,
+  .book-call-btn:focus-visible .call-wave-delay {
+    animation-delay: 0.42s;
+  }
+}
+
+.hero-parallax-layer {
+  transform: translate3d(0, var(--hero-parallax-y, 0px), 0) scale(1.04);
+  transition: transform 120ms linear;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-load-rise {
+    animation: hero-rise 680ms var(--token-ease-expo) both;
+    animation-delay: var(--hero-delay, 0ms);
+  }
+
+  .hero-underline-path {
+    stroke-dasharray: 160;
+    stroke-dashoffset: 160;
+    animation: hero-stroke 900ms var(--token-ease-expo) 180ms forwards;
+  }
+}
+
+/* ---------------------------------------------------------------------------
    Scroll reveal (progressive enhancement)
    `@media (scripting: enabled)` means a browser that will not run the
    IntersectionObserver also never hides the content, and the reduced-motion
    override below keeps everything visible even before hydration. Only
-   opacity + a short translate animate: no layout, no colour, no scale.
+   opacity + a short translate animate: no layout, no colour.
 --------------------------------------------------------------------------- */
 @media (scripting: enabled) {
   [data-reveal="hidden"] {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(16px);
     transition:
-      opacity 620ms var(--token-ease),
-      transform 620ms var(--token-ease);
+      opacity var(--token-duration-reveal) var(--token-ease-expo),
+      transform var(--token-duration-reveal) var(--token-ease-expo);
     transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-reveal="hidden"][data-reveal-variant="scale"] {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
   }
 
   [data-reveal="visible"] {
     opacity: 1;
     transform: none;
     transition:
-      opacity 620ms var(--token-ease),
-      transform 620ms var(--token-ease);
+      opacity var(--token-duration-reveal) var(--token-ease-expo),
+      transform var(--token-duration-reveal) var(--token-ease-expo);
     transition-delay: var(--reveal-delay, 0ms);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal="hidden"] {
+  [data-reveal="hidden"],
+  [data-reveal="hidden"][data-reveal-variant="scale"] {
     opacity: 1;
     transform: none;
+  }
+
+  .hero-load-rise {
+    animation: none;
+  }
+
+  .hero-underline-path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .hero-parallax-layer,
+  .spotlight-card {
+    transform: none !important;
   }
 }

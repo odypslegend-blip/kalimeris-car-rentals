@@ -123,6 +123,116 @@ test.describe("Greek home", () => {
       await context.close();
     }
   });
+
+  test("EasyUI motion components, scroll progress, spotlight cards, and reduced motion", async ({
+    page,
+    browser
+  }) => {
+    const errors: string[] = [];
+    page.on("pageerror", (err) => errors.push(err.message));
+    page.on("console", (msg) => {
+      if (msg.type() === "error") errors.push(msg.text());
+    });
+
+    await page.setViewportSize({width: 1440, height: 900});
+    await page.goto("/en", {waitUntil: "networkidle"});
+
+    await expect(page.getByRole("heading", {level: 1})).toHaveText(
+      "Rent with confidence."
+    );
+    await expect(page.locator(".hero-underline-path")).toBeAttached();
+
+    const progress = page.locator("[data-scroll-progress]");
+    await expect(progress).toBeAttached();
+    await expect(progress).toHaveCSS("opacity", "0");
+
+    const callBtn = page.locator('header a.book-call-btn[href^="tel:"]');
+    await expect(callBtn).toBeVisible();
+    const callBox = await callBtn.boundingBox();
+    expect(callBox?.height ?? 0).toBeGreaterThanOrEqual(44);
+
+    const spotlightCards = page.locator(".spotlight-card");
+    expect(await spotlightCards.count()).toBeGreaterThanOrEqual(7);
+
+    const firstCard = spotlightCards.first();
+    await firstCard.scrollIntoViewIfNeeded();
+    const cardBox = await firstCard.boundingBox();
+    expect(cardBox).not.toBeNull();
+    if (cardBox) {
+      await page.mouse.move(
+        cardBox.x + cardBox.width / 2,
+        cardBox.y + cardBox.height / 2
+      );
+      await page.evaluate(
+        () =>
+          new Promise<void>((resolve) =>
+            requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+          )
+      );
+      const mouseX = await firstCard.evaluate((el) =>
+        el.style.getPropertyValue("--mouse-x")
+      );
+      expect(mouseX).toMatch(/px$/);
+    }
+
+    const steps = page.locator("[data-animated-steps]");
+    await steps.scrollIntoViewIfNeeded();
+    await page.evaluate(
+      () =>
+        new Promise<void>((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+        )
+    );
+    await expect(steps).toHaveAttribute("data-steps-active", "true");
+    await expect(progress).toHaveCSS("opacity", "1");
+
+    const desktopOverflow = await page.evaluate(
+      () =>
+        document.documentElement.scrollWidth <=
+        document.documentElement.clientWidth
+    );
+    expect(desktopOverflow).toBe(true);
+
+    await page.goto("/en/cars", {waitUntil: "networkidle"});
+    expect(await page.locator(".spotlight-card").count()).toBeGreaterThanOrEqual(
+      6
+    );
+    await page.setViewportSize({width: 390, height: 844});
+    const mobileOverflow = await page.evaluate(
+      () =>
+        document.documentElement.scrollWidth <=
+        document.documentElement.clientWidth
+    );
+    expect(mobileOverflow).toBe(true);
+    expect(errors).toEqual([]);
+
+    const reducedContext = await browser.newContext({reducedMotion: "reduce"});
+    try {
+      const reducedPage = await reducedContext.newPage();
+      const reducedErrors: string[] = [];
+      reducedPage.on("pageerror", (err) => reducedErrors.push(err.message));
+      reducedPage.on("console", (msg) => {
+        if (msg.type() === "error") reducedErrors.push(msg.text());
+      });
+
+      await reducedPage.setViewportSize({width: 1440, height: 900});
+      await reducedPage.goto("/el", {waitUntil: "networkidle"});
+      await reducedPage.evaluate(
+        () =>
+          new Promise<void>((resolve) =>
+            requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+          )
+      );
+      const reducedSteps = reducedPage.locator("[data-animated-steps]");
+      await reducedSteps.scrollIntoViewIfNeeded();
+      await expect(reducedSteps).toHaveAttribute("data-steps-active", "true");
+      const firstReveal = reducedPage.locator("[data-reveal]").first();
+      await expect(firstReveal).toHaveCSS("opacity", "1");
+      expect(reducedErrors).toEqual([]);
+    } finally {
+      await reducedContext.close();
+    }
+  });
 });
 
 test.describe("Fleet", () => {

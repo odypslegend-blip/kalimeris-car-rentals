@@ -1,6 +1,7 @@
 import Image from "next/image";
 import {ArrowRight, Cog, Fuel, UsersRound} from "lucide-react";
 import {useTranslations} from "next-intl";
+import {SpotlightCard} from "@/components/motion/spotlight-card";
 import {Badge} from "@/components/ui/badge";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/base-path";
@@ -50,14 +51,17 @@ export function VehicleCard({
   ];
 
   return (
-    <Link
-      href={href}
-      prefetch={false}
+    <SpotlightCard
       className={cn(
-        "group block overflow-hidden rounded-card border border-line bg-surface shadow-card transition-[transform,box-shadow] duration-[var(--token-duration-normal)] ease-brand hover:-translate-y-0.5 hover:shadow-panel focus-visible:-translate-y-0.5",
+        "h-full border border-line bg-surface shadow-card transition-shadow duration-[var(--token-duration-normal)] ease-brand hover:shadow-panel",
         className
       )}
     >
+      <Link
+        href={href}
+        prefetch={false}
+        className="group block h-full overflow-hidden rounded-card focus-visible:outline-offset-[-2px]"
+      >
       <div className="relative aspect-[4/3] overflow-hidden bg-background">
         <Image
           src={assetPath(vehicle.image)}
@@ -118,6 +122,7 @@ export function VehicleCard({
 
         <span className="sr-only"> — {t("cardCta")}</span>
       </div>
-    </Link>
+      </Link>
+    </SpotlightCard>
   );
 }

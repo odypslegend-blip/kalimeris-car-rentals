@@ -6,6 +6,7 @@ import {getTranslations, setRequestLocale} from "next-intl/server";
 import {DisclosureStrip} from "@/components/layout/disclosure-strip";
 import {SiteFooter} from "@/components/layout/site-footer";
 import {SiteHeader} from "@/components/layout/site-header";
+import {SmoothScrollProvider} from "@/components/motion/smooth-scroll";
 import {SiteToaster} from "@/components/providers/site-toaster";
 import {ThemeProvider} from "@/components/providers/theme-provider";
 import {routing} from "@/i18n/routing";
@@ -107,6 +108,7 @@ export default async function LocaleLayout({
         />
         <NextIntlClientProvider>
           <ThemeProvider>
+            <SmoothScrollProvider />
             <a href="#main" className="skip-link">
               {t("skipToContent")}
             </a>

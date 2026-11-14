@@ -5,6 +5,7 @@ import {useLocale, useTranslations} from "next-intl";
 import {EmptyFleetState} from "@/components/fleet/empty-fleet-state";
 import {FleetFilters} from "@/components/fleet/fleet-filters";
 import {VehicleCard} from "@/components/fleet/vehicle-card";
+import {Reveal} from "@/components/motion/reveal";
 import type {Vehicle} from "@/lib/data/fleet";
 import {
   parseFleetSearchParams,
@@ -65,12 +66,14 @@ export function FleetBrowser({vehicles, className}: FleetBrowserProps) {
         <ul className="mt-5 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {filtered.map((vehicle, index) => (
             <li key={vehicle.slug} className="min-w-0">
-              <VehicleCard
-                vehicle={vehicle}
-                locale={locale}
-                search={search}
-                priority={index < 3}
-              />
+              <Reveal delay={(index % 6) * 55} variant="scale">
+                <VehicleCard
+                  vehicle={vehicle}
+                  locale={locale}
+                  search={search}
+                  priority={index < 3}
+                />
+              </Reveal>
             </li>
           ))}
         </ul>
