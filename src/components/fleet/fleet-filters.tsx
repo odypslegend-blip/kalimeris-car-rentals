@@ -101,7 +101,7 @@ export function FleetFilters({params, className}: FleetFiltersProps) {
                     chipBase,
                     !params.category
                       ? "border-brand-strong bg-brand-strong text-brand-ink"
-                      : "border-line bg-surface text-ink hover:border-brand hover:text-brand"
+                      : "border-line bg-surface text-ink hover:border-accent-orange/50 hover:bg-accent-orange-subtle/40 hover:text-ink dark:hover:border-brand dark:hover:bg-surface dark:hover:text-brand"
                   )}
                 >
                   {t("all")}
@@ -121,7 +121,7 @@ export function FleetFilters({params, className}: FleetFiltersProps) {
                         chipBase,
                         isActive
                           ? "border-brand-strong bg-brand-strong text-brand-ink"
-                          : "border-line bg-surface text-ink hover:border-brand hover:text-brand"
+                          : "border-line bg-surface text-ink hover:border-accent-orange/50 hover:bg-accent-orange-subtle/40 hover:text-ink dark:hover:border-brand dark:hover:bg-surface dark:hover:text-brand"
                       )}
                     >
                       {categories(category)}
@@ -172,7 +172,10 @@ export function FleetFilters({params, className}: FleetFiltersProps) {
 
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-hairline pt-3">
         <p className="inline-flex items-center gap-2 text-[0.75rem] font-semibold text-muted">
-          <SlidersHorizontal aria-hidden="true" className="size-4" />
+          <SlidersHorizontal
+            aria-hidden="true"
+            className="size-4 text-accent-orange dark:text-brand"
+          />
           {t("filters")}
         </p>
 
@@ -180,7 +183,7 @@ export function FleetFilters({params, className}: FleetFiltersProps) {
           <Link
             href={withFleetParams("/cars", withoutFleetFilters(params))}
             prefetch={false}
-            className="inline-flex min-h-9 items-center text-[0.8125rem] font-semibold text-brand underline-offset-4 hover:underline"
+            className="inline-flex min-h-9 items-center text-[0.8125rem] font-semibold text-brand underline-offset-4 hover:text-accent-orange hover:underline dark:hover:text-brand"
           >
             {t("clear")}
           </Link>

@@ -18,22 +18,29 @@
    a parallel palette and not `dark:` utility spam — flips the whole site.
 --------------------------------------------------------------------------- */
 :root {
-  --token-bg: #f7f8f7;
+  --token-bg: #f5f2ea;
   --token-surface: #ffffff;
-  --token-surface-elevated: #eff3f1;
+  --token-surface-elevated: #ece7dc;
+  --token-surface-warm: #eae3d5;
   --token-ink: #0e1720;
-  --token-muted: #58646b;
-  /* Accent for TEXT, icons and borders (4.6:1 on bg, 4.9:1 on surface). */
+  --token-muted: #525e66;
+  /* Accent for TEXT, icons and borders (contrast-safe on cream and white). */
   --token-brand: #087f78;
-  --token-brand-hover: #076861;
-  /* SOLID fill that sits behind white text (white here is 4.9:1). */
+  --token-brand-hover: #066660;
+  /* SOLID fill that sits behind white text. */
   --token-brand-strong: #087f78;
-  --token-brand-strong-hover: #076861;
-  --token-brand-subtle: #e7f5f2;
+  --token-brand-strong-hover: #066660;
+  --token-brand-subtle: #e4f2ef;
   --token-brand-ink: #ffffff;
   --token-brand-rib: #13968d;
-  --token-border: #e2e8e7;
-  --token-hairline: #edf0f0;
+  --token-accent-orange: #ff693b;
+  --token-accent-orange-hover: #e55629;
+  --token-accent-orange-subtle: #fff0eb;
+  --token-accent-yellow: #f4c95d;
+  --token-accent-yellow-subtle: #fcf3d9;
+  --token-accent-yellow-ink: #0e1720;
+  --token-border: #dde2df;
+  --token-hairline: #e5e2d9;
   /* Form-control border: 3.5:1 on white, meets WCAG 1.4.11 non-text contrast. */
   --token-control-border: #7f8b87;
   --token-error: #b42318;
@@ -43,7 +50,7 @@
   --token-media: #0e1720;
   /* Space-separated RGB, consumed as rgb(var(--token-scrim) / <alpha>) by the
      hero scrim. Dark overrides the channel values, not the syntax. */
-  --token-scrim: 247 248 247;
+  --token-scrim: 245 242 234;
 
   /* Amber notice: 7.1:1 on its own surface, used only for legal drafts. */
   --token-notice: #fbf6e9;
@@ -54,9 +61,9 @@
   --token-radius-card: 14px;
   --token-radius-hero: 18px;
 
-  --token-duration-fast: 140ms;
-  --token-duration-normal: 190ms;
-  --token-duration-slow: 250ms;
+  --token-duration-fast: 180ms;
+  --token-duration-normal: 220ms;
+  --token-duration-slow: 300ms;
   --token-duration-reveal: 720ms;
   --token-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --token-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -69,8 +76,8 @@
   --token-container: 1240px;
   --token-header-h: 60px;
 
-  --token-shadow-card: 0 8px 25px rgb(14 23 32 / 0.05);
-  --token-shadow-panel: 0 18px 45px rgb(14 23 32 / 0.1);
+  --token-shadow-card: 0 10px 28px rgb(14 23 32 / 0.06);
+  --token-shadow-panel: 0 20px 48px rgb(14 23 32 / 0.11);
   --token-shadow-modal: 0 24px 70px rgb(14 23 32 / 0.22);
   --token-shadow-menu: 0 18px 45px rgb(14 23 32 / 0.16);
 
@@ -92,6 +99,7 @@
   --token-bg: #1c1c1c;
   --token-surface: #242424;
   --token-surface-elevated: #2c2c2c;
+  --token-surface-warm: #242424;
   --token-ink: #f5f5f5;
   --token-muted: #a3a3a3;
   /* Pure white accents for text, icons, rings, underlines and borders on charcoal. */
@@ -103,6 +111,12 @@
   --token-brand-subtle: #2b2b2b;
   --token-brand-ink: #1c1c1c;
   --token-brand-rib: #b5b5b5;
+  --token-accent-orange: #ffffff;
+  --token-accent-orange-hover: #e0e0e0;
+  --token-accent-orange-subtle: #2b2b2b;
+  --token-accent-yellow: #2b2b2b;
+  --token-accent-yellow-subtle: #2b2b2b;
+  --token-accent-yellow-ink: #f5f5f5;
   --token-border: #333333;
   --token-hairline: #282828;
   /* 3.6:1 on #242424 surface — WCAG 1.4.11 non-text contrast. */
@@ -134,6 +148,7 @@
   --color-background: var(--token-bg);
   --color-surface: var(--token-surface);
   --color-surface-elevated: var(--token-surface-elevated);
+  --color-surface-warm: var(--token-surface-warm);
   --color-ink: var(--token-ink);
   --color-muted: var(--token-muted);
   --color-brand: var(--token-brand);
@@ -142,6 +157,12 @@
   --color-brand-strong-hover: var(--token-brand-strong-hover);
   --color-brand-subtle: var(--token-brand-subtle);
   --color-brand-ink: var(--token-brand-ink);
+  --color-accent-orange: var(--token-accent-orange);
+  --color-accent-orange-hover: var(--token-accent-orange-hover);
+  --color-accent-orange-subtle: var(--token-accent-orange-subtle);
+  --color-accent-yellow: var(--token-accent-yellow);
+  --color-accent-yellow-subtle: var(--token-accent-yellow-subtle);
+  --color-accent-yellow-ink: var(--token-accent-yellow-ink);
   --color-line: var(--token-border);
   --color-control: var(--token-control-border);
   --color-hairline: var(--token-hairline);
@@ -200,7 +221,7 @@
     transition: background-color var(--token-duration-normal) var(--token-ease), color var(--token-duration-normal) var(--token-ease);
   }
 
-  /* Visible 2px brand focus ring — 4.0:1 on #FFFFFF, 3.7:1 on #F7F8F7; 15.5:1 on #242424 in dark. */
+  /* Visible 2px brand focus ring — 4.0:1 on #FFFFFF, 3.8:1 on #F5F2EA; 15.5:1 on #242424 in dark. */
   :focus-visible {
     outline: 2px solid var(--token-brand);
     outline-offset: 2px;
@@ -286,6 +307,52 @@
 
   .skip-link:focus-visible {
     transform: translateY(0);
+  }
+
+  /* Subtle horizontal dashed road marking in light mode; clean 1px hairline in dark. */
+  .road-divider {
+    height: 1px;
+    width: 100%;
+    background-image: repeating-linear-gradient(
+      90deg,
+      var(--token-border) 0 12px,
+      transparent 12px 22px
+    );
+  }
+
+  .dark .road-divider {
+    background-image: none;
+    background-color: var(--token-hairline);
+  }
+
+  /* Subtle corner-tick calibration frame using orange/brand accents in light mode;
+     muted border ticks in dark mode so pseudo-elements stay free for .spotlight-card. */
+  .automotive-frame {
+    position: relative;
+    background-image:
+      linear-gradient(var(--token-accent-orange), var(--token-accent-orange)),
+      linear-gradient(var(--token-accent-orange), var(--token-accent-orange)),
+      linear-gradient(var(--token-brand), var(--token-brand)),
+      linear-gradient(var(--token-brand), var(--token-brand));
+    background-position:
+      top 8px left 8px,
+      top 8px left 8px,
+      bottom 8px right 8px,
+      bottom 8px right 8px;
+    background-size:
+      12px 2px,
+      2px 12px,
+      12px 2px,
+      2px 12px;
+    background-repeat: no-repeat;
+  }
+
+  .dark .automotive-frame {
+    background-image:
+      linear-gradient(var(--token-border), var(--token-border)),
+      linear-gradient(var(--token-border), var(--token-border)),
+      linear-gradient(var(--token-border), var(--token-border)),
+      linear-gradient(var(--token-border), var(--token-border));
   }
 
   /* -------------------------------------------------------------------------

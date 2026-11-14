@@ -13,7 +13,7 @@ const navItems = [
 ] as const;
 
 const linkClasses =
-  "relative inline-flex min-h-11 items-center text-[0.875rem] font-medium text-muted transition-colors duration-[var(--token-duration-fast)] ease-brand after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-brand after:transition-[width] after:duration-[var(--token-duration-normal)] after:ease-brand hover:text-ink hover:after:w-full";
+  "relative inline-flex min-h-11 items-center text-[0.875rem] font-medium text-muted transition-colors duration-[var(--token-duration-fast)] ease-brand after:absolute after:-bottom-1.5 after:left-0 after:h-[2px] after:w-0 after:rounded-full after:bg-accent-orange after:transition-[width] after:duration-[var(--token-duration-normal)] after:ease-brand hover:text-ink hover:after:w-full dark:after:bg-brand";
 
 export function NavLinks() {
   const t = useTranslations("Nav");

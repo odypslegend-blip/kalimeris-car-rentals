@@ -171,16 +171,16 @@ export default async function VehiclePage({params}: VehiclePageProps) {
           </ol>
         </nav>
 
-        <div className="mt-2">
+        <div className="mt-3 rounded-card border border-line border-t-2 border-t-accent-orange bg-surface p-5 shadow-card sm:p-7 dark:mt-2 dark:rounded-none dark:border-0 dark:bg-transparent dark:p-0 dark:shadow-none">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="brand">{categories(vehicle.category)}</Badge>
+            <Badge variant="heritage">{categories(vehicle.category)}</Badge>
             <Badge variant="demo">{tcommon("demo")}</Badge>
           </div>
 
           <h1 className="mt-3 text-[2rem] font-semibold leading-[1.1] tracking-[-0.025em] text-ink lg:text-[2.5rem]">
             {name}
           </h1>
-          <p className="mt-1.5 text-[0.9375rem] text-muted">
+          <p className="mt-1.5 font-mono text-[0.875rem] text-muted dark:font-sans dark:text-[0.9375rem]">
             {vehicle.modelNote}
           </p>
           {vehicle.pricePerDay != null ? (
@@ -193,7 +193,7 @@ export default async function VehiclePage({params}: VehiclePageProps) {
             {description}
           </p>
 
-          <dl className="mt-6 grid max-w-[42rem] gap-x-10 sm:grid-cols-2">
+          <dl className="mt-6 grid max-w-[44rem] gap-x-8 rounded-field border border-hairline bg-surface-elevated/45 px-4 py-1 sm:grid-cols-2 dark:rounded-none dark:border-0 dark:bg-transparent dark:px-0 dark:py-0">
             {specRows.map((row) => (
               <VehicleSpecRow
                 key={row.label}
@@ -237,7 +237,7 @@ export default async function VehiclePage({params}: VehiclePageProps) {
             </TabsList>
 
             <TabsContent value="overview" className="pt-6">
-              <div className="max-w-[70ch]">
+              <div className="max-w-[70ch] rounded-card border border-line bg-surface p-5 shadow-card sm:p-6 dark:rounded-none dark:border-0 dark:bg-transparent dark:p-0 dark:shadow-none">
                 <h3 className="text-[1.0625rem] font-semibold text-ink">
                   {tv("tabs.overview")}
                 </h3>
@@ -251,11 +251,11 @@ export default async function VehiclePage({params}: VehiclePageProps) {
             </TabsContent>
 
             <TabsContent value="specifications" className="pt-6">
-              <dl className="grid max-w-[62rem] gap-x-10 sm:grid-cols-2">
+              <dl className="grid max-w-[62rem] gap-x-10 rounded-card border border-line bg-surface px-5 py-2 shadow-card sm:grid-cols-2 dark:rounded-none dark:border-0 dark:bg-transparent dark:px-0 dark:py-0 dark:shadow-none">
                 {allSpecs.map((spec) => (
                   <div
                     key={spec.label}
-                    className="flex items-baseline justify-between gap-4 border-b border-hairline py-3"
+                    className="flex items-baseline justify-between gap-4 border-b border-hairline py-3 last:border-b-0 sm:[&:nth-last-child(2):nth-child(odd)]:border-b-0"
                   >
                     <dt className="text-[0.8125rem] text-muted">
                       {spec.label}
@@ -269,7 +269,7 @@ export default async function VehiclePage({params}: VehiclePageProps) {
             </TabsContent>
 
             <TabsContent value="conditions" className="pt-6">
-              <div className="max-w-[70ch] rounded-card border border-line bg-surface p-5 shadow-card sm:p-6">
+              <div className="max-w-[70ch] rounded-card border border-line border-t-2 border-t-brand bg-surface p-5 shadow-card sm:p-6 dark:border-t dark:border-t-line">
                 <div className="flex flex-wrap items-center gap-3">
                   <h3 className="text-[1.0625rem] font-semibold text-ink">
                     {conditions("title")}

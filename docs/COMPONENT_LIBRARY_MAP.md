@@ -7,7 +7,7 @@
 | Styles | `tailwindcss` | https://tailwindcss.com/docs | Token-based CSS variables |
 | Typed UI | `typescript` | https://www.typescriptlang.org/docs/ | Strict mode |
 | Greek + English | `next-intl` | https://next-intl.dev/docs | Locale routing and dictionary keys |
-| Font | `next/font/google` `Inter` | https://nextjs.org/docs/app/getting-started/fonts | Explicit Greek+Latin subsets |
+| Font | `next/font/google` `Syne`, `Manrope`, `JetBrains Mono` (Pairing A) | https://nextjs.org/docs/app/getting-started/fonts | Explicit Greek+Latin subsets (`--font-syne`, `--font-manrope`, `--font-jetbrains-mono`) |
 | Icons | `lucide-react` | https://lucide.dev/guide/packages/lucide-react | See exact icon list below |
 | Form | `react-hook-form` | https://react-hook-form.com/docs | Controlled inputs, form state |
 | Schema | `zod` | https://zod.dev/ | Shared server and client validation |
@@ -45,6 +45,16 @@ pnpm dlx shadcn@latest add button input textarea select combobox calendar popove
 ```
 
 Use up-to-date framework scaffolding instructions for Tailwind and Next.js rather than copying bare dependency commands if initialization is needed. Check selected shadcn component implementation for compatibility. Do NOT add separate carousel dependency when shadcn's Embla carousel suffices.
+
+## Custom automotive & editorial motion components
+
+| Component / Module | File | Purpose |
+| --- | --- | --- |
+| `HeritageBadge`, `RouteIndicator`, `TechnicalDivider`, `ChassisIllustration` | `src/components/brand/automotive-accents.tsx` | Reusable editorial automotive badges (`ΑΠΟ ΤΟ 1980`), route telemetry indicators, technical numbered dividers, and wireframe chassis art |
+| `AnimatedSteps` | `src/components/motion/animated-steps.tsx` | Style 2 interactive rental process stepper with route progression state and active step highlight |
+| `SmoothScroll` | `src/components/motion/smooth-scroll.tsx` | Lenis smooth scroll wrapper + `--hero-parallax-y` CSS custom property updater (clamped `0..36px`) |
+| `KineticHeading`, `BookCallButton`, `Reveal`, `SpotlightCard` | `src/components/motion/` | Editorial headline reveal, CTA micro-interaction, viewport reveals, and dual-mode card spotlight |
+| `SectionHeading`, `PageHeader` | `src/components/sections/` | Optional monospaced `index` label, orange/brand eyebrow tick, and warm elevated light-mode page headers |
 
 ## Icons: exact named exports from lucide-react
 - `MapPin`: pickup / return location

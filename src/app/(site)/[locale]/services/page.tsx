@@ -2,6 +2,10 @@ import type {Metadata} from "next";
 import type {LucideIcon} from "lucide-react";
 import {ArrowRight, ArrowUpRight, Car, Gauge, Wrench} from "lucide-react";
 import {getTranslations, setRequestLocale} from "next-intl/server";
+import {
+  ChassisIllustration,
+  TechnicalDivider
+} from "@/components/brand/automotive-accents";
 import {BookCallButton} from "@/components/motion/book-call-button";
 import {Reveal} from "@/components/motion/reveal";
 import {SpotlightCard} from "@/components/motion/spotlight-card";
@@ -11,6 +15,7 @@ import {Button} from "@/components/ui/button";
 import {Link} from "@/i18n/navigation";
 import {buildAlternates} from "@/lib/seo";
 import {site} from "@/lib/site";
+import {cn} from "@/lib/utils";
 
 type ServicesPageProps = {
   params: Promise<{locale: string}>;
@@ -28,7 +33,11 @@ type ServiceGroup = {
 type ServiceLedgerSectionProps = {
   group: ServiceGroup;
   icon: LucideIcon;
+  sectionIndex: string;
+  accent?: "teal" | "orange";
   surfaceClassName?: string;
+  rowHoverClassName?: string;
+  stickyAccent?: React.ReactNode;
   actions?: React.ReactNode;
 };
 
@@ -36,7 +45,11 @@ type ServiceLedgerSectionProps = {
 function ServiceLedgerSection({
   group,
   icon: Icon,
+  sectionIndex,
+  accent = "teal",
   surfaceClassName = "py-12 md:py-16",
+  rowHoverClassName = "hover:bg-surface dark:hover:bg-surface-elevated/70",
+  stickyAccent,
   actions
 }: ServiceLedgerSectionProps) {
   return (
@@ -47,15 +60,22 @@ function ServiceLedgerSection({
             <Reveal>
               <span
                 aria-hidden="true"
-                className="mb-4 inline-flex size-10 items-center justify-center rounded-full bg-brand-subtle text-brand"
+                className={cn(
+                  "mb-4 inline-flex size-10 items-center justify-center rounded-full dark:bg-brand-subtle dark:text-brand",
+                  accent === "orange"
+                    ? "bg-accent-orange-subtle text-accent-orange"
+                    : "bg-brand-subtle text-brand"
+                )}
               >
                 <Icon className="size-5" />
               </span>
               <SectionHeading
+                index={sectionIndex}
                 eyebrow={group.eyebrow}
                 title={group.title}
                 description={group.body}
               />
+              {stickyAccent}
             </Reveal>
           </div>
 
@@ -64,8 +84,20 @@ function ServiceLedgerSection({
               {group.items.map((item, index) => (
                 <li key={item} className="py-1">
                   <Reveal delay={Math.min(index * 45, 220)}>
-                    <div className="group grid gap-2 rounded-xl px-3 py-4 transition-colors duration-[var(--token-duration-fast)] ease-brand hover:bg-surface-elevated/70 sm:grid-cols-[3.5rem_1fr] sm:items-baseline sm:gap-4 sm:px-5 sm:py-5">
-                      <span className="font-mono text-xs font-semibold tracking-[0.14em] tabular-nums text-brand">
+                    <div
+                      className={cn(
+                        "group grid gap-2 rounded-xl px-3 py-4 transition-colors duration-[var(--token-duration-fast)] ease-brand sm:grid-cols-[4rem_1fr] sm:items-baseline sm:gap-4 sm:px-5 sm:py-5",
+                        rowHoverClassName
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          "inline-flex w-fit items-center justify-center rounded-full border px-2.5 py-0.5 font-mono text-xs font-bold tracking-[0.14em] tabular-nums dark:border-0 dark:bg-transparent dark:px-0 dark:py-0 dark:font-semibold dark:text-brand",
+                          accent === "orange"
+                            ? "border-accent-orange/35 bg-accent-orange-subtle text-ink"
+                            : "border-brand/25 bg-brand-subtle text-brand-hover"
+                        )}
+                      >
                         {String(index + 1).padStart(2, "0")}
                       </span>
                       <p className="font-display text-[1.0625rem] font-bold leading-snug text-ink sm:text-lg">
@@ -136,17 +168,43 @@ export default async function ServicesPage({params}: ServicesPageProps) {
         }
       />
 
-      <ServiceLedgerSection group={workshop} icon={Wrench} />
+      <ServiceLedgerSection
+        group={workshop}
+        icon={Wrench}
+        sectionIndex="01"
+        accent="teal"
+        stickyAccent={<ChassisIllustration className="mt-6 dark:hidden" />}
+      />
 
       <ServiceLedgerSection
         group={performance}
         icon={Gauge}
+        sectionIndex="02"
+        accent="orange"
         surfaceClassName="border-y border-line bg-surface py-12 md:py-16"
+        rowHoverClassName="hover:bg-surface-elevated/60 dark:hover:bg-surface-elevated/70"
+        stickyAccent={
+          <TechnicalDivider
+            code="ECU · LPG"
+            label={locale === "el" ? "ΔΙΑΓΝΩΣΤΙΚΑ BOSCH" : "BOSCH DIAGNOSTICS"}
+            className="mt-6 dark:hidden"
+          />
+        }
       />
 
       <ServiceLedgerSection
         group={rental}
         icon={Car}
+        sectionIndex="03"
+        accent="teal"
+        surfaceClassName="border-b border-line bg-surface-warm/60 py-12 md:py-16 dark:border-b-0 dark:bg-transparent"
+        stickyAccent={
+          <TechnicalDivider
+            code="24/7"
+            label={locale === "el" ? "ΚΟΖΑΝΗ · ΑΕΡΟΔΡΟΜΙΟ" : "KOZANI · AIRPORT"}
+            className="mt-6 dark:hidden"
+          />
+        }
         actions={
           <>
             <Button asChild size="lg">
@@ -166,16 +224,20 @@ export default async function ServicesPage({params}: ServicesPageProps) {
         }
       />
 
-      <section className="pb-12 md:pb-16">
+      <section className="pb-12 pt-12 md:pb-16 md:pt-16 dark:pt-0 dark:md:pt-0">
         <div className="page-shell">
           <Reveal variant="scale">
             <SpotlightCard
               tilt={false}
-              className="border border-line bg-brand-subtle p-6 md:p-8 lg:flex lg:items-center lg:justify-between lg:gap-10"
+              className="border border-line border-t-2 border-t-brand bg-brand-subtle p-6 shadow-card md:p-8 lg:flex lg:items-center lg:justify-between lg:gap-10 dark:border-t dark:border-t-line dark:shadow-none"
             >
               <div className="min-w-0">
-                <p className="text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-muted">
-                  {parts.eyebrow}
+                <p className="inline-flex items-center gap-2 font-mono text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-muted">
+                  <span
+                    aria-hidden="true"
+                    className="hidden h-[2px] w-3 bg-accent-orange dark:hidden sm:inline-block"
+                  />
+                  <span>{parts.eyebrow}</span>
                 </p>
                 <h2 className="mt-3 font-display text-[1.375rem] font-bold leading-snug tracking-[-0.015em] text-ink md:text-[1.625rem]">
                   {parts.title}
@@ -208,7 +270,7 @@ export default async function ServicesPage({params}: ServicesPageProps) {
           <Reveal variant="scale">
             <SpotlightCard
               tilt={false}
-              className="border border-line bg-surface p-6 md:p-8 lg:flex lg:items-center lg:justify-between lg:gap-10"
+              className="border border-line border-t-2 border-t-accent-orange bg-surface p-6 shadow-card md:p-8 lg:flex lg:items-center lg:justify-between lg:gap-10 dark:border-t dark:border-t-line dark:shadow-none"
             >
               <div className="min-w-0">
                 <h2 className="font-display text-[1.375rem] font-bold leading-snug tracking-[-0.015em] text-ink md:text-[1.625rem]">

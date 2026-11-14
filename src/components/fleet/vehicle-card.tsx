@@ -53,7 +53,7 @@ export function VehicleCard({
   return (
     <SpotlightCard
       className={cn(
-        "h-full border border-line bg-surface shadow-card transition-shadow duration-[var(--token-duration-normal)] ease-brand hover:shadow-panel",
+        "h-full border border-line bg-surface shadow-card transition-[box-shadow,border-color] duration-[var(--token-duration-normal)] ease-brand hover:border-brand/50 hover:shadow-panel",
         className
       )}
     >
@@ -70,11 +70,18 @@ export function VehicleCard({
           priority={priority}
           quality={90}
           sizes="(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 100vw"
-          className="object-cover transition-transform duration-[var(--token-duration-slow)] ease-brand group-hover:scale-[1.02]"
+          className="object-cover transition-transform duration-[var(--token-duration-slow)] ease-brand group-hover:scale-[1.03]"
         />
         <Badge variant="demo" className="absolute left-3 top-3 shadow-sm">
           {common("demo")}
         </Badge>
+        <span
+          aria-hidden="true"
+          className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-line/80 bg-surface/92 px-2.5 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-ink shadow-sm backdrop-blur-sm"
+        >
+          <span className="size-1.5 shrink-0 rounded-full bg-accent-orange dark:bg-brand" />
+          <span>{categories(vehicle.category)}</span>
+        </span>
       </div>
 
       <div className="flex flex-1 flex-col p-5">
@@ -101,7 +108,7 @@ export function VehicleCard({
 
           <span
             aria-hidden="true"
-            className="mt-1 inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line text-brand transition-colors duration-[var(--token-duration-fast)] ease-brand group-hover:border-brand group-hover:bg-brand-subtle"
+            className="mt-1 inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line text-brand transition-[background-color,border-color,color,transform] duration-[var(--token-duration-fast)] ease-brand group-hover:translate-x-0.5 group-hover:border-accent-orange group-hover:bg-accent-orange group-hover:text-white dark:group-hover:border-brand dark:group-hover:bg-brand-subtle dark:group-hover:text-brand"
           >
             <ArrowRight className="size-4" />
           </span>
@@ -110,7 +117,7 @@ export function VehicleCard({
         <span className="sr-only"> — {t("cardCta")}</span>
       </div>
 
-      <ul className="grid grid-cols-3 divide-x divide-hairline border-t border-hairline bg-background/50">
+      <ul className="grid grid-cols-3 divide-x divide-hairline border-t border-hairline bg-surface-elevated/60 dark:bg-background/50">
         {facts.map((fact) => {
           const Icon = fact.icon;
 

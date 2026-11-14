@@ -12,15 +12,23 @@ export async function SiteHeader() {
   const t = await getTranslations();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-hairline bg-surface transition-colors duration-[var(--token-duration-normal)] ease-brand">
+    <header className="sticky top-0 z-40 border-b border-b-hairline border-t-2 border-t-accent-orange bg-surface transition-colors duration-[var(--token-duration-normal)] ease-brand dark:border-t-0">
       <div className="page-shell flex h-[var(--token-header-h)] items-center justify-between gap-4">
-        <Link
-          href="/"
-          aria-label={`${t("Common.brandName")} ${t("Common.brandSuffix")}`}
-          className="rounded-field"
-        >
-          <Wordmark />
-        </Link>
+        <div className="flex min-w-0 items-center gap-3">
+          <Link
+            href="/"
+            aria-label={`${t("Common.brandName")} ${t("Common.brandSuffix")}`}
+            className="rounded-field"
+          >
+            <Wordmark />
+          </Link>
+          <span
+            aria-hidden="true"
+            className="hidden items-center rounded-full border border-line/70 bg-accent-yellow px-2.5 py-0.5 font-mono text-[0.6875rem] font-bold leading-none tracking-[0.12em] tabular-nums text-accent-yellow-ink dark:border-line dark:bg-brand-subtle dark:text-muted 2xl:inline-flex"
+          >
+            {site.foundedYear}
+          </span>
+        </div>
 
         <NavLinks />
 

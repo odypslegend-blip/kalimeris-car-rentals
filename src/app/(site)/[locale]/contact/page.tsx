@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import type {ReactNode} from "react";
 import {ArrowRight, ArrowUpRight, Check} from "lucide-react";
 import {getTranslations, setRequestLocale} from "next-intl/server";
+import {RouteIndicator} from "@/components/brand/automotive-accents";
 import {PageHeader} from "@/components/sections/page-header";
 import {Button} from "@/components/ui/button";
 import {Link} from "@/i18n/navigation";
@@ -61,12 +62,26 @@ export default async function ContactPage({params}: ContactPageProps) {
       <section className="py-12 md:py-16">
         <div className="page-shell grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           <div className="flex flex-col gap-8">
-            <div>
+            <div className="rounded-card border border-line bg-surface p-6 shadow-card md:p-8 dark:rounded-none dark:border-0 dark:bg-transparent dark:p-0 dark:shadow-none">
               <h2 className="text-[1.25rem] font-semibold leading-snug tracking-[-0.01em] text-ink md:text-[1.375rem]">
                 {t("detailsTitle")}
               </h2>
 
-              <dl className="mt-5 border-y border-line">
+              <RouteIndicator
+                code={
+                  locale === "el"
+                    ? `ΕΔΡΑ · ${site.address.postalCode}`
+                    : `HQ · ${site.address.postalCode}`
+                }
+                route={
+                  locale === "el"
+                    ? site.address.streetEl
+                    : site.address.streetEn
+                }
+                className="mt-3"
+              />
+
+              <dl className="mt-5 border-t border-hairline dark:border-y dark:border-line">
                 <DetailRow label={t("phoneLabel")}>
                   <a
                     href={site.phone.href}
@@ -126,7 +141,7 @@ export default async function ContactPage({params}: ContactPageProps) {
               </dl>
             </div>
 
-            <div className="rounded-card border border-line bg-surface p-6 md:p-8">
+            <div className="rounded-card border border-line bg-surface p-6 shadow-card md:p-8 dark:shadow-none">
               <h2 className="text-[1.25rem] font-semibold leading-snug tracking-[-0.01em] text-ink md:text-[1.375rem]">
                 {t("companyTitle")}
               </h2>
@@ -145,7 +160,7 @@ export default async function ContactPage({params}: ContactPageProps) {
           </div>
 
           <div className="flex flex-col gap-6">
-            <div className="rounded-card border border-line bg-surface p-6 md:p-8">
+            <div className="rounded-card border border-line border-t-2 border-t-accent-orange bg-surface p-6 shadow-card md:p-8 dark:border-t dark:border-t-line dark:shadow-none">
               <h2 className="text-[1.25rem] font-semibold leading-snug tracking-[-0.01em] text-ink md:text-[1.375rem]">
                 {t("formTitle")}
               </h2>
@@ -160,7 +175,7 @@ export default async function ContactPage({params}: ContactPageProps) {
               </Button>
             </div>
 
-            <div className="rounded-card border border-line bg-brand-subtle p-6 md:p-8">
+            <div className="rounded-card border border-line bg-surface-warm/70 p-6 shadow-card md:p-8 dark:bg-brand-subtle dark:shadow-none">
               <h2 className="text-[1.25rem] font-semibold leading-snug tracking-[-0.01em] text-ink md:text-[1.375rem]">
                 {t("servicesTitle")}
               </h2>

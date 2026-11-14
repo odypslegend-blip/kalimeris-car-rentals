@@ -79,10 +79,8 @@ export function SmoothScrollProvider() {
         bar.style.opacity = scrollY > 8 ? "1" : "0";
       }
 
-      if (scrollY < 900) {
-        const parallaxY = Math.min(scrollY * 0.12, 36);
-        root.style.setProperty("--hero-parallax-y", `${parallaxY.toFixed(1)}px`);
-      }
+      const parallaxY = Math.min(Math.max(0, scrollY) * 0.12, 36);
+      root.style.setProperty("--hero-parallax-y", `${parallaxY.toFixed(1)}px`);
 
       const delta = Math.abs(scrollY - lastScrollY);
       lastScrollY = scrollY;

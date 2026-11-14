@@ -210,13 +210,13 @@ export function AnimatedSteps({
                 "group relative flex min-h-12 min-w-0 items-center gap-3 overflow-hidden rounded-card border px-4 py-3 text-left transition-[background-color,border-color,color,box-shadow] duration-[var(--token-duration-fast)] ease-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
                 isSelected
                   ? cn("border-brand shadow-card text-ink", cardSurface)
-                  : "border-line bg-transparent text-muted hover:border-brand/50 hover:text-ink"
+                  : "border-line bg-transparent text-muted hover:border-accent-orange/50 hover:text-ink dark:hover:border-brand/50"
               )}
             >
               <span
                 aria-hidden="true"
                 className={cn(
-                  "absolute inset-x-0 top-0 h-[2px] origin-left bg-brand transition-transform duration-500 ease-[var(--token-ease-expo)] motion-reduce:transition-none",
+                  "absolute inset-x-0 top-0 h-[2px] origin-left bg-accent-orange transition-transform duration-500 ease-[var(--token-ease-expo)] motion-reduce:transition-none dark:bg-brand",
                   active && isSelected ? "scale-x-100" : "scale-x-0"
                 )}
               />
@@ -224,7 +224,7 @@ export function AnimatedSteps({
                 className={cn(
                   "inline-flex shrink-0 items-center justify-center rounded-full border px-2 py-0.5 font-mono text-[0.75rem] font-bold tabular-nums tracking-[0.12em] transition-colors duration-[var(--token-duration-fast)]",
                   isSelected
-                    ? "border-brand-strong bg-brand-strong text-brand-ink"
+                    ? "border-accent-orange bg-accent-orange text-white dark:border-brand-strong dark:bg-brand-strong dark:text-brand-ink"
                     : "border-line bg-brand-subtle text-brand group-hover:border-brand/40"
                 )}
               >
@@ -302,7 +302,11 @@ export function AnimatedSteps({
                   key={step.title}
                   className={cn(
                     "h-1 rounded-full transition-colors duration-300",
-                    index <= boundedIndex ? "bg-brand-strong" : "bg-line"
+                    index === boundedIndex
+                      ? "bg-accent-orange dark:bg-brand-strong"
+                      : index < boundedIndex
+                        ? "bg-brand-strong"
+                        : "bg-line"
                   )}
                 />
               ))}
@@ -375,13 +379,58 @@ export function AnimatedSteps({
           <SpotlightCard
             tilt={false}
             className={cn(
-              "flex h-full flex-col justify-between border border-line p-5 shadow-card sm:p-7",
+              "flex h-full flex-col border border-line shadow-card",
               cardSurface
             )}
           >
+            {/* Warm route-telemetry top strip */}
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-hairline bg-surface-elevated/70 px-5 py-3 dark:bg-transparent sm:px-7">
+              <div className="flex min-w-0 items-center gap-3">
+                <div aria-hidden="true" className="flex items-center gap-1.5">
+                  {steps.map((step, index) => {
+                    const isDone = index < boundedIndex;
+                    const isCurrent = index === boundedIndex;
+                    return (
+                      <React.Fragment key={step.title}>
+                        <span
+                          className={cn(
+                            "inline-block size-2 rounded-full transition-colors duration-300",
+                            isCurrent
+                              ? "bg-accent-orange ring-4 ring-accent-orange/20 dark:bg-brand dark:ring-brand/20"
+                              : isDone
+                                ? "bg-brand"
+                                : "border border-control/45 bg-transparent dark:border-line"
+                          )}
+                        />
+                        {index < stepCount - 1 ? (
+                          <span
+                            className={cn(
+                              "w-4 border-t border-dashed transition-colors duration-300 sm:w-6",
+                              index < boundedIndex
+                                ? "border-brand"
+                                : "border-line"
+                            )}
+                          />
+                        ) : null}
+                      </React.Fragment>
+                    );
+                  })}
+                </div>
+                <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">
+                  {isEl
+                    ? `ΔΙΑΔΡΟΜΗ · ${stepNumber}/${totalLabel}`
+                    : `ROUTE · ${stepNumber}/${totalLabel}`}
+                </span>
+              </div>
+
+              <span className="inline-flex items-center rounded-full border border-line/60 bg-accent-yellow px-2.5 py-1 font-mono text-[0.6875rem] font-bold uppercase tracking-[0.14em] text-accent-yellow-ink dark:border-brand/25 dark:bg-brand-subtle dark:text-ink">
+                {isEl ? `ΣΤΑΔΙΟ ${stepNumber}` : `STAGE ${stepNumber}`}
+              </span>
+            </div>
+
             <div
               key={`preview-${boundedIndex}`}
-              className="flex h-full flex-col justify-between gap-6 animate-in fade-in-0 slide-in-from-bottom-1 duration-300 motion-reduce:animate-none"
+              className="flex flex-1 flex-col justify-between gap-6 p-5 animate-in fade-in-0 slide-in-from-bottom-1 duration-300 motion-reduce:animate-none sm:p-7"
             >
               {boundedIndex === 0 ? (
                 <StepOnePreview isEl={isEl} insetSurface={insetSurface} />
@@ -409,9 +458,7 @@ function StepOnePreview({isEl, insetSurface}: StagePreviewProps) {
       <div className="space-y-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
-            {isEl
-              ? "ΑΙΤΗΜΑ ΠΡΟΣΦΟΡΑΣ · ΣΤΑΔΙΟ 01"
-              : "QUOTE REQUEST INTAKE · STAGE 01"}
+            {isEl ? "ΑΙΤΗΜΑ ΠΡΟΣΦΟΡΑΣ" : "QUOTE REQUEST INTAKE"}
           </span>
           <span className="inline-flex items-center rounded-full border border-brand/25 bg-brand-subtle px-2.5 py-1 text-[0.75rem] font-semibold text-brand">
             {isEl
@@ -542,9 +589,7 @@ function StepTwoPreview({isEl, insetSurface}: StagePreviewProps) {
       <div className="space-y-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
-            {isEl
-              ? "ΕΠΙΒΕΒΑΙΩΣΗ ΚΑΙ ΠΡΟΣΦΟΡΑ · ΣΤΑΔΙΟ 02"
-              : "QUOTE & AVAILABILITY · STAGE 02"}
+            {isEl ? "ΕΠΙΒΕΒΑΙΩΣΗ ΚΑΙ ΠΡΟΣΦΟΡΑ" : "QUOTE & AVAILABILITY"}
           </span>
           <span className="inline-flex items-center rounded-full border border-brand/25 bg-brand-subtle px-2.5 py-1 text-[0.75rem] font-semibold text-brand">
             {isEl ? "Απευθείας απάντηση" : "Direct follow-up"}
@@ -664,9 +709,7 @@ function StepThreePreview({isEl, insetSurface}: StagePreviewProps) {
       <div className="space-y-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
-            {isEl
-              ? "ΔΙΑΦΑΝΗΣ ΠΑΡΑΔΟΣΗ · ΣΤΑΔΙΟ 03"
-              : "TRANSPARENT HANDOVER · STAGE 03"}
+            {isEl ? "ΔΙΑΦΑΝΗΣ ΠΑΡΑΔΟΣΗ" : "TRANSPARENT HANDOVER"}
           </span>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-brand/25 bg-brand-subtle px-2.5 py-1 text-[0.75rem] font-semibold text-brand">
             <ShieldCheck aria-hidden="true" className="size-3.5" />

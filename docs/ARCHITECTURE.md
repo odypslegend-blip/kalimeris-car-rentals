@@ -1,47 +1,69 @@
-# Suggested project architecture (adapt to existing repo)
+# Project architecture
 
 ```text
 src/
   app/
-    [locale]/
-      layout.tsx
-      page.tsx                    # home
-      cars/
-        page.tsx                  # fleet
-        [slug]/page.tsx           # vehicle
-      request/page.tsx           # quote request
-      how-it-works/page.tsx
-      faq/page.tsx
-      about/page.tsx
-      contact/page.tsx
-      privacy/page.tsx
-      rental-terms/page.tsx
+    (site)/
+      [locale]/
+        layout.tsx                  # root locale layout (ThemeProvider, NextIntlClientProvider, SmoothScroll)
+        page.tsx                    # editorial home (Hero, 1+2 Fleet Bento, Style 2 Steps, Split Services Ledger, Heritage Spread)
+        cars/
+          page.tsx                  # fleet catalog with filters
+          [slug]/page.tsx           # vehicle detail + gallery + specs + request panel
+        services/page.tsx           # automotive services ledger
+        request/page.tsx            # quote request form
+        how-it-works/page.tsx       # rental process steps
+        faq/page.tsx                # accordion Q&A
+        about/page.tsx              # company heritage & principles
+        contact/page.tsx            # pending contact disclosure + request link
+        privacy/page.tsx            # draft privacy policy (noindex)
+        rental-terms/page.tsx       # draft rental terms (noindex)
+        error.tsx
+        not-found.tsx
+        [...rest]/page.tsx
     api/
-      inquiries/route.ts          # optional server route
+      health/route.ts
+      inquiries/route.ts            # server inquiry validation + rate limit + delivery
+    globals.css                     # light-mode editorial tokens (:root), preserved .dark tokens, .road-divider, .automotive-frame
+    icon.svg
+    robots.ts
+    sitemap.ts
   components/
-    layout/{site-header,mobile-nav,site-footer,language-switcher}.tsx
-    booking/{hero-search,location-select,date-range-picker,request-form}.tsx
-    fleet/{vehicle-card,fleet-filters,vehicle-gallery,vehicle-spec-row}.tsx
-    ui/                           # shadcn generated UI primitives
+    brand/{wordmark,automotive-accents}.tsx
+    booking/{hero-search,location-select,date-range-picker,request-form,request-page-client}.tsx
+    fleet/{empty-fleet-state,fleet-browser,fleet-filters,request-panel,vehicle-card,vehicle-gallery,vehicle-spec-row}.tsx
+    home/hero-media.tsx
+    layout/{disclosure-strip,language-switcher,mobile-nav,nav-links,site-footer,site-header,theme-toggle}.tsx
+    motion/{animated-steps,book-call-button,kinetic-heading,reveal,smooth-scroll,spotlight-card}.tsx
+    providers/{site-toaster,theme-provider}.tsx
+    sections/{legal-document,legal-notice,page-header,prose,section-heading}.tsx
+    ui/                             # Radix-backed shadcn/ui primitives (badge, button, card, dialog, etc.)
   lib/
-    data/fleet.ts                 # verified data adapter
+    data/{fleet,locations}.ts
+    inquiry/{rate-limit,reference,transport}.ts
+    theme/{theme-init,theme-script}.ts
     validation/inquiry.ts
-    inquiry/submit.ts             # real backend adapter
+    vehicles/{store,types,view}.ts
+    base-path.ts
+    dates.ts
     media.ts
+    search-params.ts
+    seo.ts
+    site.ts
+    utils.ts
   i18n/
-    routing.ts
+    navigation.ts
     request.ts
+    routing.ts
+  proxy.ts
 messages/
   en.json
   el.json
 public/
-  brand/                           # approved brand assets only
   images/
-    reference/                     # licensed demo stock, never fake fleet
-    fleet/{vehicle-slug}/          # approved client-supplied photographs
-
-Tests:
-tests/e2e/{home,fleet,vehicle,inquiry,i18n}.spec.ts
+    reference/                      # licensed demo stock, never fake fleet
+tests/
+  e2e/{helpers,inquiry.spec,smoke.spec}.ts
 ```
 
 ## Data contract

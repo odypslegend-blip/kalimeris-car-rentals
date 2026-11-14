@@ -15,7 +15,11 @@ const badgeVariants = cva(
         neutral: "border-line bg-surface text-muted",
         brand: "border-transparent bg-brand-subtle text-brand-hover",
         demo: "border-transparent bg-media text-white",
-        outline: "border-line bg-transparent text-ink"
+        outline: "border-line bg-transparent text-ink",
+        heritage:
+          "border-line/70 bg-accent-yellow text-accent-yellow-ink dark:border-line dark:bg-brand-subtle dark:text-ink",
+        orange:
+          "border-transparent bg-accent-orange text-white dark:bg-brand-strong dark:text-brand-ink"
       }
     },
     defaultVariants: {

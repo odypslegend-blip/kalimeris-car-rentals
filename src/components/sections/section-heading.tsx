@@ -3,6 +3,7 @@ import {cn} from "@/lib/utils";
 
 type SectionHeadingProps = {
   eyebrow?: string;
+  index?: string;
   title: string;
   description?: string;
   align?: "left" | "center";
@@ -12,11 +13,13 @@ type SectionHeadingProps = {
 };
 
 /**
- * Shared section intro: eyebrow, heading and optional description.
- * Uses only design tokens so every section keeps the same type rhythm.
+ * Shared section intro: automotive eyebrow bar, heading and optional
+ * description. Uses design tokens so every section keeps the same type rhythm
+ * in light and dark themes.
  */
 export function SectionHeading({
   eyebrow,
+  index,
   title,
   description,
   align = "left",
@@ -32,9 +35,25 @@ export function SectionHeading({
         className
       )}
     >
-      {eyebrow ? (
-        <p className="min-w-0 max-w-full font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-brand">
-          {eyebrow}
+      {eyebrow || index ? (
+        <p
+          className={cn(
+            "flex min-w-0 max-w-full items-center gap-2.5 font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-brand-hover dark:text-brand",
+            align === "center" && "justify-center"
+          )}
+        >
+          <span
+            aria-hidden="true"
+            className="h-[2px] w-3.5 shrink-0 bg-accent-orange dark:bg-brand"
+          />
+          <span className="min-w-0">
+            {index ? (
+              <span className="text-muted">
+                {index} {eyebrow ? "// " : ""}
+              </span>
+            ) : null}
+            {eyebrow}
+          </span>
         </p>
       ) : null}
       <Heading

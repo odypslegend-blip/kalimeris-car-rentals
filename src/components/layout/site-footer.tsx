@@ -26,11 +26,40 @@ export async function SiteFooter() {
   return (
     <footer className="border-t border-line bg-surface">
       <div className="page-shell py-12 md:py-16">
+        <div className="mb-7 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted">
+            <span
+              aria-hidden="true"
+              className="inline-block size-2 shrink-0 rounded-[2px] bg-accent-orange dark:bg-brand"
+            />
+            <span>
+              {locale === "el" ? site.tradingNameEl : site.tradingNameEn}
+            </span>
+            <span aria-hidden="true" className="text-line">
+              /
+            </span>
+            <span>
+              {locale === "el" ? site.address.cityEl : site.address.cityEn}
+            </span>
+          </div>
+          <span className="font-mono text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-muted">
+            {locale === "el" ? site.activityEl : site.activityEn}
+          </span>
+        </div>
+
+        <div aria-hidden="true" className="road-divider mb-10" />
+
         <div className="grid gap-10 md:grid-cols-2 md:gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
           <div className="max-w-sm">
             <Wordmark />
             <p className="mt-4 text-[0.9375rem] leading-relaxed text-muted">
-              {t("Footer.tagline")}
+              <span
+                aria-hidden="true"
+                className="mr-2 inline-flex -translate-y-px items-center rounded-full border border-line/70 bg-accent-yellow px-2 py-0.5 align-middle font-mono text-[0.6875rem] font-bold uppercase leading-none tracking-[0.12em] tabular-nums text-accent-yellow-ink dark:border-line dark:bg-brand-subtle dark:text-muted"
+              >
+                {site.foundedYear}
+              </span>
+              <span>{t("Footer.tagline")}</span>
             </p>
 
             <div className="mt-4 flex flex-col">
@@ -77,8 +106,12 @@ export async function SiteFooter() {
           </div>
 
           <nav aria-label={t("Footer.explore")}>
-            <h2 className="text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
-              {t("Footer.explore")}
+            <h2 className="flex items-center gap-2 text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
+              <span
+                aria-hidden="true"
+                className="inline-block size-1.5 shrink-0 rounded-[1px] bg-accent-orange dark:bg-brand"
+              />
+              <span>{t("Footer.explore")}</span>
             </h2>
             <ul className="mt-2 flex flex-col">
               <li>
@@ -113,8 +146,12 @@ export async function SiteFooter() {
           </nav>
 
           <nav aria-label={t("Footer.information")}>
-            <h2 className="text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
-              {t("Footer.information")}
+            <h2 className="flex items-center gap-2 text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
+              <span
+                aria-hidden="true"
+                className="inline-block size-1.5 shrink-0 rounded-[1px] bg-accent-orange dark:bg-brand"
+              />
+              <span>{t("Footer.information")}</span>
             </h2>
             <ul className="mt-2 flex flex-col">
               <li>
@@ -153,8 +190,12 @@ export async function SiteFooter() {
           </nav>
 
           <div>
-            <h2 className="text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
-              {t("Footer.contactTitle")}
+            <h2 className="flex items-center gap-2 text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
+              <span
+                aria-hidden="true"
+                className="inline-block size-1.5 shrink-0 rounded-[1px] bg-accent-orange dark:bg-brand"
+              />
+              <span>{t("Footer.contactTitle")}</span>
             </h2>
 
             <address className="mt-2 flex flex-col not-italic">

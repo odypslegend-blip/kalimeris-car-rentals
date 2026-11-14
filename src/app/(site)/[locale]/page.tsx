@@ -12,6 +12,12 @@ import {
 } from "lucide-react";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {HeroSearch} from "@/components/booking/hero-search";
+import {
+  ChassisIllustration,
+  HeritageBadge,
+  RouteIndicator,
+  TechnicalDivider
+} from "@/components/brand/automotive-accents";
 import {HeroMedia} from "@/components/home/hero-media";
 import {AnimatedSteps} from "@/components/motion/animated-steps";
 import {HeroKineticHeading} from "@/components/motion/kinetic-heading";
@@ -51,6 +57,7 @@ export const revalidate = 30;
 export default async function HomePage({params}: HomePageProps) {
   const {locale} = await params;
   setRequestLocale(locale);
+  const isEl = locale === "el";
 
   const [t, meta, bookingT, fleetT, vehicleT, categories, transmissions, fuels] =
     await Promise.all([
@@ -157,23 +164,46 @@ export default async function HomePage({params}: HomePageProps) {
                 text legible; from lg up the panel disappears and the hero is
                 photo-forward again. */}
             <div className="max-w-[34rem] rounded-card bg-background/[0.96] p-4 sm:p-5 lg:rounded-none lg:bg-transparent lg:p-0">
+              <div
+                className="hero-load-rise mb-4 flex flex-wrap items-center gap-2.5"
+                style={{"--hero-delay": "40ms"} as CSSProperties}
+              >
+                <HeritageBadge
+                  label={isEl ? "ΑΠΟ ΤΟ 1980 · ΚΟΖΑΝΗ" : "SINCE 1980 · KOZANI"}
+                />
+                <RouteIndicator
+                  code="GR-50100"
+                  route={
+                    isEl
+                      ? "3ο ΧΛΜ. ΚΟΖΑΝΗΣ – ΘΕΣΣΑΛΟΝΙΚΗΣ"
+                      : "3RD KM KOZANI – THESSALONIKI"
+                  }
+                />
+              </div>
+
               <HeroKineticHeading>{t("title")}</HeroKineticHeading>
 
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 140 12"
-                className="mt-4 h-3 w-[132px] text-brand"
-                fill="none"
-              >
-                <path
-                  d="M2 8.5C36 2.5 101 1.5 138 6"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  pathLength={1}
-                  className="hero-underline-path"
+              <div className="mt-4 flex items-center gap-2.5">
+                <span
+                  aria-hidden="true"
+                  className="h-[3px] w-4 shrink-0 rounded-full bg-brand dark:hidden"
                 />
-              </svg>
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 140 12"
+                  className="h-3 w-[132px] text-accent-orange dark:text-brand"
+                  fill="none"
+                >
+                  <path
+                    d="M2 8.5C36 2.5 101 1.5 138 6"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    pathLength={1}
+                    className="hero-underline-path"
+                  />
+                </svg>
+              </div>
 
               <p
                 className="hero-load-rise mt-5 max-w-[44ch] text-[1.0625rem] leading-relaxed text-ink"
@@ -199,6 +229,7 @@ export default async function HomePage({params}: HomePageProps) {
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <Reveal>
               <SectionHeading
+                index="01"
                 eyebrow={t("fleet.eyebrow")}
                 title={t("fleet.title")}
                 description={t("fleet.description")}
@@ -207,7 +238,7 @@ export default async function HomePage({params}: HomePageProps) {
             <Link
               href="/cars"
               prefetch={false}
-              className="group hidden min-h-11 shrink-0 items-center gap-2 text-[0.875rem] font-semibold text-brand transition-colors duration-[var(--token-duration-fast)] hover:text-brand-hover md:inline-flex"
+              className="group hidden min-h-11 shrink-0 items-center gap-2 text-[0.875rem] font-semibold text-brand-hover transition-colors duration-[var(--token-duration-fast)] hover:text-brand dark:text-brand dark:hover:text-brand-hover md:inline-flex"
             >
               {t("fleet.viewAll")}
               <ArrowRight
@@ -217,8 +248,18 @@ export default async function HomePage({params}: HomePageProps) {
             </Link>
           </div>
 
+          <TechnicalDivider
+            className="mt-8"
+            code="DEMO"
+            label={
+              isEl
+                ? "ΕΝΔΕΙΚΤΙΚΕΣ ΚΑΤΗΓΟΡΙΕΣ ΟΧΗΜΑΤΩΝ"
+                : "ILLUSTRATIVE VEHICLE CATEGORIES"
+            }
+          />
+
           {flagship ? (
-            <div className="mt-10 grid gap-6 lg:grid-cols-12 lg:items-stretch">
+            <div className="mt-6 grid gap-6 lg:grid-cols-12 lg:items-stretch">
               <div
                 className={
                   secondaryFleet.length > 0
@@ -227,7 +268,7 @@ export default async function HomePage({params}: HomePageProps) {
                 }
               >
                 <Reveal delay={0} variant="scale" className="h-full">
-                  <SpotlightCard className="h-full border border-line bg-surface shadow-card transition-shadow duration-[var(--token-duration-normal)] ease-brand hover:shadow-panel">
+                  <SpotlightCard className="h-full border border-line border-t-2 border-t-accent-orange bg-surface shadow-card transition-shadow duration-[var(--token-duration-normal)] ease-brand hover:shadow-panel dark:border-t dark:border-t-line">
                     <Link
                       href={`/cars/${flagship.slug}`}
                       prefetch={false}
@@ -244,7 +285,7 @@ export default async function HomePage({params}: HomePageProps) {
                           fill
                           quality={90}
                           sizes="(min-width: 1024px) 58vw, 100vw"
-                          className="object-cover transition-transform duration-[var(--token-duration-slow)] ease-brand group-hover:scale-[1.02]"
+                          className="object-cover transition-transform duration-[var(--token-duration-slow)] ease-brand group-hover:scale-[1.03]"
                         />
                         <Badge
                           variant="demo"
@@ -252,13 +293,26 @@ export default async function HomePage({params}: HomePageProps) {
                         >
                           {t("fleet.demo")}
                         </Badge>
+                        <Badge
+                          variant="heritage"
+                          className="absolute right-4 top-4 shadow-sm"
+                        >
+                          {categories(flagship.category)}
+                        </Badge>
                       </div>
 
                       <div className="flex flex-1 flex-col justify-between">
                         <div className="flex items-start justify-between gap-4 p-5 sm:p-6">
                           <div className="min-w-0">
                             <p className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.16em] tabular-nums text-brand">
-                              01 · {categories(flagship.category)}
+                              <span>01</span>{" "}
+                              <span
+                                aria-hidden="true"
+                                className="text-accent-orange dark:text-brand"
+                              >
+                                /
+                              </span>{" "}
+                              <span>{categories(flagship.category)}</span>
                             </p>
                             <h3 className="mt-2 font-display text-2xl font-bold leading-tight tracking-[-0.02em] text-ink sm:text-3xl">
                               {getVehicleName(flagship)}
@@ -285,9 +339,9 @@ export default async function HomePage({params}: HomePageProps) {
                             ) : null}
                             <span
                               aria-hidden="true"
-                              className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-line text-brand transition-colors duration-[var(--token-duration-fast)] ease-brand group-hover:border-brand group-hover:bg-brand-subtle"
+                              className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-line text-brand transition-colors duration-[var(--token-duration-fast)] ease-brand group-hover:border-accent-orange group-hover:bg-accent-orange group-hover:text-white dark:group-hover:border-brand dark:group-hover:bg-brand-subtle dark:group-hover:text-brand"
                             >
-                              <ArrowRight className="size-4" />
+                              <ArrowRight className="size-4 transition-transform duration-[var(--token-duration-fast)] ease-brand group-hover:translate-x-1" />
                             </span>
                           </div>
                         </div>
@@ -366,7 +420,7 @@ export default async function HomePage({params}: HomePageProps) {
                                   fill
                                   quality={90}
                                   sizes="(min-width: 1280px) 184px, (min-width: 1024px) 152px, (min-width: 640px) 176px, 100vw"
-                                  className="object-cover transition-transform duration-[var(--token-duration-slow)] ease-brand group-hover:scale-[1.02]"
+                                  className="object-cover transition-transform duration-[var(--token-duration-slow)] ease-brand group-hover:scale-[1.03]"
                                 />
                                 <Badge
                                   variant="demo"
@@ -380,7 +434,14 @@ export default async function HomePage({params}: HomePageProps) {
                                 <div className="flex items-start justify-between gap-3">
                                   <div className="min-w-0">
                                     <p className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.16em] tabular-nums text-brand">
-                                      {cardIndex} · {categories(vehicle.category)}
+                                      <span>{cardIndex}</span>{" "}
+                                      <span
+                                        aria-hidden="true"
+                                        className="text-accent-orange dark:text-brand"
+                                      >
+                                        /
+                                      </span>{" "}
+                                      <span>{categories(vehicle.category)}</span>
                                     </p>
                                     <h3 className="mt-1.5 font-display text-lg font-bold leading-snug text-ink sm:text-xl">
                                       {name}
@@ -398,9 +459,9 @@ export default async function HomePage({params}: HomePageProps) {
 
                                   <span
                                     aria-hidden="true"
-                                    className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line text-brand transition-colors duration-[var(--token-duration-fast)] ease-brand group-hover:border-brand group-hover:bg-brand-subtle"
+                                    className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line text-brand transition-colors duration-[var(--token-duration-fast)] ease-brand group-hover:border-accent-orange group-hover:bg-accent-orange group-hover:text-white dark:group-hover:border-brand dark:group-hover:bg-brand-subtle dark:group-hover:text-brand"
                                   >
-                                    <ArrowRight className="size-4" />
+                                    <ArrowRight className="size-4 transition-transform duration-[var(--token-duration-fast)] ease-brand group-hover:translate-x-1" />
                                   </span>
                                 </div>
 
@@ -438,7 +499,7 @@ export default async function HomePage({params}: HomePageProps) {
           <Link
             href="/cars"
             prefetch={false}
-            className="group mt-6 inline-flex min-h-11 items-center gap-2 text-[0.875rem] font-semibold text-brand transition-colors duration-[var(--token-duration-fast)] hover:text-brand-hover md:hidden"
+            className="group mt-6 inline-flex min-h-11 items-center gap-2 text-[0.875rem] font-semibold text-brand-hover transition-colors duration-[var(--token-duration-fast)] hover:text-brand dark:text-brand dark:hover:text-brand-hover md:hidden"
           >
             {t("fleet.viewAll")}
             <ArrowRight
@@ -452,27 +513,63 @@ export default async function HomePage({params}: HomePageProps) {
       {/* 3. How it works. */}
       <section className="border-y border-line bg-surface py-16 md:py-20">
         <div className="page-shell">
-          <SectionHeading eyebrow={t("steps.eyebrow")} title={t("steps.title")} />
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <SectionHeading
+              index="02"
+              eyebrow={t("steps.eyebrow")}
+              title={t("steps.title")}
+            />
+            <RouteIndicator
+              code="01–03"
+              route={
+                isEl
+                  ? "ΕΠΙΛΟΓΗ · ΑΙΤΗΜΑ · ΕΠΙΒΕΒΑΙΩΣΗ"
+                  : "CHOOSE · REQUEST · CONFIRM"
+              }
+              className="self-start md:self-auto"
+            />
+          </div>
 
           <AnimatedSteps steps={steps} variant="home" headingLevel="h3" className="mt-10" />
         </div>
       </section>
 
       {/* 4. Services — workshop, tuning, parts and rental at the same site. */}
-      <section className="py-16 md:py-24">
+      <section className="border-b border-line bg-surface-warm/60 py-16 dark:border-b-0 dark:bg-transparent md:py-24">
         <div className="page-shell">
           <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
             <div className="min-w-0 lg:sticky lg:top-24 lg:col-span-4">
               <Reveal>
                 <SectionHeading
+                  index="03"
                   eyebrow={t("services.eyebrow")}
                   title={t("services.title")}
                   description={t("services.description")}
                 />
+
+                <div className="mt-6 rounded-field border border-line bg-surface p-3.5 shadow-card dark:bg-surface dark:shadow-none">
+                  <div className="flex items-center gap-2 font-mono text-[0.6875rem] font-bold uppercase tracking-[0.14em] text-ink">
+                    <span
+                      aria-hidden="true"
+                      className="inline-block size-2 shrink-0 rounded-full bg-accent-orange dark:bg-brand"
+                    />
+                    <span>
+                      {isEl
+                        ? `${site.workshop.areaSqm} m² · ${site.workshop.serviceBays} ΘΕΣΕΙΣ · BOSCH CAR SERVICE`
+                        : `${site.workshop.areaSqm} m² · ${site.workshop.serviceBays} BAYS · BOSCH CAR SERVICE`}
+                    </span>
+                  </div>
+                  <p className="mt-1.5 font-mono text-[0.6875rem] leading-relaxed text-muted">
+                    {isEl ? site.address.streetEl : site.address.streetEn}
+                  </p>
+                </div>
+
+                <ChassisIllustration className="mt-5 hidden lg:block dark:hidden" />
+
                 <Link
                   href="/services"
                   prefetch={false}
-                  className="group mt-6 inline-flex min-h-11 items-center gap-2 text-[0.875rem] font-semibold text-brand transition-colors duration-[var(--token-duration-fast)] hover:text-brand-hover"
+                  className="group mt-6 inline-flex min-h-11 items-center gap-2 text-[0.875rem] font-semibold text-brand-hover transition-colors duration-[var(--token-duration-fast)] hover:text-brand dark:text-brand dark:hover:text-brand-hover"
                 >
                   {t("services.cta")}
                   <ArrowRight
@@ -493,10 +590,10 @@ export default async function HomePage({params}: HomePageProps) {
                     <Reveal delay={index * 60}>
                       <SpotlightCard
                         tilt={false}
-                        className="group grid gap-4 rounded-xl bg-transparent px-3 py-5 transition-colors duration-[var(--token-duration-fast)] ease-brand hover:bg-surface-elevated/70 sm:grid-cols-[4.25rem_1fr] sm:items-start sm:px-5 sm:py-6"
+                        className="group grid gap-4 rounded-xl bg-transparent px-3 py-5 transition-colors duration-[var(--token-duration-fast)] ease-brand hover:bg-surface dark:hover:bg-surface-elevated/70 sm:grid-cols-[5.5rem_1fr_auto] sm:items-start sm:px-5 sm:py-6"
                       >
                         <div className="flex items-center gap-2.5 sm:pt-0.5">
-                          <span className="font-mono text-xs font-semibold tracking-[0.12em] tabular-nums text-brand">
+                          <span className="inline-flex items-center rounded-full border border-line/70 bg-accent-yellow-subtle px-2 py-0.5 font-mono text-xs font-bold tracking-[0.12em] tabular-nums text-accent-yellow-ink transition-colors duration-[var(--token-duration-fast)] group-hover:border-accent-orange/40 group-hover:bg-accent-orange-subtle group-hover:text-accent-orange dark:border-transparent dark:bg-transparent dark:px-0 dark:py-0 dark:text-brand dark:group-hover:bg-transparent dark:group-hover:text-brand">
                             {rowIndex}
                           </span>
                           <span
@@ -515,6 +612,11 @@ export default async function HomePage({params}: HomePageProps) {
                             {item.body}
                           </p>
                         </div>
+
+                        <ArrowRight
+                          aria-hidden="true"
+                          className="hidden size-4 shrink-0 text-muted transition-all duration-[var(--token-duration-fast)] ease-brand group-hover:translate-x-1 group-hover:text-accent-orange dark:text-brand/60 dark:group-hover:text-brand sm:mt-1.5 sm:block"
+                        />
                       </SpotlightCard>
                     </Reveal>
                   </li>
@@ -529,24 +631,76 @@ export default async function HomePage({params}: HomePageProps) {
       <section className="py-16 md:py-24">
         <div className="page-shell grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-16">
           <Reveal>
+            <HeritageBadge
+              label={isEl ? "ΑΠΟ ΤΟ 1980 · ΚΟΖΑΝΗ" : "SINCE 1980 · KOZANI"}
+              className="mb-4"
+            />
             <SectionHeading
+              index="04"
               eyebrow={t("trust.eyebrow")}
               title={t("trust.title")}
               description={t("trust.body")}
             />
+
+            <dl className="mt-7 grid grid-cols-3 divide-x divide-hairline overflow-hidden rounded-card border border-line bg-surface shadow-card dark:bg-surface dark:shadow-none">
+              <div className="flex flex-col-reverse gap-1 px-3 py-3.5 sm:px-5 sm:py-4">
+                <dt className="font-mono text-[0.625rem] font-semibold uppercase tracking-[0.12em] text-muted sm:text-[0.6875rem]">
+                  {isEl ? "Έτος ίδρυσης" : "Founded"}
+                </dt>
+                <dd className="font-display text-lg font-bold leading-none tabular-nums text-ink sm:text-2xl">
+                  {site.foundedYear}
+                </dd>
+              </div>
+              <div className="flex flex-col-reverse gap-1 px-3 py-3.5 sm:px-5 sm:py-4">
+                <dt className="font-mono text-[0.625rem] font-semibold uppercase tracking-[0.12em] text-muted sm:text-[0.6875rem]">
+                  {isEl ? "Συνεργείο" : "Workshop"}
+                </dt>
+                <dd className="font-display text-lg font-bold leading-none tabular-nums text-ink sm:text-2xl">
+                  {site.workshop.areaSqm} m²
+                </dd>
+              </div>
+              <div className="flex flex-col-reverse gap-1 px-3 py-3.5 sm:px-5 sm:py-4">
+                <dt className="font-mono text-[0.625rem] font-semibold uppercase tracking-[0.12em] text-muted sm:text-[0.6875rem]">
+                  {isEl ? "Υποστήριξη" : "Support"}
+                </dt>
+                <dd className="font-display text-lg font-bold leading-none tabular-nums text-ink sm:text-2xl">
+                  24/7
+                </dd>
+              </div>
+            </dl>
           </Reveal>
 
           <Reveal delay={90}>
-            <div className="rounded-card border border-line bg-brand-subtle p-6 md:p-8">
-              <p className="text-[0.875rem] leading-relaxed text-ink/80">
-                {t("trust.note")}
-              </p>
-              <Button asChild size="lg" className="mt-5 w-full sm:w-auto">
-                <Link href="/contact" prefetch={false}>
-                  {t("trust.cta")}
-                  <ArrowRight aria-hidden="true" />
-                </Link>
-              </Button>
+            <div className="overflow-hidden rounded-card border border-line bg-surface shadow-panel dark:bg-brand-subtle dark:shadow-none">
+              <div
+                aria-hidden="true"
+                className="h-1.5 bg-gradient-to-r from-brand via-brand to-accent-orange dark:hidden"
+              />
+              <div className="p-6 md:p-8">
+                <RouteIndicator
+                  code="HQ"
+                  route={isEl ? site.address.streetEl : site.address.streetEn}
+                  className="mb-4"
+                />
+                <p className="text-[0.875rem] leading-relaxed text-ink/80">
+                  {t("trust.note")}
+                </p>
+                <p className="mt-2 font-mono text-[0.75rem] leading-relaxed text-muted">
+                  {site.hours
+                    .map((h) =>
+                      isEl
+                        ? `${h.daysEl}: ${h.timeEl}`
+                        : `${h.daysEn}: ${h.timeEn}`
+                    )
+                    .join(" · ")}
+                </p>
+                <Button asChild size="lg" className="mt-5 w-full sm:w-auto">
+                  <Link href="/contact" prefetch={false}>
+                    {t("trust.cta")}
+                    <ArrowRight aria-hidden="true" />
+                  </Link>
+                </Button>
+              </div>
             </div>
           </Reveal>
         </div>

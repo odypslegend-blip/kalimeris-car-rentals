@@ -420,3 +420,189 @@ test.describe("Mobile navigation", () => {
     await expect(trigger).toBeFocused();
   });
 });
+
+test.describe("Visual theme & responsive integrity", () => {
+  const keyRoutes = [
+    "/el",
+    "/el/cars",
+    "/el/services",
+    "/el/how-it-works",
+    "/el/about",
+    "/el/contact",
+    "/el/faq"
+  ] as const;
+
+  const viewports = [
+    {width: 1440, height: 900},
+    {width: 768, height: 1024},
+    {width: 375, height: 812}
+  ] as const;
+
+  function normalizeHex(raw: string): string {
+    const value = raw.trim().toLowerCase();
+    if (/^#[0-9a-f]{3}$/.test(value)) {
+      return `#${value[1]}${value[1]}${value[2]}${value[2]}${value[3]}${value[3]}`;
+    }
+    return value;
+  }
+
+  test("light and dark tokens apply cleanly without leaks across modes", async ({
+    browser
+  }) => {
+    const lightContext = await browser.newContext({
+      viewport: {width: 1440, height: 900},
+      colorScheme: "light"
+    });
+    await lightContext.addInitScript(() => {
+      window.localStorage.setItem("kalimeris-theme", "light");
+    });
+
+    try {
+      const page = await lightContext.newPage();
+      const response = await page.goto("/el", {waitUntil: "load"});
+      expect(response?.status()).toBe(200);
+
+      const lightTokens = await page.evaluate(() => {
+        const root = document.documentElement;
+        const styles = getComputedStyle(root);
+        return {
+          hasDark: root.classList.contains("dark"),
+          bodyBg: getComputedStyle(document.body).backgroundColor,
+          tokenBg: styles.getPropertyValue("--token-bg"),
+          tokenBrand: styles.getPropertyValue("--token-brand"),
+          tokenAccentOrange: styles.getPropertyValue("--token-accent-orange"),
+          tokenAccentYellow: styles.getPropertyValue("--token-accent-yellow")
+        };
+      });
+
+      expect(lightTokens.hasDark).toBe(false);
+      expect(lightTokens.bodyBg).toBe("rgb(245, 242, 234)");
+      expect(normalizeHex(lightTokens.tokenBg)).toBe("#f5f2ea");
+      expect(normalizeHex(lightTokens.tokenBrand)).toBe("#087f78");
+      expect(normalizeHex(lightTokens.tokenAccentOrange)).toBe("#ff693b");
+      expect(normalizeHex(lightTokens.tokenAccentYellow)).toBe("#f4c95d");
+    } finally {
+      await lightContext.close();
+    }
+
+    const darkContext = await browser.newContext({
+      viewport: {width: 1440, height: 900},
+      colorScheme: "dark"
+    });
+    await darkContext.addInitScript(() => {
+      window.localStorage.setItem("kalimeris-theme", "dark");
+    });
+
+    try {
+      const page = await darkContext.newPage();
+      const response = await page.goto("/el", {waitUntil: "load"});
+      expect(response?.status()).toBe(200);
+
+      const darkTokens = await page.evaluate(() => {
+        const root = document.documentElement;
+        const styles = getComputedStyle(root);
+        return {
+          hasDark: root.classList.contains("dark"),
+          bodyBg: getComputedStyle(document.body).backgroundColor,
+          tokenBg: styles.getPropertyValue("--token-bg"),
+          tokenSurface: styles.getPropertyValue("--token-surface"),
+          tokenSurfaceWarm: styles.getPropertyValue("--token-surface-warm"),
+          tokenBrand: styles.getPropertyValue("--token-brand"),
+          tokenAccentOrange: styles.getPropertyValue("--token-accent-orange"),
+          tokenAccentYellow: styles.getPropertyValue("--token-accent-yellow")
+        };
+      });
+
+      expect(darkTokens.hasDark).toBe(true);
+      expect(darkTokens.bodyBg).toBe("rgb(28, 28, 28)");
+      expect(normalizeHex(darkTokens.tokenBg)).toBe("#1c1c1c");
+      expect(normalizeHex(darkTokens.tokenSurface)).toBe("#242424");
+      expect(normalizeHex(darkTokens.tokenBrand)).toBe("#ffffff");
+
+      const orange = normalizeHex(darkTokens.tokenAccentOrange);
+      const yellow = normalizeHex(darkTokens.tokenAccentYellow);
+      const warm = normalizeHex(darkTokens.tokenSurfaceWarm);
+
+      expect(orange).toBe("#ffffff");
+      expect(yellow).toBe("#2b2b2b");
+      expect(warm).toBe("#242424");
+      expect(orange).not.toBe("#ff693b");
+      expect(yellow).not.toBe("#f4c95d");
+      expect(warm).not.toBe("#f5f2ea");
+      expect(warm).not.toBe("#eae3d5");
+    } finally {
+      await darkContext.close();
+    }
+  });
+
+  test("zero horizontal overflow, console errors, or broken images across viewports and themes", async ({
+    browser
+  }) => {
+    for (const mode of ["light", "dark"] as const) {
+      const context = await browser.newContext({
+        viewport: {width: 1440, height: 900},
+        colorScheme: mode
+      });
+      await context.addInitScript((theme: string) => {
+        window.localStorage.setItem("kalimeris-theme", theme);
+      }, mode);
+
+      try {
+        const page = await context.newPage();
+        const errors: string[] = [];
+        page.on("console", (msg) => {
+          if (msg.type() === "error") {
+            errors.push(`${mode} console.error: ${msg.text()}`);
+          }
+        });
+        page.on("pageerror", (err) => {
+          errors.push(`${mode} pageerror: ${err.message}`);
+        });
+
+        for (const viewport of viewports) {
+          await page.setViewportSize(viewport);
+
+          for (const route of keyRoutes) {
+            const response = await page.goto(route, {waitUntil: "load"});
+            expect(
+              response?.status(),
+              `${mode} ${viewport.width}x${viewport.height} ${route}`
+            ).toBe(200);
+
+            await expectNoHorizontalOverflow(page);
+
+            // Scroll once so lazy images below the fold load before asserting.
+            await page.evaluate(async () => {
+              const step = Math.max(400, Math.floor(window.innerHeight * 0.8));
+              for (let y = 0; y <= document.body.scrollHeight; y += step) {
+                window.scrollTo(0, y);
+                await new Promise((resolve) => setTimeout(resolve, 40));
+              }
+              window.scrollTo(0, 0);
+            });
+
+            await expect
+              .poll(
+                async () =>
+                  page.evaluate(() => {
+                    const imgs = Array.from(document.querySelectorAll("img"));
+                    return imgs
+                      .filter((img) => !img.complete || img.naturalWidth === 0)
+                      .map((img) => img.getAttribute("src") ?? img.alt);
+                  }),
+                {
+                  message: `Broken images on ${mode} ${viewport.width}x${viewport.height} ${route}`,
+                  timeout: 10_000
+                }
+              )
+              .toEqual([]);
+          }
+        }
+
+        expect(errors).toEqual([]);
+      } finally {
+        await context.close();
+      }
+    }
+  });
+});

@@ -8,11 +8,12 @@ import {cn} from "@/lib/utils";
  * Every size keeps a >=44px tall hit area so touch targets stay compliant.
  */
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-field font-semibold transition-[background-color,color,border-color,transform,box-shadow] duration-[var(--token-duration-fast)] ease-brand active:scale-[0.985] disabled:pointer-events-none disabled:opacity-55 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:transition-transform [&_svg]:duration-[var(--token-duration-normal)] [&_svg]:ease-brand hover:[&_svg.lucide-arrow-right]:translate-x-0.5",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-field font-semibold transition-[background-color,color,border-color,transform,box-shadow] duration-[var(--token-duration-normal)] ease-brand active:scale-[0.985] disabled:pointer-events-none disabled:opacity-55 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:transition-transform [&_svg]:duration-[var(--token-duration-normal)] [&_svg]:ease-brand hover:[&_svg.lucide-arrow-right]:translate-x-1",
   {
     variants: {
       variant: {
-        primary: "bg-brand-strong text-brand-ink hover:bg-brand-strong-hover",
+        primary:
+          "bg-brand-strong text-brand-ink hover:bg-brand-strong-hover hover:shadow-card dark:hover:shadow-none",
         secondary:
           "border border-line bg-surface text-ink hover:border-brand hover:text-brand",
         ghost: "text-ink hover:bg-brand-subtle",

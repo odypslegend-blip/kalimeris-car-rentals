@@ -1,7 +1,6 @@
 # Implementation status — Kalimeris Car Rentals
 
-Last updated: 2026-11-10 · Status: implementation complete; **published as a static preview on
-GitHub Pages**; launch still blocked on client facts/approvals.
+Last updated: 2026-11-14 · Status: Light-Mode Editorial Redesign & Pairing A typography implemented (`17/17` Playwright E2E passing); **published on Vercel (`https://kalimeris-car-rentals.vercel.app`) and as a static preview on GitHub Pages**; launch still blocked on client facts/approvals.
 
 ---
 
@@ -10,21 +9,23 @@ GitHub Pages**; launch still blocked on client facts/approvals.
 | Area | State |
 | --- | --- |
 | Next.js App Router + TypeScript + Tailwind v4 scaffold | Done |
-| Design tokens from `design/tokens.json` wired into Tailwind v4 `@theme inline` | Done |
-| Inter (Latin + Greek subsets) with `--font-inter` | Done |
+| Dual-theme design tokens from `design/tokens.json` (`#F5F2EA` editorial light mode + preserved `.dark` monochrome) wired into `@theme inline` | Done |
+| Pairing A typography: `Syne` + `Manrope` + `JetBrains Mono` (Greek + Latin subsets) | Done |
 | next-intl routing (`el` default, `en`), `src/proxy.ts`, dictionaries | Done |
-| Header, language switcher, footer, first home section | Done |
+| Header (`1980` badge, orange active indicator), language switcher, `.road-divider` footer, editorial hero | Done |
+| Automotive accents (`HeritageBadge`, `RouteIndicator`, `TechnicalDivider`, `ChassisIllustration`) | Done |
+| Homepage layouts: `1+2` Flagship Fleet Bento, Style 2 interactive `AnimatedSteps`, Asymmetric Split Services Ledger, Heritage Spread | Done |
 | `/api/health`, `robots.txt`, `sitemap.xml` | Done |
 | Licensed demo photographs + credits | Done |
-| Fleet list + filters + vehicle detail page | Done (phase 3) |
+| Fleet list + filters + vehicle detail page | Done (phase 3) + light-mode editorial refresh |
 | Inquiry request page `/request` + shared Zod schema | Done (phase 4) |
 | Inquiry delivery (Resend / webhook / dev file sink) | Done (phase 4) — **needs a real destination in production** |
 | Rate limit, origin check, honeypot, timing gate | Done (phase 4) |
-| Information pages: how it works, FAQ, about, contact | Done (phase 5) |
+| Information pages: how it works, services, FAQ, about, contact | Done (phase 5) + light-mode editorial refresh |
 | Draft legal placeholders: privacy policy, rental terms | Done (phase 5) — **`noindex`, pending legal review** |
 | Localized 404 + locale error boundary | Done (phase 5) |
 | SEO: canonical/hreflang helper, full sitemap, robots, WebSite JSON-LD | Done (phase 5) |
-| E2E tests / responsive screenshot suite | Playwright suite in `tests/e2e` (`npm run test:e2e`); screenshot scripts remain in `scripts/` |
+| E2E tests / responsive screenshot suite | Playwright suite in `tests/e2e` (`npm run test:e2e` — **17/17 passing** across `smoke.spec.ts` & `inquiry.spec.ts`); screenshot scripts remain in `scripts/` |
 
 Nothing in this phase is a production booking flow, and no page claims otherwise.
 
@@ -631,3 +632,27 @@ Live `/el/` was confirmed **byte-identical** to `origin/gh-pages:el/index.html`
 - **Static hosting cannot serve security headers.** The CSP, HSTS, `X-Frame-Options`, etc. in
   `next.config.ts` apply to the server build only; GitHub Pages sends its own headers.
 - The form remains honestly disabled on Pages (§13 above, §7 for the server contract).
+
+---
+
+## 14. Light-Mode Editorial Redesign & Swarm Implementation (2026-11-14)
+
+Following the typography and layout upgrade (Pairing A `Syne` + `Manrope` + `JetBrains Mono`, `1+2` Flagship Fleet Bento, Asymmetric Split Services Ledger, and Style 2 `AnimatedSteps`), a multi-worker visual redesign refined light mode into an editorial automotive identity while strictly preserving `.dark` mode.
+
+### Token & Theme System
+- **`design/tokens.json` & `src/app/globals.css` (`:root`)**: Warm sand background (`#F5F2EA`), pure white card surface (`#FFFFFF`), elevated warm surface (`#ECE7DC`), warm ledger surface (`#EAE3D5`), deep slate-ink (`#0E1720`), muted (`#525E66`), primary brand teal (`#087F78` / hover `#066660` / subtle `#E4F2EF`), vibrant orange (`#FF693B`), warm yellow (`#F4C95D`), subtle border (`#DDE2DF`), hairline (`#E5E2D9`), and scrim `245 242 234`. Motion tokens set to `180ms` fast, `220ms` normal, `300ms` slow.
+- **Preserved `.dark` Mode**: Existing monochrome dark surfaces (`#1C1C1C`, `#242424`, `#2C2C2C`, `#F5F5F5`, `#A3A3A3`, `#FFFFFF`, `#333333`, `#282828`, scrim `28 28 28`) remain unchanged; `--token-surface-warm`, `--token-accent-orange*`, and `--token-accent-yellow*` alias to neutral dark tokens so light-mode warmth does not leak into dark mode.
+- **Automotive CSS Utilities**: Added `.road-divider` and `.automotive-frame` in `src/app/globals.css`.
+
+### New Primitives & Upgraded Components
+- **`src/components/brand/automotive-accents.tsx`**: Exports `HeritageBadge`, `RouteIndicator`, `TechnicalDivider`, and `ChassisIllustration`.
+- **`src/components/ui/badge.tsx` & `button.tsx`**: Added `"heritage"` and `"orange"` badge variants; updated button transitions to `220ms` (`duration-[var(--token-duration-normal)]`), `4px` (`translate-x-1`) arrow shift, and primary hover shadow.
+- **`src/components/sections/section-heading.tsx` & `page-header.tsx`**: Added optional `index?: string`, `14px` orange/brand eyebrow tick (`bg-accent-orange dark:bg-brand`), and warm elevated light-mode `PageHeader` framing.
+- **`src/components/layout/` & Home (`src/app/(site)/[locale]/page.tsx`)**: Header features `1980` heritage pill and orange active nav indicator (`dark:bg-brand`); footer uses `.road-divider`; homepage pairs the editorial Hero telemetry strip and spotlight search dock with the `1+2` Flagship Fleet Bento, Style 2 `AnimatedSteps`, Asymmetric Split Services Ledger (`bg-surface-warm/60`, `ChassisIllustration`), and Company Heritage Spread (`1980`, `600 m²`, `24/7`).
+- **Inner Pages & Fleet (`cars`, `cars/[slug]`, `services`, `how-it-works`, `about`, `contact`, `faq`)**: Updated with `TechnicalDivider`, route telemetry indicators, automotive-framed cards, and `1.03` image hover scaling.
+- **Parallax Fix (`src/components/motion/smooth-scroll.tsx`)**: Removed the `if (scrollY < 900)` gate on `--hero-parallax-y` so direct jumps past `900px` still clamp smoothly up to `36.0px`.
+
+### Verification (Playwright E2E & Static Checks)
+- `npm run typecheck` (`tsc --noEmit`): **exit 0**
+- `npm run lint` (`eslint`): **exit 0**
+- `npm run test:e2e` (`next build && playwright test`): **17/17 passed** (`3/3` in `tests/e2e/inquiry.spec.ts` and `14/14` in `tests/e2e/smoke.spec.ts`, including two new `Visual theme & responsive integrity` tests checking light/dark CSS variables, zero theme leakage, and zero horizontal overflow/console errors at `1440px`, `768px`, and `375px`).

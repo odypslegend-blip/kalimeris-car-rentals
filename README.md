@@ -24,13 +24,15 @@
 
 | What | Where |
 | --- | --- |
-| Live site | https://odypslegend-blip.github.io/kalimeris-car-rentals/ |
-| Repository | https://github.com/odypslegend-blip/kalimeris-car-rentals |
-| `main` | The Next.js source (this branch). Never contains build output. |
+| Live Vercel site (Node runtime) | https://kalimeris-car-rentals.vercel.app |
+| Static preview (GitHub Pages) | https://odypslegend-blip.github.io/kalimeris-car-rentals/ |
+| Primary GitHub repository | https://github.com/odysseaspsemmatakis-dotcom/kalimeriswebsite |
+| GitHub Pages mirror repository | https://github.com/odypslegend-blip/kalimeris-car-rentals |
+| `main` | The Next.js source branch. Never contains build output. |
 | `gh-pages` | The published static export only. Generated — do not edit by hand. |
 
-The site is a **static export** served by GitHub Pages under the base path
-`/kalimeris-car-rentals`, so all content is prerendered HTML with no server runtime.
+Vercel deploys the full Next.js App Router runtime directly from Git/CLI (`https://kalimeris-car-rentals.vercel.app`).
+GitHub Pages serves a **static export** under the base path `/kalimeris-car-rentals`, so all content is prerendered HTML with no server runtime.
 
 ### Rebuild and republish
 
@@ -74,6 +76,8 @@ git checkout main
 | Pickup/return locations | `src/lib/data/locations.ts` |
 | Vehicle and hero photographs | `public/images/reference/` |
 | Design tokens (colour, spacing, type, radii, motion) | `design/tokens.json` → `src/app/globals.css` |
+| Automotive brand accents (`HeritageBadge`, `RouteIndicator`, `TechnicalDivider`, `ChassisIllustration`) | `src/components/brand/automotive-accents.tsx` |
+| Interactive rental process stepper & smooth scroll / parallax | `src/components/motion/animated-steps.tsx`, `src/components/motion/smooth-scroll.tsx` |
 
 After any change, rebuild with the command above and republish `out/` to `gh-pages`.
 
@@ -103,4 +107,4 @@ Original generated concept images are visual references, **not photographs of re
 
 ## Intended website stack
 
-Next.js / TypeScript / Tailwind CSS / shadcn/ui / React Hook Form + Zod / next-intl / Lucide / Playwright. Reuse existing stack if already suitable.
+Next.js (App Router) / TypeScript / Tailwind CSS v4 / shadcn/ui (Radix primitives) / React Hook Form + Zod / `next-intl` (`el` + `en`) / `Syne` + `Manrope` + `JetBrains Mono` typography (Pairing A) / Dual-theme CSS token system (Vibrant Warm Editorial Light Mode + Preserved Monochrome Dark Mode) / Lucide / Playwright (`17/17` E2E tests covering SSR/SSG routes, fleet filters, inquiry validation, and theme/responsive checks).

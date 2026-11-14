@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import {Suspense} from "react";
 import {getTranslations, setRequestLocale} from "next-intl/server";
+import {HeritageBadge} from "@/components/brand/automotive-accents";
 import {FleetBrowser} from "@/components/fleet/fleet-browser";
 import {Skeleton} from "@/components/ui/skeleton";
 import {buildAlternates} from "@/lib/seo";
@@ -45,15 +46,30 @@ export default async function CarsPage({params}: CarsPageProps) {
   return (
     <section className="pb-16 pt-8 md:pb-24 md:pt-12">
       <div className="page-shell">
-        <p className="text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-brand">
-          {t("eyebrow")}
-        </p>
-        <h1 className="mt-3 max-w-[20ch] text-[2rem] font-semibold leading-[1.1] tracking-[-0.025em] text-ink sm:text-[2.5rem]">
-          {t("title")}
-        </h1>
-        <p className="mt-3 max-w-[58ch] text-[0.9375rem] leading-relaxed text-muted sm:text-base">
-          {t("description")}
-        </p>
+        <div className="border-b border-hairline pb-7 md:pb-8">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="inline-flex items-center gap-2.5 font-mono text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-brand-hover dark:text-brand">
+              <span
+                aria-hidden="true"
+                className="h-[2px] w-3.5 shrink-0 bg-accent-orange dark:bg-brand"
+              />
+              <span>{t("eyebrow")}</span>
+            </p>
+            <HeritageBadge
+              label={
+                locale === "el"
+                  ? "ΑΠΟ ΤΟ 1980 · ΚΟΖΑΝΗ"
+                  : "SINCE 1980 · KOZANI"
+              }
+            />
+          </div>
+          <h1 className="mt-3 max-w-[20ch] text-[2rem] font-semibold leading-[1.1] tracking-[-0.025em] text-ink sm:text-[2.5rem]">
+            {t("title")}
+          </h1>
+          <p className="mt-3 max-w-[58ch] text-[0.9375rem] leading-relaxed text-muted sm:text-base">
+            {t("description")}
+          </p>
+        </div>
 
         <Suspense fallback={<FleetGridSkeleton />}>
           <FleetBrowser vehicles={vehicles} />

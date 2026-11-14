@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import {ArrowRight} from "lucide-react";
-import {useTranslations} from "next-intl";
+import {useLocale, useTranslations} from "next-intl";
 import {DateRangePicker} from "@/components/booking/date-range-picker";
 import {LocationSelect} from "@/components/booking/location-select";
 import {Button} from "@/components/ui/button";
@@ -12,6 +12,7 @@ import {
   validateBookingInput,
   type BookingErrorCode
 } from "@/lib/search-params";
+import {site} from "@/lib/site";
 import {cn} from "@/lib/utils";
 
 type HeroSearchProps = {
@@ -32,6 +33,8 @@ type BookingErrors = {
  */
 export function HeroSearch({helperText, className}: HeroSearchProps) {
   const t = useTranslations("Booking");
+  const locale = useLocale();
+  const isEl = locale === "el";
   const router = useRouter();
   const uid = React.useId().replaceAll(":", "");
   const formRef = React.useRef<HTMLFormElement>(null);
@@ -142,6 +145,25 @@ export function HeroSearch({helperText, className}: HeroSearchProps) {
         className
       )}
     >
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-hairline pb-3">
+        <div className="flex items-center gap-2 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-ink">
+          <span
+            aria-hidden="true"
+            className="inline-block size-2 shrink-0 rounded-full bg-accent-orange dark:bg-brand"
+          />
+          <span>
+            {isEl
+              ? "01–03 · ΔΙΑΔΡΟΜΗ & ΗΜΕΡΟΜΗΝΙΕΣ"
+              : "01–03 · ROUTE & DATES"}
+          </span>
+        </div>
+        <span className="font-mono text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-muted">
+          {isEl
+            ? `ΕΔΡΑ ΚΟΖΑΝΗΣ · 3ο ΧΛΜ. (${site.address.postalCode})`
+            : `KOZANI HQ · 3RD KM (${site.address.postalCode})`}
+        </span>
+      </div>
+
       <form ref={formRef} onSubmit={handleSubmit} noValidate>
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:items-end xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.12fr)_auto]">
           <LocationSelect
@@ -183,15 +205,18 @@ export function HeroSearch({helperText, className}: HeroSearchProps) {
           <Button
             type="submit"
             size="lg"
-            className="mt-1 h-12 w-full md:col-span-1 md:mt-0 md:w-auto md:justify-self-end xl:min-w-[11.25rem]"
+            className="group mt-1 h-12 w-full md:col-span-1 md:mt-0 md:w-auto md:justify-self-end xl:min-w-[11.25rem]"
           >
             {t("findCar")}
-            <ArrowRight aria-hidden="true" />
+            <ArrowRight
+              aria-hidden="true"
+              className="transition-transform duration-[var(--token-duration-normal)] ease-brand group-hover:translate-x-1"
+            />
           </Button>
         </div>
       </form>
 
-      <p className="mt-3 text-[0.75rem] leading-relaxed text-muted">
+      <p className="mt-3.5 border-t border-hairline pt-3 text-[0.75rem] leading-relaxed text-muted">
         {helperText}
       </p>
     </div>

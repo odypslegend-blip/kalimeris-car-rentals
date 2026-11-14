@@ -54,23 +54,23 @@ export function FleetBrowser({vehicles, className}: FleetBrowserProps) {
     <div className={cn("min-w-0", className)}>
       <div
         className={cn(
-          "mt-8 min-w-0 rounded-card border border-hairline bg-surface/85 p-3.5 shadow-card backdrop-blur-md transition-colors duration-[var(--token-duration-normal)] ease-brand sm:p-4 md:sticky md:top-[calc(var(--token-header-h)+0.75rem)] md:z-20",
-          "[&_nav]:overflow-visible [&_nav]:pb-0 [&_nav_ul]:w-full [&_nav_ul]:max-w-full [&_nav_ul]:flex-wrap [&_nav_ul]:gap-1 [&_nav_ul]:rounded-field [&_nav_ul]:border [&_nav_ul]:border-hairline [&_nav_ul]:bg-background/80 [&_nav_ul]:p-1",
+          "mt-8 min-w-0 rounded-card border border-line bg-surface p-4 shadow-card transition-colors duration-[var(--token-duration-normal)] ease-brand sm:p-5 md:sticky md:top-[calc(var(--token-header-h)+0.75rem)] md:z-20 dark:border-hairline dark:bg-surface/85 dark:backdrop-blur-md",
+          "[&_nav]:overflow-visible [&_nav]:pb-0 [&_nav_ul]:w-full [&_nav_ul]:max-w-full [&_nav_ul]:flex-wrap [&_nav_ul]:gap-1 [&_nav_ul]:rounded-field [&_nav_ul]:border [&_nav_ul]:border-hairline [&_nav_ul]:bg-surface-elevated/65 [&_nav_ul]:p-1 dark:[&_nav_ul]:bg-background/80",
           "[&_nav_a]:min-h-9 [&_nav_a]:rounded-[7px] [&_nav_a]:px-3 [&_nav_a]:text-[0.8125rem]",
-          "[&_nav_a:not([aria-current=page])]:border-transparent [&_nav_a:not([aria-current=page])]:bg-transparent [&_nav_a:not([aria-current=page])]:text-muted [&_nav_a:not([aria-current=page])]:hover:bg-surface/85 [&_nav_a:not([aria-current=page])]:hover:text-ink",
+          "[&_nav_a:not([aria-current=page])]:border-transparent [&_nav_a:not([aria-current=page])]:bg-transparent [&_nav_a:not([aria-current=page])]:text-muted [&_nav_a:not([aria-current=page])]:hover:bg-surface [&_nav_a:not([aria-current=page])]:hover:text-ink dark:[&_nav_a:not([aria-current=page])]:hover:bg-surface/85",
           "[&_nav_a[aria-current=page]]:border-brand-strong [&_nav_a[aria-current=page]]:bg-brand-strong [&_nav_a[aria-current=page]]:text-brand-ink [&_nav_a[aria-current=page]]:shadow-xs"
         )}
       >
         <FleetFilters params={search} />
 
-        <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-field border border-hairline bg-background/70 px-3 py-2">
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-field border border-hairline bg-surface-elevated/55 px-3 py-2 dark:bg-background/70">
           <p
             aria-live="polite"
             className="inline-flex items-center gap-2 font-mono text-[0.8125rem] font-semibold tabular-nums text-ink"
           >
             <span
               aria-hidden="true"
-              className="inline-block size-1.5 shrink-0 rounded-full bg-brand"
+              className="inline-block size-1.5 shrink-0 rounded-full bg-accent-orange dark:bg-brand"
             />
             {t("count", {count: filtered.length})}
           </p>
