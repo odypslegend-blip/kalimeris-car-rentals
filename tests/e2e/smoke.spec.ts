@@ -200,7 +200,9 @@ test.describe("Greek home", () => {
     await expect(stepTabs).toHaveCount(3);
     await stepTabs.nth(1).click();
     await expect(stepTabs.nth(1)).toHaveAttribute("aria-selected", "true");
-    await expect(steps.getByRole("tabpanel")).toContainText(/STAGE 02/i);
+    await expect(steps.getByRole("tabpanel")).toContainText(
+      /CONFIRMATION|QUOTE & AVAILABILITY/i
+    );
 
     const desktopOverflow = await page.evaluate(
       () =>

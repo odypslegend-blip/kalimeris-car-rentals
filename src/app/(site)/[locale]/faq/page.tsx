@@ -68,16 +68,10 @@ export default async function FaqPage({params}: FaqPageProps) {
                       key={item.question}
                       value={`faq-${index}`}
                       className={cn(
-                        "group relative border-b border-hairline pl-10 transition-colors duration-[var(--token-duration-fast)] sm:pl-12",
+                        "group relative border-b border-hairline px-3 transition-colors duration-[var(--token-duration-fast)] sm:px-4",
                         "border-l-2 border-l-transparent data-[state=open]:border-l-accent-orange dark:border-b-line dark:data-[state=open]:border-l-brand"
                       )}
                     >
-                      <span
-                        aria-hidden="true"
-                        className="pointer-events-none absolute left-2 top-[1.3rem] inline-flex items-center justify-center rounded-[5px] border border-accent-orange/35 bg-accent-orange-subtle px-1.5 py-0.5 font-mono text-[0.6875rem] font-bold tabular-nums tracking-[0.12em] text-ink transition-colors dark:border-0 dark:bg-transparent dark:px-0 dark:py-0 dark:text-xs dark:text-brand sm:left-3"
-                      >
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
                       <AccordionTrigger>{item.question}</AccordionTrigger>
                       <AccordionContent>{item.answer}</AccordionContent>
                     </AccordionItem>

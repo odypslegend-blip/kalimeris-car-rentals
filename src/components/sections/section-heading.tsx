@@ -19,7 +19,6 @@ type SectionHeadingProps = {
  */
 export function SectionHeading({
   eyebrow,
-  index,
   title,
   description,
   align = "left",
@@ -35,7 +34,7 @@ export function SectionHeading({
         className
       )}
     >
-      {eyebrow || index ? (
+      {eyebrow ? (
         <p
           className={cn(
             "flex min-w-0 max-w-full items-center gap-2.5 font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-brand-hover dark:text-brand",
@@ -46,14 +45,7 @@ export function SectionHeading({
             aria-hidden="true"
             className="h-[2px] w-3.5 shrink-0 bg-accent-orange dark:bg-brand"
           />
-          <span className="min-w-0">
-            {index ? (
-              <span className="text-muted">
-                {index} {eyebrow ? "// " : ""}
-              </span>
-            ) : null}
-            {eyebrow}
-          </span>
+          <span className="min-w-0">{eyebrow}</span>
         </p>
       ) : null}
       <Heading

@@ -223,7 +223,7 @@ Every response carries `Cache-Control: no-store`.
 | `src/components/sections/page-header.tsx` | Eyebrow, page `h1` (32–40px desktop), ≤62ch intro, optional actions |
 | `src/components/sections/legal-notice.tsx` | Amber `role="note"` draft notice (notice tokens) |
 | `src/components/sections/prose.tsx` + `.prose-legal` in `globals.css` | Legal prose typography with no plugin dependency (h2 20–22px, body 15–16px) |
-| `src/components/sections/legal-document.tsx` | Numbered in-page index + prose sections |
+| `src/components/sections/legal-document.tsx` | In-page anchor index + prose sections |
 | `src/components/ui/accordion.tsx` | Radix accordion in shadcn conventions (button semantics, `aria-expanded`, keyboard, focus ring) |
 
 ### SEO decisions
@@ -647,9 +647,9 @@ Following the typography and layout upgrade (Pairing A `Syne` + `Manrope` + `Jet
 ### New Primitives & Upgraded Components
 - **`src/components/brand/automotive-accents.tsx`**: Exports `HeritageBadge`, `RouteIndicator`, `TechnicalDivider`, and `ChassisIllustration`.
 - **`src/components/ui/badge.tsx` & `button.tsx`**: Added `"heritage"` and `"orange"` badge variants; updated button transitions to `220ms` (`duration-[var(--token-duration-normal)]`), `4px` (`translate-x-1`) arrow shift, and primary hover shadow.
-- **`src/components/sections/section-heading.tsx` & `page-header.tsx`**: Added optional `index?: string`, `14px` orange/brand eyebrow tick (`bg-accent-orange dark:bg-brand`), and warm elevated light-mode `PageHeader` framing.
+- **`src/components/sections/section-heading.tsx` & `page-header.tsx`**: Text-only eyebrows with `14px` orange/brand tick (`bg-accent-orange dark:bg-brand`), unnumbered section headings, and warm elevated light-mode `PageHeader` framing.
 - **`src/components/layout/` & Home (`src/app/(site)/[locale]/page.tsx`)**: Header features `1980` heritage pill and orange active nav indicator (`dark:bg-brand`); footer uses `.road-divider`; homepage pairs the editorial Hero telemetry strip and spotlight search dock with the `1+2` Flagship Fleet Bento, Style 2 `AnimatedSteps`, Asymmetric Split Services Ledger (`bg-surface-warm/60`, `ChassisIllustration`), and Company Heritage Spread (`1980`, `600 m²`, `24/7`).
-- **Inner Pages & Fleet (`cars`, `cars/[slug]`, `services`, `how-it-works`, `about`, `contact`, `faq`)**: Updated with `TechnicalDivider`, route telemetry indicators, automotive-framed cards, and `1.03` image hover scaling.
+- **Inner Pages & Fleet (`cars`, `cars/[slug]`, `services`, `how-it-works`, `about`, `contact`, `faq`)**: Updated with `TechnicalDivider`, text-only route indicators, automotive-framed cards, and `1.03` image hover scaling; decorative/index numbers (`01`, `02`, `01–03`, `STAGE 01`, `GR-50100`, FAQ/ledger pills) removed across sections while retaining essential factual figures (`1980`, `600 m²`, `24/7`, contact details, and vehicle specs).
 - **Parallax Fix (`src/components/motion/smooth-scroll.tsx`)**: Removed the `if (scrollY < 900)` gate on `--hero-parallax-y` so direct jumps past `900px` still clamp smoothly up to `36.0px`.
 
 ### Verification (Playwright E2E & Static Checks)

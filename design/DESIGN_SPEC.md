@@ -42,7 +42,7 @@ Inspired by Virtuo's **clarity**, not its proprietary code or layout. Original, 
 - Homepage editorial hero (540-660 px desktop) with route telemetry strip, warm scrim gradient, and spotlight search dock; mobile preserves first CTA cleanly.
 - Homepage showcase (`1+2` Flagship Fleet Bento): large featured vehicle lead card paired with asymmetric secondary fleet cards.
 - Homepage rental process (Style 2): `AnimatedSteps` interactive route telemetry stepper with automotive timeline indicators.
-- Homepage services (Asymmetric Split Services Ledger): sticky `5/12` header column (`ChassisIllustration` accent on `bg-surface-warm/60`) + `7/12` numbered service cards.
+- Homepage services (Asymmetric Split Services Ledger): sticky `5/12` header column (`ChassisIllustration` accent on `bg-surface-warm/60`) + `7/12` service ledger rows with icon/dot indicators (no decorative index numbering).
 - Homepage heritage spread: editorial typography featuring `1980`, `600 m²`, and `24/7` automotive identity markers (`HeritageBadge`).
 - Footer topped with `.road-divider` dashed road marking motif.
 - Reusable automotive framing primitives: `HeritageBadge`, `RouteIndicator`, `TechnicalDivider`, `ChassisIllustration` (`src/components/brand/automotive-accents.tsx`) and `.automotive-frame` / `.road-divider` (`src/app/globals.css`).

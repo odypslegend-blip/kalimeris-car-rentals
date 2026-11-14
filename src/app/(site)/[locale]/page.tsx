@@ -172,7 +172,6 @@ export default async function HomePage({params}: HomePageProps) {
                   label={isEl ? "ΑΠΟ ΤΟ 1980 · ΚΟΖΑΝΗ" : "SINCE 1980 · KOZANI"}
                 />
                 <RouteIndicator
-                  code="GR-50100"
                   route={
                     isEl
                       ? "3ο ΧΛΜ. ΚΟΖΑΝΗΣ – ΘΕΣΣΑΛΟΝΙΚΗΣ"
@@ -229,7 +228,6 @@ export default async function HomePage({params}: HomePageProps) {
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <Reveal>
               <SectionHeading
-                index="01"
                 eyebrow={t("fleet.eyebrow")}
                 title={t("fleet.title")}
                 description={t("fleet.description")}
@@ -304,15 +302,8 @@ export default async function HomePage({params}: HomePageProps) {
                       <div className="flex flex-1 flex-col justify-between">
                         <div className="flex items-start justify-between gap-4 p-5 sm:p-6">
                           <div className="min-w-0">
-                            <p className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.16em] tabular-nums text-brand">
-                              <span>01</span>{" "}
-                              <span
-                                aria-hidden="true"
-                                className="text-accent-orange dark:text-brand"
-                              >
-                                /
-                              </span>{" "}
-                              <span>{categories(flagship.category)}</span>
+                            <p className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
+                              {categories(flagship.category)}
                             </p>
                             <h3 className="mt-2 font-display text-2xl font-bold leading-tight tracking-[-0.02em] text-ink sm:text-3xl">
                               {getVehicleName(flagship)}
@@ -398,7 +389,6 @@ export default async function HomePage({params}: HomePageProps) {
                       locale === "el"
                         ? vehicle.gallery[0].altEl
                         : vehicle.gallery[0].altEn;
-                    const cardIndex = String(index + 2).padStart(2, "0");
 
                     return (
                       <li key={vehicle.slug} className="flex min-w-0 flex-1">
@@ -433,15 +423,8 @@ export default async function HomePage({params}: HomePageProps) {
                               <div className="flex min-w-0 flex-col justify-between gap-4 p-5">
                                 <div className="flex items-start justify-between gap-3">
                                   <div className="min-w-0">
-                                    <p className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.16em] tabular-nums text-brand">
-                                      <span>{cardIndex}</span>{" "}
-                                      <span
-                                        aria-hidden="true"
-                                        className="text-accent-orange dark:text-brand"
-                                      >
-                                        /
-                                      </span>{" "}
-                                      <span>{categories(vehicle.category)}</span>
+                                    <p className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
+                                      {categories(vehicle.category)}
                                     </p>
                                     <h3 className="mt-1.5 font-display text-lg font-bold leading-snug text-ink sm:text-xl">
                                       {name}
@@ -515,12 +498,10 @@ export default async function HomePage({params}: HomePageProps) {
         <div className="page-shell">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <SectionHeading
-              index="02"
               eyebrow={t("steps.eyebrow")}
               title={t("steps.title")}
             />
             <RouteIndicator
-              code="01–03"
               route={
                 isEl
                   ? "ΕΠΙΛΟΓΗ · ΑΙΤΗΜΑ · ΕΠΙΒΕΒΑΙΩΣΗ"
@@ -541,7 +522,6 @@ export default async function HomePage({params}: HomePageProps) {
             <div className="min-w-0 lg:sticky lg:top-24 lg:col-span-4">
               <Reveal>
                 <SectionHeading
-                  index="03"
                   eyebrow={t("services.eyebrow")}
                   title={t("services.title")}
                   description={t("services.description")}
@@ -583,19 +563,15 @@ export default async function HomePage({params}: HomePageProps) {
             <ul className="min-w-0 divide-y divide-hairline border-y border-hairline lg:col-span-8">
               {services.map((item, index) => {
                 const Icon = serviceIcons[index] ?? Wrench;
-                const rowIndex = String(index + 1).padStart(2, "0");
 
                 return (
                   <li key={item.title} className="py-1">
                     <Reveal delay={index * 60}>
                       <SpotlightCard
                         tilt={false}
-                        className="group grid gap-4 rounded-xl bg-transparent px-3 py-5 transition-colors duration-[var(--token-duration-fast)] ease-brand hover:bg-surface dark:hover:bg-surface-elevated/70 sm:grid-cols-[5.5rem_1fr_auto] sm:items-start sm:px-5 sm:py-6"
+                        className="group grid gap-4 rounded-xl bg-transparent px-3 py-5 transition-colors duration-[var(--token-duration-fast)] ease-brand hover:bg-surface dark:hover:bg-surface-elevated/70 sm:grid-cols-[2.5rem_1fr_auto] sm:items-start sm:px-5 sm:py-6"
                       >
-                        <div className="flex items-center gap-2.5 sm:pt-0.5">
-                          <span className="inline-flex items-center rounded-full border border-line/70 bg-accent-yellow-subtle px-2 py-0.5 font-mono text-xs font-bold tracking-[0.12em] tabular-nums text-accent-yellow-ink transition-colors duration-[var(--token-duration-fast)] group-hover:border-accent-orange/40 group-hover:bg-accent-orange-subtle group-hover:text-accent-orange dark:border-transparent dark:bg-transparent dark:px-0 dark:py-0 dark:text-brand dark:group-hover:bg-transparent dark:group-hover:text-brand">
-                            {rowIndex}
-                          </span>
+                        <div className="flex items-center sm:pt-0.5">
                           <span
                             aria-hidden="true"
                             className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-subtle text-brand transition-colors duration-[var(--token-duration-fast)] ease-brand group-hover:bg-brand group-hover:text-brand-ink"
@@ -636,7 +612,6 @@ export default async function HomePage({params}: HomePageProps) {
               className="mb-4"
             />
             <SectionHeading
-              index="04"
               eyebrow={t("trust.eyebrow")}
               title={t("trust.title")}
               description={t("trust.body")}

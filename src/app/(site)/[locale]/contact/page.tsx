@@ -68,11 +68,7 @@ export default async function ContactPage({params}: ContactPageProps) {
               </h2>
 
               <RouteIndicator
-                code={
-                  locale === "el"
-                    ? `ΕΔΡΑ · ${site.address.postalCode}`
-                    : `HQ · ${site.address.postalCode}`
-                }
+                code={locale === "el" ? "ΕΔΡΑ" : "HQ"}
                 route={
                   locale === "el"
                     ? site.address.streetEl

@@ -50,11 +50,11 @@ Use up-to-date framework scaffolding instructions for Tailwind and Next.js rathe
 
 | Component / Module | File | Purpose |
 | --- | --- | --- |
-| `HeritageBadge`, `RouteIndicator`, `TechnicalDivider`, `ChassisIllustration` | `src/components/brand/automotive-accents.tsx` | Reusable editorial automotive badges (`ΑΠΟ ΤΟ 1980`), route telemetry indicators, technical numbered dividers, and wireframe chassis art |
+| `HeritageBadge`, `RouteIndicator`, `TechnicalDivider`, `ChassisIllustration` | `src/components/brand/automotive-accents.tsx` | Reusable editorial automotive badges (`ΑΠΟ ΤΟ 1980`), route indicators, technical dividers, and wireframe chassis art |
 | `AnimatedSteps` | `src/components/motion/animated-steps.tsx` | Style 2 interactive rental process stepper with route progression state and active step highlight |
 | `SmoothScroll` | `src/components/motion/smooth-scroll.tsx` | Lenis smooth scroll wrapper + `--hero-parallax-y` CSS custom property updater (clamped `0..36px`) |
 | `KineticHeading`, `BookCallButton`, `Reveal`, `SpotlightCard` | `src/components/motion/` | Editorial headline reveal, CTA micro-interaction, viewport reveals, and dual-mode card spotlight |
-| `SectionHeading`, `PageHeader` | `src/components/sections/` | Optional monospaced `index` label, orange/brand eyebrow tick, and warm elevated light-mode page headers |
+| `SectionHeading`, `PageHeader` | `src/components/sections/` | Text-only eyebrows with orange/brand accent tick, and warm elevated light-mode page headers |
 
 ## Icons: exact named exports from lucide-react
 - `MapPin`: pickup / return location

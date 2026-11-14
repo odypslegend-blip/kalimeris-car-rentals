@@ -17,7 +17,6 @@ type PageHeaderProps = {
  */
 export function PageHeader({
   eyebrow,
-  index,
   title,
   intro,
   actions,
@@ -36,10 +35,7 @@ export function PageHeader({
             aria-hidden="true"
             className="h-[2px] w-3.5 shrink-0 bg-accent-orange dark:bg-brand"
           />
-          <span className="min-w-0">
-            {index ? <span className="text-muted">{index} {"//"} </span> : null}
-            {eyebrow}
-          </span>
+          <span className="min-w-0">{eyebrow}</span>
         </p>
         <h1 className="mt-3 min-w-0 max-w-[min(24ch,100%)] font-display text-[length:calc(var(--step-head)*1.08)] font-bold leading-[1.12] tracking-[-0.025em] text-ink">
           {title}

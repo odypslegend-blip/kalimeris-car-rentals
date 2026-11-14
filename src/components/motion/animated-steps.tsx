@@ -160,8 +160,24 @@ export function AnimatedSteps({
 
   const activeTabId = `${uid}-tab-${boundedIndex}`;
   const panelId = `${uid}-panel`;
-  const stepNumber = String(boundedIndex + 1).padStart(2, "0");
-  const totalLabel = String(stepCount).padStart(2, "0");
+  const narrativeLabelsEl = [
+    "ΕΠΙΛΟΓΗ ΟΧΗΜΑΤΟΣ",
+    "ΑΙΤΗΜΑ & ΠΡΟΣΦΟΡΑ",
+    "ΠΑΡΑΔΟΣΗ ΟΧΗΜΑΤΟΣ"
+  ] as const;
+  const narrativeLabelsEn = [
+    "VEHICLE SELECTION",
+    "REQUEST & QUOTE",
+    "VEHICLE HANDOVER"
+  ] as const;
+  const stageBadgesEl = ["ΕΠΙΛΟΓΗ", "ΕΠΙΒΕΒΑΙΩΣΗ", "ΠΑΡΑΔΟΣΗ"] as const;
+  const stageBadgesEn = ["SELECTION", "CONFIRMATION", "HANDOVER"] as const;
+  const currentNarrativeLabel = isEl
+    ? (narrativeLabelsEl[boundedIndex] ?? "ΒΗΜΑ")
+    : (narrativeLabelsEn[boundedIndex] ?? "STEP");
+  const currentStageBadge = isEl
+    ? (stageBadgesEl[boundedIndex] ?? "ΣΤΑΔΙΟ")
+    : (stageBadgesEn[boundedIndex] ?? "STAGE");
 
   return (
     <div
@@ -190,7 +206,6 @@ export function AnimatedSteps({
       >
         {steps.map((step, index) => {
           const isSelected = index === boundedIndex;
-          const indexCode = String(index + 1).padStart(2, "0");
 
           return (
             <button
@@ -221,15 +236,14 @@ export function AnimatedSteps({
                 )}
               />
               <span
+                aria-hidden="true"
                 className={cn(
-                  "inline-flex shrink-0 items-center justify-center rounded-full border px-2 py-0.5 font-mono text-[0.75rem] font-bold tabular-nums tracking-[0.12em] transition-colors duration-[var(--token-duration-fast)]",
+                  "size-2.5 shrink-0 rounded-full transition-colors duration-[var(--token-duration-fast)]",
                   isSelected
-                    ? "border-accent-orange bg-accent-orange text-white dark:border-brand-strong dark:bg-brand-strong dark:text-brand-ink"
-                    : "border-line bg-brand-subtle text-brand group-hover:border-brand/40"
+                    ? "bg-accent-orange dark:bg-brand-strong"
+                    : "border border-control/50 bg-transparent group-hover:border-brand/60"
                 )}
-              >
-                {indexCode}
-              </span>
+              />
               <span className="font-display min-w-0 text-[0.9375rem] font-semibold leading-snug">
                 {step.title}
               </span>
@@ -254,14 +268,9 @@ export function AnimatedSteps({
         >
           <div>
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="flex items-baseline gap-2">
-                <span className="font-mono text-[2.25rem] font-bold leading-none tabular-nums tracking-[-0.04em] text-brand sm:text-[2.75rem]">
-                  {stepNumber}
-                </span>
-                <span className="font-mono text-xs font-semibold tabular-nums tracking-[0.14em] text-muted">
-                  / {totalLabel}
-                </span>
-              </div>
+              <span className="font-mono text-[0.75rem] font-bold uppercase tracking-[0.16em] text-brand">
+                {currentNarrativeLabel}
+              </span>
 
               <button
                 type="button"
@@ -326,7 +335,7 @@ export function AnimatedSteps({
           </div>
 
           <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-hairline pt-5">
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               {steps.map((step, index) => {
                 const isCurrent = index === boundedIndex;
                 return (
@@ -340,14 +349,12 @@ export function AnimatedSteps({
                         : `Step ${index + 1}: ${step.title}`
                     }
                     className={cn(
-                      "inline-flex size-8 items-center justify-center rounded-full font-mono text-[0.75rem] font-bold tabular-nums transition-colors duration-[var(--token-duration-fast)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
+                      "inline-flex h-2.5 items-center justify-center rounded-full transition-[width,background-color,border-color] duration-[var(--token-duration-fast)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
                       isCurrent
-                        ? "bg-brand-strong text-brand-ink"
-                        : "border border-line text-muted hover:border-brand hover:text-ink"
+                        ? "w-6 bg-brand-strong"
+                        : "w-2.5 border border-line bg-transparent hover:border-brand"
                     )}
-                  >
-                    {index + 1}
-                  </button>
+                  />
                 );
               })}
             </div>
@@ -417,14 +424,12 @@ export function AnimatedSteps({
                   })}
                 </div>
                 <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">
-                  {isEl
-                    ? `ΔΙΑΔΡΟΜΗ · ${stepNumber}/${totalLabel}`
-                    : `ROUTE · ${stepNumber}/${totalLabel}`}
+                  {isEl ? "ΔΙΑΔΡΟΜΗ ΚΡΑΤΗΣΗΣ" : "RENTAL PROCESS"}
                 </span>
               </div>
 
               <span className="inline-flex items-center rounded-full border border-line/60 bg-accent-yellow px-2.5 py-1 font-mono text-[0.6875rem] font-bold uppercase tracking-[0.14em] text-accent-yellow-ink dark:border-brand/25 dark:bg-brand-subtle dark:text-ink">
-                {isEl ? `ΣΤΑΔΙΟ ${stepNumber}` : `STAGE ${stepNumber}`}
+                {currentStageBadge}
               </span>
             </div>
 

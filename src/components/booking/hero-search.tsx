@@ -12,7 +12,6 @@ import {
   validateBookingInput,
   type BookingErrorCode
 } from "@/lib/search-params";
-import {site} from "@/lib/site";
 import {cn} from "@/lib/utils";
 
 type HeroSearchProps = {
@@ -152,15 +151,11 @@ export function HeroSearch({helperText, className}: HeroSearchProps) {
             className="inline-block size-2 shrink-0 rounded-full bg-accent-orange dark:bg-brand"
           />
           <span>
-            {isEl
-              ? "01–03 · ΔΙΑΔΡΟΜΗ & ΗΜΕΡΟΜΗΝΙΕΣ"
-              : "01–03 · ROUTE & DATES"}
+            {isEl ? "ΔΙΑΔΡΟΜΗ & ΗΜΕΡΟΜΗΝΙΕΣ" : "ROUTE & DATES"}
           </span>
         </div>
         <span className="font-mono text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-muted">
-          {isEl
-            ? `ΕΔΡΑ ΚΟΖΑΝΗΣ · 3ο ΧΛΜ. (${site.address.postalCode})`
-            : `KOZANI HQ · 3RD KM (${site.address.postalCode})`}
+          {isEl ? "ΕΔΡΑ ΚΟΖΑΝΗΣ · 3ο ΧΛΜ." : "KOZANI HQ · 3RD KM"}
         </span>
       </div>
 

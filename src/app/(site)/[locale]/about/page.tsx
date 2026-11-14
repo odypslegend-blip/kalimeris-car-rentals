@@ -114,21 +114,11 @@ export default async function AboutPage({params}: AboutPageProps) {
               >
                 <div
                   aria-hidden="true"
-                  className="flex items-center justify-between gap-2"
+                  className="flex items-center"
                 >
                   <span
                     className={cn(
-                      "inline-flex items-center rounded-full border px-2 py-0.5 font-mono text-[0.6875rem] font-bold tracking-[0.14em] tabular-nums dark:border-0 dark:bg-transparent dark:px-0 dark:py-0 dark:text-brand",
-                      index === 0
-                        ? "border-accent-orange/35 bg-accent-orange-subtle text-ink"
-                        : "border-brand/25 bg-brand-subtle text-brand-hover"
-                    )}
-                  >
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span
-                    className={cn(
-                      "size-1.5 rounded-full",
+                      "size-2 rounded-full",
                       index === 0
                         ? "bg-accent-orange dark:bg-brand"
                         : "bg-brand/45 dark:bg-brand/50"
@@ -149,7 +139,7 @@ export default async function AboutPage({params}: AboutPageProps) {
           </dl>
 
           <div className="mt-12 md:mt-16">
-            <SectionHeading index="01" title={t("activitiesTitle")} />
+            <SectionHeading title={t("activitiesTitle")} />
             <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {activities.map((activity, index) => {
                 const Icon = activityIcons[index] ?? Car;
@@ -163,13 +153,7 @@ export default async function AboutPage({params}: AboutPageProps) {
                     )}
                   >
                     <div>
-                      <div className="flex items-center justify-between gap-2">
-                        <span
-                          aria-hidden="true"
-                          className="font-mono text-xs font-bold tracking-[0.14em] tabular-nums text-muted"
-                        >
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
+                      <div className="flex items-center justify-end gap-2">
                         <span
                           aria-hidden="true"
                           className={cn(
@@ -201,7 +185,6 @@ export default async function AboutPage({params}: AboutPageProps) {
         <div className="page-shell grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-16">
           <div>
             <SectionHeading
-              index="02"
               title={t("boschTitle")}
               description={t("boschBody")}
             />
@@ -249,7 +232,7 @@ export default async function AboutPage({params}: AboutPageProps) {
 
       <section className="py-12 md:py-16">
         <div className="page-shell">
-          <SectionHeading index="03" title={t("factsTitle")} />
+          <SectionHeading title={t("factsTitle")} />
 
           <dl className="mt-6 max-w-[52rem] rounded-card border border-line bg-surface px-5 py-1 shadow-card sm:px-6 dark:rounded-none dark:border-x-0 dark:border-y dark:bg-transparent dark:px-0 dark:py-0 dark:shadow-none">
             <FactRow

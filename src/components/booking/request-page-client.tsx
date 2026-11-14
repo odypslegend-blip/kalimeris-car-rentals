@@ -180,17 +180,15 @@ export function RequestPageClient({
               {t("nextTitle")}
             </h3>
             <ol className="mt-2.5 grid gap-2">
-              {nextSteps.map((step, index) => (
+              {nextSteps.map((step) => (
                 <li
                   key={step}
                   className="flex items-start gap-2.5 text-[0.8125rem] leading-relaxed text-muted"
                 >
                   <span
                     aria-hidden="true"
-                    className="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-subtle text-[0.6875rem] font-bold text-brand-hover"
-                  >
-                    {index + 1}
-                  </span>
+                    className="mt-2 inline-block size-1.5 shrink-0 rounded-full bg-brand"
+                  />
                   <span>{step}</span>
                 </li>
               ))}

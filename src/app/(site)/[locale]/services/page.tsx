@@ -33,7 +33,6 @@ type ServiceGroup = {
 type ServiceLedgerSectionProps = {
   group: ServiceGroup;
   icon: LucideIcon;
-  sectionIndex: string;
   accent?: "teal" | "orange";
   surfaceClassName?: string;
   rowHoverClassName?: string;
@@ -45,7 +44,6 @@ type ServiceLedgerSectionProps = {
 function ServiceLedgerSection({
   group,
   icon: Icon,
-  sectionIndex,
   accent = "teal",
   surfaceClassName = "py-12 md:py-16",
   rowHoverClassName = "hover:bg-surface dark:hover:bg-surface-elevated/70",
@@ -70,7 +68,6 @@ function ServiceLedgerSection({
                 <Icon className="size-5" />
               </span>
               <SectionHeading
-                index={sectionIndex}
                 eyebrow={group.eyebrow}
                 title={group.title}
                 description={group.body}
@@ -86,20 +83,17 @@ function ServiceLedgerSection({
                   <Reveal delay={Math.min(index * 45, 220)}>
                     <div
                       className={cn(
-                        "group grid gap-2 rounded-xl px-3 py-4 transition-colors duration-[var(--token-duration-fast)] ease-brand sm:grid-cols-[4rem_1fr] sm:items-baseline sm:gap-4 sm:px-5 sm:py-5",
+                        "group grid grid-cols-[1rem_1fr] items-start gap-3 rounded-xl px-3 py-4 transition-colors duration-[var(--token-duration-fast)] ease-brand sm:grid-cols-[1.5rem_1fr] sm:gap-4 sm:px-5 sm:py-5",
                         rowHoverClassName
                       )}
                     >
                       <span
+                        aria-hidden="true"
                         className={cn(
-                          "inline-flex w-fit items-center justify-center rounded-full border px-2.5 py-0.5 font-mono text-xs font-bold tracking-[0.14em] tabular-nums dark:border-0 dark:bg-transparent dark:px-0 dark:py-0 dark:font-semibold dark:text-brand",
-                          accent === "orange"
-                            ? "border-accent-orange/35 bg-accent-orange-subtle text-ink"
-                            : "border-brand/25 bg-brand-subtle text-brand-hover"
+                          "mt-2 size-2 shrink-0 rounded-full dark:bg-brand",
+                          accent === "orange" ? "bg-accent-orange" : "bg-brand"
                         )}
-                      >
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
+                      />
                       <p className="font-display text-[1.0625rem] font-bold leading-snug text-ink sm:text-lg">
                         {item}
                       </p>
@@ -171,7 +165,6 @@ export default async function ServicesPage({params}: ServicesPageProps) {
       <ServiceLedgerSection
         group={workshop}
         icon={Wrench}
-        sectionIndex="01"
         accent="teal"
         stickyAccent={<ChassisIllustration className="mt-6 dark:hidden" />}
       />
@@ -179,7 +172,6 @@ export default async function ServicesPage({params}: ServicesPageProps) {
       <ServiceLedgerSection
         group={performance}
         icon={Gauge}
-        sectionIndex="02"
         accent="orange"
         surfaceClassName="border-y border-line bg-surface py-12 md:py-16"
         rowHoverClassName="hover:bg-surface-elevated/60 dark:hover:bg-surface-elevated/70"
@@ -195,7 +187,6 @@ export default async function ServicesPage({params}: ServicesPageProps) {
       <ServiceLedgerSection
         group={rental}
         icon={Car}
-        sectionIndex="03"
         accent="teal"
         surfaceClassName="border-b border-line bg-surface-warm/60 py-12 md:py-16 dark:border-b-0 dark:bg-transparent"
         stickyAccent={

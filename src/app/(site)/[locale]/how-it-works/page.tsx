@@ -77,33 +77,25 @@ export default async function HowItWorksPage({
       <section className="border-y border-line bg-surface py-12 md:py-16">
         <div className="page-shell grid gap-8 lg:grid-cols-12 lg:items-start lg:gap-10">
           <div className="min-w-0 lg:col-span-7">
-            <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <h2 className="font-display text-[1.25rem] font-bold leading-snug tracking-[-0.015em] text-ink md:text-[1.5rem]">
-                {t("needs.title")}
-              </h2>
-              <span className="rounded-full bg-surface-elevated px-2.5 py-0.5 font-mono text-xs font-semibold tabular-nums tracking-[0.14em] text-ink dark:bg-transparent dark:px-0 dark:py-0 dark:text-muted">
-                01–{String(needs.length).padStart(2, "0")}
-              </span>
-            </div>
+            <h2 className="font-display text-[1.25rem] font-bold leading-snug tracking-[-0.015em] text-ink md:text-[1.5rem]">
+              {t("needs.title")}
+            </h2>
 
             <div className="mt-6 overflow-hidden rounded-card border border-line bg-background shadow-card dark:shadow-none">
-              <ol className="divide-y divide-hairline">
+              <ul className="divide-y divide-hairline">
                 {needs.map((item, index) => (
                   <li
                     key={item}
                     className="flex items-center justify-between gap-4 px-5 py-4 sm:px-6"
                   >
-                    <div className="flex min-w-0 items-center gap-4">
+                    <div className="flex min-w-0 items-center gap-3.5">
                       <span
+                        aria-hidden="true"
                         className={cn(
-                          "inline-flex shrink-0 items-center justify-center rounded-full border px-2 py-0.5 font-mono text-xs font-bold tabular-nums tracking-[0.14em] dark:border-0 dark:bg-transparent dark:px-0 dark:py-0 dark:text-brand",
-                          index % 2 === 0
-                            ? "border-accent-orange/40 bg-accent-orange-subtle text-ink"
-                            : "border-brand/25 bg-brand-subtle text-brand-hover"
+                          "size-2 shrink-0 rounded-full dark:bg-brand",
+                          index % 2 === 0 ? "bg-accent-orange" : "bg-brand"
                         )}
-                      >
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
+                      />
                       <span className="text-[0.9375rem] font-medium leading-relaxed text-ink">
                         {item}
                       </span>
@@ -116,7 +108,7 @@ export default async function HowItWorksPage({
                     </span>
                   </li>
                 ))}
-              </ol>
+              </ul>
             </div>
           </div>
 
@@ -125,14 +117,9 @@ export default async function HowItWorksPage({
               tilt={false}
               className="border border-line border-t-2 border-t-accent-orange bg-surface p-6 shadow-card md:p-8 dark:border-t dark:border-t-line dark:bg-brand-subtle"
             >
-              <div className="flex items-center justify-between gap-3">
-                <h2 className="font-display text-[1.25rem] font-bold leading-snug tracking-[-0.015em] text-ink md:text-[1.375rem]">
-                  {t("not.title")}
-                </h2>
-                <span className="rounded-full border border-accent-orange/35 bg-accent-orange-subtle px-2.5 py-0.5 font-mono text-xs font-bold tabular-nums tracking-[0.14em] text-ink dark:border-0 dark:bg-transparent dark:px-0 dark:py-0 dark:text-brand">
-                  {String(notItems.length).padStart(2, "0")}
-                </span>
-              </div>
+              <h2 className="font-display text-[1.25rem] font-bold leading-snug tracking-[-0.015em] text-ink md:text-[1.375rem]">
+                {t("not.title")}
+              </h2>
 
               <ul className="mt-6 divide-y divide-line/70 border-t border-line/70">
                 {notItems.map((item) => (

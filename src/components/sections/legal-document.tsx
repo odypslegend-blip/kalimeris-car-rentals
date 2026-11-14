@@ -39,15 +39,12 @@ export function LegalDocument({
           {contentsLabel}
         </p>
         <ol className="mt-4 border-l border-line">
-          {sections.map((section, index) => (
+          {sections.map((section) => (
             <li key={section.id}>
               <a
                 href={`#${section.id}`}
-                className="-ml-px flex min-h-11 items-baseline gap-2 py-2 pl-3 pr-2 text-[0.8125rem] leading-snug text-muted transition-colors duration-[var(--token-duration-fast)] ease-brand hover:bg-surface hover:text-ink"
+                className="-ml-px flex min-h-11 items-center py-2 pl-3 pr-2 text-[0.8125rem] leading-snug text-muted transition-colors duration-[var(--token-duration-fast)] ease-brand hover:bg-surface hover:text-ink"
               >
-                <span aria-hidden="true" className="tabular-nums text-muted">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
                 <span>{section.title}</span>
               </a>
             </li>
