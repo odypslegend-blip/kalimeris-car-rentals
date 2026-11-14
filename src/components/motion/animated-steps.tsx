@@ -12,9 +12,7 @@ import {
   Mail,
   MapPin,
   MessageSquare,
-  Pause,
   PhoneCall,
-  Play,
   ShieldCheck,
   Wrench
 } from "lucide-react";
@@ -262,34 +260,6 @@ export function AnimatedSteps({
               <span className="font-mono text-[0.75rem] font-bold uppercase tracking-[0.16em] text-brand">
                 {currentNarrativeLabel}
               </span>
-
-              <button
-                type="button"
-                onClick={() => setPaused((prev) => !prev)}
-                aria-pressed={paused}
-                aria-label={
-                  paused
-                    ? isEl
-                      ? "Συνέχιση αυτόματης εναλλαγής βημάτων"
-                      : "Resume automatic step cycling"
-                    : isEl
-                      ? "Παύση αυτόματης εναλλαγής βημάτων"
-                      : "Pause automatic step cycling"
-                }
-                className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-line px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted transition-colors duration-[var(--token-duration-fast)] hover:border-brand hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-              >
-                {paused ? (
-                  <>
-                    <Play aria-hidden="true" className="size-3 text-brand" />
-                    <span>{isEl ? "Συνέχιση" : "Auto-play"}</span>
-                  </>
-                ) : (
-                  <>
-                    <Pause aria-hidden="true" className="size-3 text-brand" />
-                    <span>{isEl ? "Ενεργό" : "Live"}</span>
-                  </>
-                )}
-              </button>
             </div>
 
             {/* Segmented step progress bar */}
