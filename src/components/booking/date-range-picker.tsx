@@ -126,7 +126,7 @@ export function DateRangePicker({
             aria-describedby={error ? errorId : undefined}
             className={cn(
               "flex h-11 w-full min-w-0 max-w-full items-center justify-between gap-2 rounded-field border border-control bg-surface px-3 text-left text-[0.9375rem] transition-colors duration-[var(--token-duration-fast)] ease-brand",
-              "hover:border-ink/20 focus-visible:border-brand data-[state=open]:border-brand",
+              "hover:border-muted focus-visible:border-brand data-[state=open]:border-brand",
               "data-[invalid=true]:border-danger data-[invalid=true]:focus-visible:border-danger",
               fromDate ? "text-ink" : "text-muted"
             )}

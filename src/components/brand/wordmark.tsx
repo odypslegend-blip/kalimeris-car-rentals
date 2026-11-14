@@ -28,7 +28,7 @@ export async function Wordmark({className, compact = false}: WordmarkProps) {
           d="M11 10H26V38L52 10H73L45 39L74 76H55L34 50L26 59V76H11Z"
           fill="var(--token-brand)"
         />
-        <path d="M26 40L56 10H71L40 42L26 54Z" fill="#13968D" />
+        <path d="M26 40L56 10H71L40 42L26 54Z" fill="var(--token-brand-rib)" />
       </svg>
       <span className="flex flex-col justify-center leading-none">
         <span className="text-[1.0625rem] font-extrabold tracking-[0.1em] text-ink lg:text-[1.1875rem]">

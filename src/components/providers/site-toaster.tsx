@@ -28,7 +28,7 @@ export function SiteToaster() {
             "rounded-card border border-line bg-surface text-ink shadow-panel text-[0.875rem]",
           title: "font-semibold text-ink",
           description: "text-muted",
-          actionButton: "bg-brand-strong text-white",
+          actionButton: "bg-brand-strong text-brand-ink",
           cancelButton: "border border-line bg-surface text-ink"
         }
       }}

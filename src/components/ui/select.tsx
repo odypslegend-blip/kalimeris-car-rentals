@@ -35,7 +35,7 @@ function SelectTrigger({
         // value such as "Κεντρικό σημείο παραλαβής" must truncate inside the
         // field, never widen it past the 320px content box (WCAG 1.4.10).
         "flex h-11 w-full min-w-0 max-w-full items-center justify-between gap-2 rounded-field border border-control bg-surface px-3 text-left text-[0.9375rem] text-ink transition-colors duration-[var(--token-duration-fast)] ease-brand",
-        "hover:border-ink/20 focus-visible:border-brand data-[state=open]:border-brand",
+        "hover:border-muted focus-visible:border-brand data-[state=open]:border-brand",
         "disabled:cursor-not-allowed disabled:bg-background disabled:opacity-60",
         "aria-invalid:border-danger aria-invalid:focus-visible:border-danger",
         "[&_[data-slot=select-value]]:min-w-0 [&_[data-slot=select-value]]:truncate",

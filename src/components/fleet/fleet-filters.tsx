@@ -100,7 +100,7 @@ export function FleetFilters({params, className}: FleetFiltersProps) {
                   className={cn(
                     chipBase,
                     !params.category
-                      ? "border-brand-strong bg-brand-strong text-white"
+                      ? "border-brand-strong bg-brand-strong text-brand-ink"
                       : "border-line bg-surface text-ink hover:border-brand hover:text-brand"
                   )}
                 >
@@ -120,7 +120,7 @@ export function FleetFilters({params, className}: FleetFiltersProps) {
                       className={cn(
                         chipBase,
                         isActive
-                          ? "border-brand-strong bg-brand-strong text-white"
+                          ? "border-brand-strong bg-brand-strong text-brand-ink"
                           : "border-line bg-surface text-ink hover:border-brand hover:text-brand"
                       )}
                     >

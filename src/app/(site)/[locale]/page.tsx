@@ -136,7 +136,7 @@ export default async function HomePage({params}: HomePageProps) {
           />
           <div
             aria-hidden="true"
-            className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[rgb(var(--token-scrim)/0.90)] to-transparent lg:hidden"
+            className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[rgb(var(--token-scrim)/0.90)] to-transparent lg:hidden dark:lg:block dark:lg:h-20 dark:lg:from-[rgb(var(--token-scrim)/0.92)]"
           />
 
           <div className="page-shell relative flex min-h-[470px] items-center pb-12 pt-10 sm:min-h-[540px] lg:min-h-[620px] lg:pb-36 lg:pt-16">

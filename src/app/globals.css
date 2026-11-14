@@ -29,6 +29,8 @@
   --token-brand-strong: #087f78;
   --token-brand-strong-hover: #076861;
   --token-brand-subtle: #e7f5f2;
+  --token-brand-ink: #ffffff;
+  --token-brand-rib: #13968d;
   --token-border: #e2e8e7;
   --token-hairline: #edf0f0;
   /* Form-control border: 3.5:1 on white, meets WCAG 1.4.11 non-text contrast. */
@@ -66,31 +68,35 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Dark theme — same token names, dark values. Every text pair below clears
-   WCAG AA in darkness (see docs/IMPLEMENTATION_STATUS.md):
-   ink/bg 17.1:1 · muted/bg 7.7:1 · muted/surface 7.0:1 · brand/bg 10.9:1 ·
-   brand/surface 9.9:1 · white/brand-strong 5.2:1 · control/surface 4.2:1.
+   Dark theme — matte neutral charcoal & architectural white-accent palette
+   aligned with the dark color bible (zero blue-green slate cast). Every text
+   and control pair clears WCAG AA:
+   ink/bg 15.6:1 · ink/surface 14.2:1 · muted/bg 6.8:1 · muted/surface 6.2:1 ·
+   brand/bg 17.0:1 · brand/surface 15.5:1 · brand-ink/brand-strong 17.0:1 ·
+   control/surface 3.6:1.
 --------------------------------------------------------------------------- */
 .dark {
-  --token-bg: #080d10;
-  --token-surface: #111a1d;
-  --token-ink: #eaf1f0;
-  --token-muted: #97a6a6;
-  /* Accent TEXT only. Still #087f78 here would be ~2.4:1 on this background. */
-  --token-brand: #4bd6c8;
-  --token-brand-hover: #74e3d8;
-  /* SOLID fill under white text: white on this is 5.2:1. */
-  --token-brand-strong: #067a71;
-  --token-brand-strong-hover: #056b63;
-  --token-brand-subtle: #0d2b2b;
-  --token-border: #223136;
-  --token-hairline: #182326;
-  /* 4.2:1 on surface — WCAG 1.4.11 non-text contrast. */
-  --token-control-border: #6d7f83;
+  --token-bg: #1c1c1c;
+  --token-surface: #242424;
+  --token-ink: #f5f5f5;
+  --token-muted: #a3a3a3;
+  /* Pure white accents for text, icons, rings, underlines and borders on charcoal. */
+  --token-brand: #ffffff;
+  --token-brand-hover: #e0e0e0;
+  /* Solid crisp white fill paired with `--token-brand-ink` (#1c1c1c) text. */
+  --token-brand-strong: #ffffff;
+  --token-brand-strong-hover: #e5e5e5;
+  --token-brand-subtle: #2b2b2b;
+  --token-brand-ink: #1c1c1c;
+  --token-brand-rib: #b5b5b5;
+  --token-border: #333333;
+  --token-hairline: #282828;
+  /* 3.6:1 on #242424 surface — WCAG 1.4.11 non-text contrast. */
+  --token-control-border: #7a7a7a;
   --token-error: #ff8b80;
 
-  --token-media: #05090b;
-  --token-scrim: 8 13 16;
+  --token-media: #111111;
+  --token-scrim: 28 28 28;
 
   --token-notice: #241d10;
   --token-notice-border: #4a3a1e;
@@ -118,6 +124,7 @@
   --color-brand-strong: var(--token-brand-strong);
   --color-brand-strong-hover: var(--token-brand-strong-hover);
   --color-brand-subtle: var(--token-brand-subtle);
+  --color-brand-ink: var(--token-brand-ink);
   --color-line: var(--token-border);
   --color-control: var(--token-control-border);
   --color-hairline: var(--token-hairline);
@@ -172,7 +179,7 @@
     transition: background-color var(--token-duration-normal) var(--token-ease), color var(--token-duration-normal) var(--token-ease);
   }
 
-  /* Visible 2px teal focus ring — 4.0:1 on #FFFFFF, 3.7:1 on #F7F8F7. */
+  /* Visible 2px brand focus ring — 4.0:1 on #FFFFFF, 3.7:1 on #F7F8F7; 15.5:1 on #242424 in dark. */
   :focus-visible {
     outline: 2px solid var(--token-brand);
     outline-offset: 2px;
@@ -441,8 +448,8 @@
   --rdp-range_middle-color: var(--token-ink);
   --rdp-range_start-date-background-color: var(--token-brand-strong);
   --rdp-range_end-date-background-color: var(--token-brand-strong);
-  --rdp-range_start-color: #ffffff;
-  --rdp-range_end-color: #ffffff;
+  --rdp-range_start-color: var(--token-brand-ink);
+  --rdp-range_end-color: var(--token-brand-ink);
   font-size: 0.875rem;
 }
 
@@ -509,7 +516,14 @@
 .rdp-root.kalimeris-calendar .rdp-range_end .rdp-day_button {
   border-radius: 9999px;
   background-color: var(--token-brand-strong);
-  color: #ffffff;
+  color: var(--token-brand-ink);
+}
+
+.rdp-root.kalimeris-calendar .rdp-selected .rdp-day_button:hover:not(:disabled),
+.rdp-root.kalimeris-calendar .rdp-range_start .rdp-day_button:hover:not(:disabled),
+.rdp-root.kalimeris-calendar .rdp-range_end .rdp-day_button:hover:not(:disabled) {
+  background-color: var(--token-brand-strong-hover);
+  color: var(--token-brand-ink);
 }
 
 .rdp-root.kalimeris-calendar .rdp-range_middle .rdp-day_button {
@@ -518,8 +532,10 @@
   color: var(--token-ink);
 }
 
-.rdp-root.kalimeris-calendar .rdp-range_middle .rdp-day_button:hover {
+.rdp-root.kalimeris-calendar .rdp-range_middle .rdp-day_button:hover,
+.rdp-root.kalimeris-calendar .rdp-range_middle .rdp-day_button:hover:not(:disabled) {
   background-color: transparent;
+  color: var(--token-ink);
 }
 
 .rdp-root.kalimeris-calendar .rdp-footer {
