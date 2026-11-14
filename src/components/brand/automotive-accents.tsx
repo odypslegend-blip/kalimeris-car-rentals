@@ -78,14 +78,6 @@ export function RouteIndicator({
           {code}
         </span>
       ) : null}
-      <span
-        aria-hidden="true"
-        className="inline-flex shrink-0 items-center gap-1"
-      >
-        <span className="size-1.5 rounded-full bg-accent-orange dark:bg-brand" />
-        <span className="h-px w-3 border-t border-dashed border-muted/70 dark:border-line" />
-        <span className="size-1.5 rounded-full bg-brand dark:bg-muted" />
-      </span>
       <span className="min-w-0 break-words">{route}</span>
     </span>
   );

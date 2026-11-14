@@ -235,15 +235,6 @@ export function AnimatedSteps({
                   active && isSelected ? "scale-x-100" : "scale-x-0"
                 )}
               />
-              <span
-                aria-hidden="true"
-                className={cn(
-                  "size-2.5 shrink-0 rounded-full transition-colors duration-[var(--token-duration-fast)]",
-                  isSelected
-                    ? "bg-accent-orange dark:bg-brand-strong"
-                    : "border border-control/50 bg-transparent group-hover:border-brand/60"
-                )}
-              />
               <span className="font-display min-w-0 text-[0.9375rem] font-semibold leading-snug">
                 {step.title}
               </span>
@@ -334,31 +325,7 @@ export function AnimatedSteps({
             </div>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-hairline pt-5">
-            <div className="flex items-center gap-2">
-              {steps.map((step, index) => {
-                const isCurrent = index === boundedIndex;
-                return (
-                  <button
-                    key={step.title}
-                    type="button"
-                    onClick={() => selectStep(index)}
-                    aria-label={
-                      isEl
-                        ? `Βήμα ${index + 1}: ${step.title}`
-                        : `Step ${index + 1}: ${step.title}`
-                    }
-                    className={cn(
-                      "inline-flex h-2.5 items-center justify-center rounded-full transition-[width,background-color,border-color] duration-[var(--token-duration-fast)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
-                      isCurrent
-                        ? "w-6 bg-brand-strong"
-                        : "w-2.5 border border-line bg-transparent hover:border-brand"
-                    )}
-                  />
-                );
-              })}
-            </div>
-
+          <div className="mt-8 flex flex-wrap items-center justify-end gap-3 border-t border-hairline pt-5">
             <div className="flex items-center gap-2">
               <button
                 type="button"
@@ -392,41 +359,9 @@ export function AnimatedSteps({
           >
             {/* Warm route-telemetry top strip */}
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-hairline bg-surface-elevated/70 px-5 py-3 dark:bg-transparent sm:px-7">
-              <div className="flex min-w-0 items-center gap-3">
-                <div aria-hidden="true" className="flex items-center gap-1.5">
-                  {steps.map((step, index) => {
-                    const isDone = index < boundedIndex;
-                    const isCurrent = index === boundedIndex;
-                    return (
-                      <React.Fragment key={step.title}>
-                        <span
-                          className={cn(
-                            "inline-block size-2 rounded-full transition-colors duration-300",
-                            isCurrent
-                              ? "bg-accent-orange ring-4 ring-accent-orange/20 dark:bg-brand dark:ring-brand/20"
-                              : isDone
-                                ? "bg-brand"
-                                : "border border-control/45 bg-transparent dark:border-line"
-                          )}
-                        />
-                        {index < stepCount - 1 ? (
-                          <span
-                            className={cn(
-                              "w-4 border-t border-dashed transition-colors duration-300 sm:w-6",
-                              index < boundedIndex
-                                ? "border-brand"
-                                : "border-line"
-                            )}
-                          />
-                        ) : null}
-                      </React.Fragment>
-                    );
-                  })}
-                </div>
-                <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">
-                  {isEl ? "ΔΙΑΔΡΟΜΗ ΚΡΑΤΗΣΗΣ" : "RENTAL PROCESS"}
-                </span>
-              </div>
+              <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">
+                {isEl ? "ΔΙΑΔΡΟΜΗ ΚΡΑΤΗΣΗΣ" : "RENTAL PROCESS"}
+              </span>
 
               <span className="inline-flex items-center rounded-full border border-line/60 bg-accent-yellow px-2.5 py-1 font-mono text-[0.6875rem] font-bold uppercase tracking-[0.14em] text-accent-yellow-ink dark:border-brand/25 dark:bg-brand-subtle dark:text-ink">
                 {currentStageBadge}
