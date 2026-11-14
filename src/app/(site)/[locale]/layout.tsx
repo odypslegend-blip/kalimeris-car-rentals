@@ -10,6 +10,7 @@ import {SiteToaster} from "@/components/providers/site-toaster";
 import {ThemeProvider} from "@/components/providers/theme-provider";
 import {routing} from "@/i18n/routing";
 import {buildAlternates} from "@/lib/seo";
+import {themeInitScript} from "@/lib/theme/theme-init";
 import "../../globals.css";
 
 const inter = Inter({
@@ -95,9 +96,15 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       className={inter.variable}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body className="flex min-h-dvh flex-col">
+        <script
+          id="theme-init"
+          key="theme-init"
+          dangerouslySetInnerHTML={{__html: themeInitScript}}
+        />
         <NextIntlClientProvider>
           <ThemeProvider>
             <a href="#main" className="skip-link">

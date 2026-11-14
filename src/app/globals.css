@@ -1,7 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Class-driven dark mode (`<html class="dark">`), set by next-themes.
+/* Class-driven dark mode (`<html class="dark">`), set before first paint by
+   the inline bootstrap in src/lib/theme/theme-init.ts.
    Declared before the layers so `dark:` utilities are available wherever a
    one-off override genuinely beats a token flip. */
 @custom-variant dark (&:where(.dark, .dark *));

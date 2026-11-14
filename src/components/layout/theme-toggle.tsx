@@ -1,9 +1,9 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import * as React from "react";
 import {Check, Monitor, Moon, Sun} from "lucide-react";
 import {useTranslations} from "next-intl";
-import {useTheme} from "next-themes";
+import {useTheme} from "@/components/providers/theme-provider";
 import {
   Popover,
   PopoverContent,
@@ -25,23 +25,65 @@ const options = [
 /**
  * Sun/moon trigger that opens a three-way Light / Dark / System menu.
  *
- * The icon is rendered only after mount: `resolvedTheme` is unknown during
- * server rendering, so painting it eagerly would hydrate a different icon.
+ * The icon is chosen by CSS from the `dark` class on <html> (applied before the
+ * first paint by the inline bootstrap), so it is correct on first render
+ * without waiting for hydration.
+ *
+ * The popover implements the ARIA menu-button keyboard model: roving tabindex,
+ * ArrowUp/ArrowDown/Home/End, focus starts on the current choice, and Tab
+ * closes the menu so focus continues in the page.
  */
 export function ThemeToggle({label, className}: ThemeToggleProps) {
   const t = useTranslations("A11y");
-  const {theme, setTheme, resolvedTheme} = useTheme();
-  const [mounted, setMounted] = useState(false);
-  const [open, setOpen] = useState(false);
+  const {theme, setTheme} = useTheme();
+  const [open, setOpen] = React.useState(false);
+  const menuRef = React.useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    // Deliberate post-hydration flag: the resolved theme only exists in the
-    // browser, so the icon must wait one tick to avoid a hydration mismatch.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-  }, []);
+  function moveFocus(offset: number | "first" | "last") {
+    const items = Array.from(
+      menuRef.current?.querySelectorAll<HTMLButtonElement>(
+        '[role="menuitemradio"]'
+      ) ?? []
+    );
+    if (items.length === 0) return;
 
-  const ActiveIcon = resolvedTheme === "dark" ? Moon : Sun;
+    const current = items.indexOf(document.activeElement as HTMLButtonElement);
+    const index =
+      offset === "first"
+        ? 0
+        : offset === "last"
+          ? items.length - 1
+          : (current + offset + items.length) % items.length;
+
+    items[index]?.focus();
+  }
+
+  function handleMenuKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    switch (event.key) {
+      case "ArrowDown":
+        event.preventDefault();
+        moveFocus(1);
+        break;
+      case "ArrowUp":
+        event.preventDefault();
+        moveFocus(-1);
+        break;
+      case "Home":
+        event.preventDefault();
+        moveFocus("first");
+        break;
+      case "End":
+        event.preventDefault();
+        moveFocus("last");
+        break;
+      case "Tab":
+        // Let focus leave the menu naturally after it closes.
+        setOpen(false);
+        break;
+      default:
+        break;
+    }
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -50,21 +92,38 @@ export function ThemeToggle({label, className}: ThemeToggleProps) {
           type="button"
           aria-label={label}
           aria-haspopup="menu"
+          aria-expanded={open}
           className={cn(
             "inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-line bg-surface text-ink transition-colors duration-[var(--token-duration-fast)] ease-brand hover:bg-brand-subtle",
             className
           )}
         >
-          {mounted ? (
-            <ActiveIcon aria-hidden="true" className="size-5" />
-          ) : (
-            <span aria-hidden="true" className="size-5" />
-          )}
+          <Sun aria-hidden="true" className="size-5 dark:hidden" />
+          <Moon aria-hidden="true" className="hidden size-5 dark:block" />
         </button>
       </PopoverTrigger>
 
-      <PopoverContent align="end" className="w-52 p-1.5">
-        <div role="menu" aria-label={label} className="flex flex-col">
+      <PopoverContent
+        align="end"
+        className="w-52 p-1.5"
+        onOpenAutoFocus={(event) => {
+          event.preventDefault();
+          const checked = menuRef.current?.querySelector<HTMLElement>(
+            '[aria-checked="true"]'
+          );
+          const first = menuRef.current?.querySelector<HTMLElement>(
+            '[role="menuitemradio"]'
+          );
+          (checked ?? first)?.focus();
+        }}
+      >
+        <div
+          ref={menuRef}
+          role="menu"
+          aria-label={label}
+          className="flex flex-col"
+          onKeyDown={handleMenuKeyDown}
+        >
           {options.map((option) => {
             const OptionIcon = option.icon;
             const isActive = theme === option.value;
@@ -75,6 +134,7 @@ export function ThemeToggle({label, className}: ThemeToggleProps) {
                 type="button"
                 role="menuitemradio"
                 aria-checked={isActive}
+                tabIndex={isActive ? 0 : -1}
                 onClick={() => {
                   setTheme(option.value);
                   setOpen(false);
