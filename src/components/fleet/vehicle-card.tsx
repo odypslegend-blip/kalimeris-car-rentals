@@ -77,10 +77,9 @@ export function VehicleCard({
         </Badge>
         <span
           aria-hidden="true"
-          className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-line/80 bg-surface/92 px-2.5 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-ink shadow-sm backdrop-blur-sm"
+          className="absolute right-3 top-3 inline-flex items-center rounded-full border border-line/80 bg-surface/92 px-2.5 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-ink shadow-sm backdrop-blur-sm"
         >
-          <span className="size-1.5 shrink-0 rounded-full bg-accent-orange dark:bg-brand" />
-          <span>{categories(vehicle.category)}</span>
+          {categories(vehicle.category)}
         </span>
       </div>
 

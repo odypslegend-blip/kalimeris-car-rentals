@@ -7,7 +7,6 @@ import {PageHeader} from "@/components/sections/page-header";
 import {Button} from "@/components/ui/button";
 import {Link} from "@/i18n/navigation";
 import {buildAlternates} from "@/lib/seo";
-import {cn} from "@/lib/utils";
 
 type HowItWorksPageProps = {
   params: Promise<{locale: string}>;
@@ -83,23 +82,14 @@ export default async function HowItWorksPage({
 
             <div className="mt-6 overflow-hidden rounded-card border border-line bg-background shadow-card dark:shadow-none">
               <ul className="divide-y divide-hairline">
-                {needs.map((item, index) => (
+                {needs.map((item) => (
                   <li
                     key={item}
                     className="flex items-center justify-between gap-4 px-5 py-4 sm:px-6"
                   >
-                    <div className="flex min-w-0 items-center gap-3.5">
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          "size-2 shrink-0 rounded-full dark:bg-brand",
-                          index % 2 === 0 ? "bg-accent-orange" : "bg-brand"
-                        )}
-                      />
-                      <span className="text-[0.9375rem] font-medium leading-relaxed text-ink">
-                        {item}
-                      </span>
-                    </div>
+                    <span className="min-w-0 text-[0.9375rem] font-medium leading-relaxed text-ink">
+                      {item}
+                    </span>
                     <span
                       aria-hidden="true"
                       className="inline-flex size-7 shrink-0 items-center justify-center rounded-full border border-brand/25 bg-brand-subtle text-brand"

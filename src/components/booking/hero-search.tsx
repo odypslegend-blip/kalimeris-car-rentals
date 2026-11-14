@@ -145,15 +145,9 @@ export function HeroSearch({helperText, className}: HeroSearchProps) {
       )}
     >
       <div className="mb-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-hairline pb-3">
-        <div className="flex items-center gap-2 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-ink">
-          <span
-            aria-hidden="true"
-            className="inline-block size-2 shrink-0 rounded-full bg-accent-orange dark:bg-brand"
-          />
-          <span>
-            {isEl ? "ΔΙΑΔΡΟΜΗ & ΗΜΕΡΟΜΗΝΙΕΣ" : "ROUTE & DATES"}
-          </span>
-        </div>
+        <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-ink">
+          {isEl ? "ΔΙΑΔΡΟΜΗ & ΗΜΕΡΟΜΗΝΙΕΣ" : "ROUTE & DATES"}
+        </span>
         <span className="font-mono text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-muted">
           {isEl ? "ΕΔΡΑ ΚΟΖΑΝΗΣ · 3ο ΧΛΜ." : "KOZANI HQ · 3RD KM"}
         </span>

@@ -183,13 +183,9 @@ export function RequestPageClient({
               {nextSteps.map((step) => (
                 <li
                   key={step}
-                  className="flex items-start gap-2.5 text-[0.8125rem] leading-relaxed text-muted"
+                  className="text-[0.8125rem] leading-relaxed text-muted"
                 >
-                  <span
-                    aria-hidden="true"
-                    className="mt-2 inline-block size-1.5 shrink-0 rounded-full bg-brand"
-                  />
-                  <span>{step}</span>
+                  {step}
                 </li>
               ))}
             </ol>

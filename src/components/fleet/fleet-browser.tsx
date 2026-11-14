@@ -66,12 +66,8 @@ export function FleetBrowser({vehicles, className}: FleetBrowserProps) {
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-field border border-hairline bg-surface-elevated/55 px-3 py-2 dark:bg-background/70">
           <p
             aria-live="polite"
-            className="inline-flex items-center gap-2 font-mono text-[0.8125rem] font-semibold tabular-nums text-ink"
+            className="font-mono text-[0.8125rem] font-semibold tabular-nums text-ink"
           >
-            <span
-              aria-hidden="true"
-              className="inline-block size-1.5 shrink-0 rounded-full bg-accent-orange dark:bg-brand"
-            />
             {t("count", {count: filtered.length})}
           </p>
         </div>

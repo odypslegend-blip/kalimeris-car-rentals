@@ -370,10 +370,16 @@ function StepOnePreview({isEl, insetSurface}: StagePreviewProps) {
           <span className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
             {isEl ? "ΑΙΤΗΜΑ ΠΡΟΣΦΟΡΑΣ" : "QUOTE REQUEST INTAKE"}
           </span>
-          <span className="inline-flex items-center rounded-full border border-brand/25 bg-brand-subtle px-2.5 py-1 text-[0.75rem] font-semibold text-brand">
-            {isEl
-              ? "Χωρίς κάρτα · Χωρίς δέσμευση"
-              : "No card · No obligation"}
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-brand/25 bg-brand-subtle px-2.5 py-1 text-[0.75rem] font-semibold text-brand">
+            <span
+              aria-hidden="true"
+              className="size-1.5 shrink-0 rounded-full bg-accent-orange dark:bg-brand"
+            />
+            <span>
+              {isEl
+                ? "Χωρίς κάρτα · Χωρίς δέσμευση"
+                : "No card · No obligation"}
+            </span>
           </span>
         </div>
 

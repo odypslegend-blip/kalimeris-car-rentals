@@ -39,10 +39,6 @@ export function HeritageBadge({
         className
       )}
     >
-      <span
-        aria-hidden="true"
-        className="inline-flex size-2 shrink-0 rotate-45 rounded-[1px] bg-accent-orange dark:bg-brand"
-      />
       <span className="min-w-0">{label}</span>
       {sublabel ? (
         <>
@@ -99,10 +95,6 @@ export function TechnicalDivider({
         className
       )}
     >
-      <span
-        aria-hidden="true"
-        className="h-2 w-2 shrink-0 rounded-[2px] bg-accent-orange dark:bg-brand"
-      />
       {code ? (
         <span className="shrink-0 font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-ink">
           {code}

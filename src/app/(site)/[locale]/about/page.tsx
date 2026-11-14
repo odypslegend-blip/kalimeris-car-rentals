@@ -107,25 +107,11 @@ export default async function AboutPage({params}: AboutPageProps) {
       <section className="py-12 md:py-16">
         <div className="page-shell">
           <dl className="grid grid-cols-1 divide-y divide-hairline overflow-hidden rounded-card border border-line bg-surface shadow-card sm:grid-cols-2 sm:divide-x sm:divide-y-0 sm:[&>*:nth-child(n+3)]:border-t sm:[&>*:nth-child(n+3)]:border-hairline md:grid-cols-4 md:[&>*:nth-child(n+3)]:border-t-0 dark:shadow-none">
-            {stats.map((stat, index) => (
+            {stats.map((stat) => (
               <div
                 key={stat.label}
                 className="flex flex-col justify-between gap-4 p-6 md:p-7"
               >
-                <div
-                  aria-hidden="true"
-                  className="flex items-center"
-                >
-                  <span
-                    className={cn(
-                      "size-2 rounded-full",
-                      index === 0
-                        ? "bg-accent-orange dark:bg-brand"
-                        : "bg-brand/45 dark:bg-brand/50"
-                    )}
-                  />
-                </div>
-
                 <div className="flex flex-col-reverse gap-2">
                   <dt className="text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-muted">
                     {stat.label}

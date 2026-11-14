@@ -83,17 +83,10 @@ function ServiceLedgerSection({
                   <Reveal delay={Math.min(index * 45, 220)}>
                     <div
                       className={cn(
-                        "group grid grid-cols-[1rem_1fr] items-start gap-3 rounded-xl px-3 py-4 transition-colors duration-[var(--token-duration-fast)] ease-brand sm:grid-cols-[1.5rem_1fr] sm:gap-4 sm:px-5 sm:py-5",
+                        "group rounded-xl px-3 py-4 transition-colors duration-[var(--token-duration-fast)] ease-brand sm:px-5 sm:py-5",
                         rowHoverClassName
                       )}
                     >
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          "mt-2 size-2 shrink-0 rounded-full dark:bg-brand",
-                          accent === "orange" ? "bg-accent-orange" : "bg-brand"
-                        )}
-                      />
                       <p className="font-display text-[1.0625rem] font-bold leading-snug text-ink sm:text-lg">
                         {item}
                       </p>

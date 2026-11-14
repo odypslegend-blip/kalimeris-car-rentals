@@ -182,11 +182,7 @@ export default async function HomePage({params}: HomePageProps) {
 
               <HeroKineticHeading>{t("title")}</HeroKineticHeading>
 
-              <div className="mt-4 flex items-center gap-2.5">
-                <span
-                  aria-hidden="true"
-                  className="h-[3px] w-4 shrink-0 rounded-full bg-brand dark:hidden"
-                />
+              <div className="mt-4 flex items-center">
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 140 12"
@@ -535,8 +531,8 @@ export default async function HomePage({params}: HomePageProps) {
                     />
                     <span>
                       {isEl
-                        ? `${site.workshop.areaSqm} m² · ${site.workshop.serviceBays} ΘΕΣΕΙΣ · BOSCH CAR SERVICE`
-                        : `${site.workshop.areaSqm} m² · ${site.workshop.serviceBays} BAYS · BOSCH CAR SERVICE`}
+                        ? `BOSCH CAR SERVICE · ${site.workshop.areaSqm} m² · ${site.workshop.serviceBays} ΘΕΣΕΙΣ`
+                        : `BOSCH CAR SERVICE · ${site.workshop.areaSqm} m² · ${site.workshop.serviceBays} BAYS`}
                     </span>
                   </div>
                   <p className="mt-1.5 font-mono text-[0.6875rem] leading-relaxed text-muted">

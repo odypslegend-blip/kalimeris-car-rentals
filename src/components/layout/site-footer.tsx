@@ -30,7 +30,7 @@ export async function SiteFooter() {
           <div className="flex items-center gap-2.5 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted">
             <span
               aria-hidden="true"
-              className="inline-block size-2 shrink-0 rounded-[2px] bg-accent-orange dark:bg-brand"
+              className="inline-block size-2 shrink-0 rounded-full bg-accent-orange dark:bg-brand"
             />
             <span>
               {locale === "el" ? site.tradingNameEl : site.tradingNameEn}
@@ -106,12 +106,8 @@ export async function SiteFooter() {
           </div>
 
           <nav aria-label={t("Footer.explore")}>
-            <h2 className="flex items-center gap-2 text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
-              <span
-                aria-hidden="true"
-                className="inline-block size-1.5 shrink-0 rounded-[1px] bg-accent-orange dark:bg-brand"
-              />
-              <span>{t("Footer.explore")}</span>
+            <h2 className="text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
+              {t("Footer.explore")}
             </h2>
             <ul className="mt-2 flex flex-col">
               <li>
@@ -146,12 +142,8 @@ export async function SiteFooter() {
           </nav>
 
           <nav aria-label={t("Footer.information")}>
-            <h2 className="flex items-center gap-2 text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
-              <span
-                aria-hidden="true"
-                className="inline-block size-1.5 shrink-0 rounded-[1px] bg-accent-orange dark:bg-brand"
-              />
-              <span>{t("Footer.information")}</span>
+            <h2 className="text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
+              {t("Footer.information")}
             </h2>
             <ul className="mt-2 flex flex-col">
               <li>
@@ -190,12 +182,8 @@ export async function SiteFooter() {
           </nav>
 
           <div>
-            <h2 className="flex items-center gap-2 text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
-              <span
-                aria-hidden="true"
-                className="inline-block size-1.5 shrink-0 rounded-[1px] bg-accent-orange dark:bg-brand"
-              />
-              <span>{t("Footer.contactTitle")}</span>
+            <h2 className="text-[0.6875rem] font-bold uppercase tracking-[0.16em] text-brand">
+              {t("Footer.contactTitle")}
             </h2>
 
             <address className="mt-2 flex flex-col not-italic">
