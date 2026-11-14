@@ -14,7 +14,7 @@ const badgeVariants = cva(
       variant: {
         neutral: "border-line bg-surface text-muted",
         brand: "border-transparent bg-brand-subtle text-brand-hover",
-        demo: "border-transparent bg-ink text-white",
+        demo: "border-transparent bg-media text-white",
         outline: "border-line bg-transparent text-ink"
       }
     },

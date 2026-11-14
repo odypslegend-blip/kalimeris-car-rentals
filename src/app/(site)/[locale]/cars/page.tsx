@@ -3,12 +3,15 @@ import {Suspense} from "react";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {FleetBrowser} from "@/components/fleet/fleet-browser";
 import {Skeleton} from "@/components/ui/skeleton";
-import {vehicles} from "@/lib/data/fleet";
 import {buildAlternates} from "@/lib/seo";
+import {getPublishedVehicles} from "@/lib/vehicles/store";
+import {toVehicleView} from "@/lib/vehicles/view";
 
 type CarsPageProps = {
   params: Promise<{locale: string}>;
 };
+
+export const revalidate = 30;
 
 export async function generateMetadata({
   params
@@ -35,6 +38,9 @@ export default async function CarsPage({params}: CarsPageProps) {
   setRequestLocale(locale);
 
   const t = await getTranslations("Fleet");
+  const vehicles = (await getPublishedVehicles()).map((vehicle) =>
+    toVehicleView(vehicle, locale)
+  );
 
   return (
     <section className="pb-16 pt-8 md:pb-24 md:pt-12">

@@ -19,6 +19,38 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const isDev = process.env.NODE_ENV === "development";
 
 /**
+ * Allow `next/image` to optimize objects served from the configured R2 public
+ * bucket. Nothing is hardcoded: without a valid http(s) `R2_PUBLIC_BASE_URL`
+ * at build time the allowlist stays empty.
+ */
+function r2RemotePattern(): {
+  protocol: "http" | "https";
+  hostname: string;
+  port?: string;
+} | null {
+  const value = process.env.R2_PUBLIC_BASE_URL;
+
+  if (!value) return null;
+
+  try {
+    const url = new URL(value);
+
+    if (url.protocol !== "http:" && url.protocol !== "https:") return null;
+
+    return {
+      protocol: url.protocol === "https:" ? "https" : "http",
+      hostname: url.hostname,
+      ...(url.port ? {port: url.port} : {})
+    };
+  } catch {
+    return null;
+  }
+}
+
+const remotePattern = r2RemotePattern();
+const remotePatterns = remotePattern ? [remotePattern] : [];
+
+/**
  * Security headers applied to every route.
  *
  * - `script-src` allows `'unsafe-inline'` because Next's App Router bootstrap
@@ -39,7 +71,7 @@ const securityHeaders: {key: string; value: string}[] = [
     value:
       "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data: blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'" +
       (isDev ? " 'unsafe-eval'" : "") +
-      "; connect-src 'self'"
+      "; connect-src 'self'; media-src 'self' https: data:"
   }
 ];
 
@@ -49,7 +81,8 @@ const serverConfig: NextConfig = {
   // Next.js 16 requires an explicit quality allowlist for next/image.
   images: {
     qualities: [75, 90],
-    formats: ["image/avif", "image/webp"]
+    formats: ["image/avif", "image/webp"],
+    remotePatterns
   },
   async headers() {
     const headers = [...securityHeaders];
@@ -74,7 +107,7 @@ const staticConfig: NextConfig = {
   output: "export",
   trailingSlash: true,
   ...(basePath ? {basePath} : {}),
-  images: {unoptimized: true}
+  images: {unoptimized: true, remotePatterns}
 };
 
 const nextConfig: NextConfig = isStatic ? staticConfig : serverConfig;

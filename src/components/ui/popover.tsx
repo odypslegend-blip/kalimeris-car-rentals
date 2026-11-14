@@ -33,7 +33,7 @@ function PopoverContent({
           // `max-w-[calc(100vw-24px)]` keeps a wide popover (the range
           // calendar) inside the viewport on a 320px phone instead of
           // overflowing horizontally (WCAG 1.4.10).
-          "z-50 w-auto max-w-[calc(100vw-24px)] rounded-card border border-line bg-surface p-3 text-ink shadow-[0_18px_45px_rgba(14,23,32,0.16)] outline-none",
+          "z-50 w-auto max-w-[calc(100vw-24px)] rounded-card border border-line bg-surface p-3 text-ink shadow-menu outline-none",
           "origin-[var(--radix-popover-content-transform-origin)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
           className
         )}

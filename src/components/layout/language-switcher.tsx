@@ -82,7 +82,7 @@ export function LanguageSwitcher({
             className={cn(
               "inline-flex min-h-9 min-w-10 items-center justify-center rounded-full px-2.5 py-1 text-[0.6875rem] font-bold uppercase tracking-[0.14em] transition-colors duration-[var(--token-duration-fast)] ease-brand",
               isActive
-                ? "bg-brand text-white"
+                ? "bg-brand-strong text-white"
                 : "text-muted hover:bg-brand-subtle hover:text-ink"
             )}
           >

@@ -1,8 +1,8 @@
 /**
  * Pickup / return locations.
  *
- * Only one neutral option is published until the client confirms the operating
- * area and the exact address. Do not add invented branches, towns or addresses.
+ * Address verified against https://kalimeriscars.gr/. There is a single site:
+ * 3ο χλμ. Κοζάνης – Θεσσαλονίκης, 50100 Κοζάνη. Do not add branches.
  */
 export type PickupLocation = {
   id: string;
@@ -15,10 +15,10 @@ export type PickupLocation = {
 export const locations: readonly PickupLocation[] = [
   {
     id: "main",
-    nameEl: "Κεντρικό σημείο παραλαβής",
-    nameEn: "Main pickup point",
-    noteEl: "Η διεύθυνση αναμένεται επιβεβαίωση",
-    noteEn: "Address to be confirmed"
+    nameEl: "Κοζάνη — 3ο χλμ. Κοζάνης – Θεσσαλονίκης",
+    nameEn: "Kozani — 3rd km Kozani – Thessaloniki",
+    noteEl: "Παραλαβή από την έδρα μας. Δευτέρα–Παρασκευή 9:00–19:30, Σάββατο 9:00–13:00.",
+    noteEn: "Pickup at our premises. Monday–Friday 9:00–19:30, Saturday 9:00–13:00."
   }
 ];
 

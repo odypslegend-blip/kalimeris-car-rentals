@@ -7,9 +7,10 @@ import {DisclosureStrip} from "@/components/layout/disclosure-strip";
 import {SiteFooter} from "@/components/layout/site-footer";
 import {SiteHeader} from "@/components/layout/site-header";
 import {SiteToaster} from "@/components/providers/site-toaster";
+import {ThemeProvider} from "@/components/providers/theme-provider";
 import {routing} from "@/i18n/routing";
 import {buildAlternates} from "@/lib/seo";
-import "../globals.css";
+import "../../globals.css";
 
 const inter = Inter({
   subsets: ["latin", "greek"],
@@ -30,8 +31,11 @@ export function generateStaticParams() {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#f7f8f7",
-  colorScheme: "light"
+  colorScheme: "light dark",
+  themeColor: [
+    {media: "(prefers-color-scheme: light)", color: "#f7f8f7"},
+    {media: "(prefers-color-scheme: dark)", color: "#080d10"}
+  ]
 };
 
 export async function generateMetadata({
@@ -88,19 +92,25 @@ export default async function LocaleLayout({
   const t = await getTranslations({locale, namespace: "A11y"});
 
   return (
-    <html lang={locale} className={inter.variable}>
+    <html
+      lang={locale}
+      className={inter.variable}
+      suppressHydrationWarning
+    >
       <body className="flex min-h-dvh flex-col">
         <NextIntlClientProvider>
-          <a href="#main" className="skip-link">
-            {t("skipToContent")}
-          </a>
-          <SiteHeader />
-          <main id="main" tabIndex={-1} className="flex-1">
-            {children}
-          </main>
-          <DisclosureStrip />
-          <SiteFooter />
-          <SiteToaster />
+          <ThemeProvider>
+            <a href="#main" className="skip-link">
+              {t("skipToContent")}
+            </a>
+            <SiteHeader />
+            <main id="main" tabIndex={-1} className="flex-1">
+              {children}
+            </main>
+            <DisclosureStrip />
+            <SiteFooter />
+            <SiteToaster />
+          </ThemeProvider>
         </NextIntlClientProvider>
       </body>
     </html>

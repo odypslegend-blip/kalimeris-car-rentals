@@ -1,26 +1,45 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Class-driven dark mode (`<html class="dark">`), set by next-themes.
+   Declared before the layers so `dark:` utilities are available wherever a
+   one-off override genuinely beats a token flip. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ---------------------------------------------------------------------------
    Design tokens — source of truth: design/tokens.json
    Raw values live on :root (prefixed `--token-`) and are mapped to Tailwind
    utilities through @theme inline (bg-surface, text-ink, rounded-card,
    ease-brand, ...). Prefixing keeps the raw custom properties from colliding
    with the theme names Tailwind generates.
+
+   The same token names are overridden under `.dark`, so the token layer — not
+   a parallel palette and not `dark:` utility spam — flips the whole site.
 --------------------------------------------------------------------------- */
 :root {
   --token-bg: #f7f8f7;
   --token-surface: #ffffff;
   --token-ink: #0e1720;
   --token-muted: #58646b;
+  /* Accent for TEXT, icons and borders (4.6:1 on bg, 4.9:1 on surface). */
   --token-brand: #087f78;
   --token-brand-hover: #076861;
+  /* SOLID fill that sits behind white text (white here is 4.9:1). */
+  --token-brand-strong: #087f78;
+  --token-brand-strong-hover: #076861;
   --token-brand-subtle: #e7f5f2;
   --token-border: #e2e8e7;
   --token-hairline: #edf0f0;
   /* Form-control border: 3.5:1 on white, meets WCAG 1.4.11 non-text contrast. */
   --token-control-border: #7f8b87;
   --token-error: #b42318;
+
+  /* Always-dark backdrop behind photography/video. Deliberately NOT flipped by
+     `.dark`: a photograph needs a stable dark frame in both themes. */
+  --token-media: #0e1720;
+  /* Space-separated RGB, consumed as rgb(var(--token-scrim) / <alpha>) by the
+     hero scrim. Dark overrides the channel values, not the syntax. */
+  --token-scrim: 247 248 247;
 
   /* Amber notice: 7.1:1 on its own surface, used only for legal drafts. */
   --token-notice: #fbf6e9;
@@ -41,6 +60,45 @@
 
   --token-shadow-card: 0 8px 25px rgb(14 23 32 / 0.05);
   --token-shadow-panel: 0 18px 45px rgb(14 23 32 / 0.1);
+  --token-shadow-modal: 0 24px 70px rgb(14 23 32 / 0.22);
+  --token-shadow-menu: 0 18px 45px rgb(14 23 32 / 0.16);
+}
+
+/* ---------------------------------------------------------------------------
+   Dark theme — same token names, dark values. Every text pair below clears
+   WCAG AA in darkness (see docs/IMPLEMENTATION_STATUS.md):
+   ink/bg 17.1:1 · muted/bg 7.7:1 · muted/surface 7.0:1 · brand/bg 10.9:1 ·
+   brand/surface 9.9:1 · white/brand-strong 5.2:1 · control/surface 4.2:1.
+--------------------------------------------------------------------------- */
+.dark {
+  --token-bg: #080d10;
+  --token-surface: #111a1d;
+  --token-ink: #eaf1f0;
+  --token-muted: #97a6a6;
+  /* Accent TEXT only. Still #087f78 here would be ~2.4:1 on this background. */
+  --token-brand: #4bd6c8;
+  --token-brand-hover: #74e3d8;
+  /* SOLID fill under white text: white on this is 5.2:1. */
+  --token-brand-strong: #067a71;
+  --token-brand-strong-hover: #056b63;
+  --token-brand-subtle: #0d2b2b;
+  --token-border: #223136;
+  --token-hairline: #182326;
+  /* 4.2:1 on surface — WCAG 1.4.11 non-text contrast. */
+  --token-control-border: #6d7f83;
+  --token-error: #ff8b80;
+
+  --token-media: #05090b;
+  --token-scrim: 8 13 16;
+
+  --token-notice: #241d10;
+  --token-notice-border: #4a3a1e;
+  --token-notice-ink: #f2d9a2;
+
+  --token-shadow-card: 0 8px 25px rgb(0 0 0 / 0.55);
+  --token-shadow-panel: 0 18px 45px rgb(0 0 0 / 0.62);
+  --token-shadow-modal: 0 24px 70px rgb(0 0 0 / 0.66);
+  --token-shadow-menu: 0 18px 45px rgb(0 0 0 / 0.58);
 }
 
 @media (min-width: 1024px) {
@@ -56,10 +114,13 @@
   --color-muted: var(--token-muted);
   --color-brand: var(--token-brand);
   --color-brand-hover: var(--token-brand-hover);
+  --color-brand-strong: var(--token-brand-strong);
+  --color-brand-strong-hover: var(--token-brand-strong-hover);
   --color-brand-subtle: var(--token-brand-subtle);
   --color-line: var(--token-border);
   --color-control: var(--token-control-border);
   --color-hairline: var(--token-hairline);
+  --color-media: var(--token-media);
   --color-danger: var(--token-error);
   --color-notice: var(--token-notice);
   --color-notice-border: var(--token-notice-border);
@@ -74,6 +135,8 @@
 
   --shadow-card: var(--token-shadow-card);
   --shadow-panel: var(--token-shadow-panel);
+  --shadow-modal: var(--token-shadow-modal);
+  --shadow-menu: var(--token-shadow-menu);
 
   --ease-brand: var(--token-ease);
 }
@@ -83,10 +146,17 @@
 --------------------------------------------------------------------------- */
 @layer base {
   html {
+    /* Native UI (scrollbars, form widgets, autofill) follows the active theme. */
+    color-scheme: light;
     overflow-x: clip;
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
     scroll-padding-top: calc(var(--token-header-h) + 16px);
+    transition: background-color var(--token-duration-normal) var(--token-ease), color var(--token-duration-normal) var(--token-ease);
+  }
+
+  :root.dark {
+    color-scheme: dark;
   }
 
   body {
@@ -98,6 +168,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: clip;
+    transition: background-color var(--token-duration-normal) var(--token-ease), color var(--token-duration-normal) var(--token-ease);
   }
 
   /* Visible 2px teal focus ring — 4.0:1 on #FFFFFF, 3.7:1 on #F7F8F7. */
@@ -178,7 +249,7 @@
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--token-ink);
-    box-shadow: 0 8px 25px rgb(14 23 32 / 0.09);
+    box-shadow: var(--token-shadow-card);
     transition: transform var(--token-duration-fast) var(--token-ease);
   }
 
@@ -347,7 +418,7 @@
    regardless of stylesheet order.
 --------------------------------------------------------------------------- */
 .rdp-root.kalimeris-calendar {
-  --rdp-accent-color: var(--token-brand);
+  --rdp-accent-color: var(--token-brand-strong);
   --rdp-accent-background-color: var(--token-brand-subtle);
   --rdp-day-width: 44px;
   --rdp-day-height: 44px;
@@ -367,8 +438,8 @@
   --rdp-weekday-text-transform: uppercase;
   --rdp-range_middle-background-color: var(--token-brand-subtle);
   --rdp-range_middle-color: var(--token-ink);
-  --rdp-range_start-date-background-color: var(--token-brand);
-  --rdp-range_end-date-background-color: var(--token-brand);
+  --rdp-range_start-date-background-color: var(--token-brand-strong);
+  --rdp-range_end-date-background-color: var(--token-brand-strong);
   --rdp-range_start-color: #ffffff;
   --rdp-range_end-color: #ffffff;
   font-size: 0.875rem;
@@ -436,7 +507,7 @@
 .rdp-root.kalimeris-calendar .rdp-range_start .rdp-day_button,
 .rdp-root.kalimeris-calendar .rdp-range_end .rdp-day_button {
   border-radius: 9999px;
-  background-color: var(--token-brand);
+  background-color: var(--token-brand-strong);
   color: #ffffff;
 }
 
@@ -479,5 +550,39 @@
   .rdp-root.kalimeris-calendar .rdp-month_caption {
     height: 40px;
     font-size: 0.875rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Scroll reveal (progressive enhancement)
+   `@media (scripting: enabled)` means a browser that will not run the
+   IntersectionObserver also never hides the content, and the reduced-motion
+   override below keeps everything visible even before hydration. Only
+   opacity + a short translate animate: no layout, no colour, no scale.
+--------------------------------------------------------------------------- */
+@media (scripting: enabled) {
+  [data-reveal="hidden"] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 620ms var(--token-ease),
+      transform 620ms var(--token-ease);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-reveal="visible"] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 620ms var(--token-ease),
+      transform 620ms var(--token-ease);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal="hidden"] {
+    opacity: 1;
+    transform: none;
   }
 }

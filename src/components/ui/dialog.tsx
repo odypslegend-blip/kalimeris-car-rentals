@@ -37,7 +37,8 @@ function DialogOverlay({
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
       className={cn(
-        "dialog-overlay fixed inset-0 z-50 bg-ink/45 backdrop-blur-[2px]",
+        // `bg-media` never flips: a white veil would wash out a dark page.
+        "dialog-overlay fixed inset-0 z-50 bg-media/45 backdrop-blur-[2px]",
         className
       )}
       {...props}
@@ -61,7 +62,7 @@ function DialogContent({
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(
-          "dialog-panel fixed left-1/2 top-1/2 z-50 grid w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 rounded-card border border-line bg-surface p-6 shadow-[0_24px_70px_rgba(14,23,32,0.22)] outline-none",
+          "dialog-panel fixed left-1/2 top-1/2 z-50 grid w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 rounded-card border border-line bg-surface p-6 shadow-modal outline-none",
           className
         )}
         {...props}
