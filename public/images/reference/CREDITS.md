@@ -34,12 +34,11 @@ Decorative motion footage for the homepage hero, self-hosted at
 photographs above, and must be replaced with client-owned or client-authorised
 footage before any production launch.
 
-| Title | Source | Author | License | Local file | Status |
-| --- | --- | --- | --- | --- | --- |
-| Scenic Highway Drive at Sunset | https://www.pexels.com/video/scenic-highway-drive-at-sunset-40612791/ | Allan González | [Pexels License](https://www.pexels.com/license/) | `public/videos/hero-loop.mp4` | DEMO — decorative background only. |
+| Title | Source | Direct MP4 URL | Author | License | Local file | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| Electric car driving in the dark woods | https://coverr.co/videos/electric-car-driving-in-the-dark-woods-5ic0lgeuge | https://cdn.coverr.co/videos/coverr-electric-car-driving-in-the-dark-woods-668/1080p.mp4 | Coverr Stock Library contributor | [Coverr License](https://coverr.co/license) | `public/videos/hero-loop.mp4` | DEMO — decorative car-driving background only. |
 
-- Pexels video id: `40612791`
-- Delivered rendition: 1280×720, 30 fps, H.264 MP4 (~8.6 MB), 29 s loop. The
-  Pexels source is 3840×2160.
-- Licence: Pexels Licence — free for commercial use, no attribution required.
-- Decorative background footage only. It does not depict any vehicle offered for rent by Kalimeris.
+- Coverr video id: `5Ic0LgEUgE` (`coverr-electric-car-driving-in-the-dark-woods-668`, `isPremium: false`, `isAiGenerated: false`).
+- Delivered rendition: 1280×720, 24 fps, H.264 (`avc1` High L4.1, `yuv420p`, `-movflags +faststart`, muted / no audio stream), 10.83 s loop, 1,664,976 bytes (~1.66 MB, ~1.23 Mbps). Transcoded from Coverr's 1920×1080 MP4 download.
+- License: [Coverr License](https://coverr.co/license) — free for commercial and personal use (including client websites), no watermark, no attribution required (reselling raw stock files and AI training are prohibited).
+- Usage note: Decorative atmospheric car-driving hero footage only. It does not depict any vehicle offered for rent by Kalimeris; `hero-greece-delphi-road.jpg` remains the static LCP poster & reduced-motion/error fallback.

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState, useSyncExternalStore} from "react";
 import {assetPath} from "@/lib/base-path";
 import {cn} from "@/lib/utils";
 
@@ -12,7 +12,23 @@ type HeroMediaProps = {
   className?: string;
 };
 
-/** Poster image is the LCP base layer; an optional decorative video fades in. */
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribeReducedMotion(onStoreChange: () => void) {
+  const query = window.matchMedia(REDUCED_MOTION_QUERY);
+  query.addEventListener("change", onStoreChange);
+  return () => query.removeEventListener("change", onStoreChange);
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia(REDUCED_MOTION_QUERY).matches;
+}
+
+function getReducedMotionServerSnapshot() {
+  return false;
+}
+
+/** Poster image is the LCP base layer & fallback; decorative car-driving video auto-plays above it unless reduced motion is requested. */
 export function HeroMedia({
   posterSrc,
   videoSrc,
@@ -20,48 +36,53 @@ export function HeroMedia({
   className
 }: HeroMediaProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [ready, setReady] = useState(false);
-  const [allowVideo, setAllowVideo] = useState(true);
+  const reducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot
+  );
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
+  const resolvedVideoSrc = videoSrc ? assetPath(videoSrc) : null;
+  const errored = resolvedVideoSrc !== null && failedSrc === resolvedVideoSrc;
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !videoSrc) return;
+    if (!video || !resolvedVideoSrc) return;
 
-    // `canplay` can fire before hydration attaches the JSX handler, which would
-    // pin `ready` to false for the whole first loop. Listen natively here and
-    // also seed from the element's own readyState.
-    const markReady = () => setReady(true);
-    const frame = requestAnimationFrame(() => {
-      if (video.readyState >= 3) markReady();
-    });
+    video.defaultMuted = true;
+    video.muted = true;
 
-    video.addEventListener("canplay", markReady);
-    video.addEventListener("loadeddata", markReady);
+    const markFailed = () => setFailedSrc(resolvedVideoSrc);
+    if (video.error) {
+      queueMicrotask(markFailed);
+      return;
+    }
 
-    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    const apply = () => {
-      const element = videoRef.current;
-      if (!element) return;
-      if (motionQuery.matches) {
-        setAllowVideo(false);
-        element.pause();
-      } else {
-        setAllowVideo(true);
-        void element.play().catch(() => {});
+    const ensurePlay = () => {
+      if (reducedMotion || video.error) {
+        video.pause();
+        return;
+      }
+      if (video.paused) {
+        void video.play().catch(() => {});
       }
     };
 
-    apply();
-    motionQuery.addEventListener("change", apply);
+    ensurePlay();
+    video.addEventListener("loadeddata", ensurePlay);
+    video.addEventListener("canplay", ensurePlay);
+    video.addEventListener("playing", ensurePlay);
+    video.addEventListener("error", markFailed);
 
     return () => {
-      cancelAnimationFrame(frame);
-      video.removeEventListener("canplay", markReady);
-      video.removeEventListener("loadeddata", markReady);
-      motionQuery.removeEventListener("change", apply);
+      video.removeEventListener("loadeddata", ensurePlay);
+      video.removeEventListener("canplay", ensurePlay);
+      video.removeEventListener("playing", ensurePlay);
+      video.removeEventListener("error", markFailed);
     };
-  }, [videoSrc]);
+  }, [resolvedVideoSrc, reducedMotion]);
+
+  const showVideo = Boolean(resolvedVideoSrc) && !reducedMotion && !errored;
 
   return (
     <>
@@ -74,24 +95,24 @@ export function HeroMedia({
         sizes="100vw"
         className={className}
       />
-      {videoSrc ? (
+      {resolvedVideoSrc ? (
         <video
           ref={videoRef}
+          src={resolvedVideoSrc}
           aria-hidden="true"
           tabIndex={-1}
+          autoPlay
           muted
           loop
           playsInline
-          preload="metadata"
-          poster={posterSrc}
+          preload="auto"
+          onError={() => setFailedSrc(resolvedVideoSrc)}
           className={cn(
-            "absolute inset-0 size-full object-cover transition-opacity duration-700 ease-brand",
-            ready && allowVideo ? "opacity-100" : "opacity-0",
+            "motion-reduce:hidden absolute inset-0 size-full object-cover",
+            showVideo ? "opacity-100" : "hidden opacity-0",
             className
           )}
-        >
-          <source src={assetPath(videoSrc)} />
-        </video>
+        />
       ) : null}
     </>
   );

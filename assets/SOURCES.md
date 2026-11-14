@@ -13,6 +13,15 @@ Unsplash license: https://unsplash.com/license (allows commercial use of Unsplas
 
 Download script (agent can run in connected environment after verifying current status): `scripts/fetch_reference_photos.sh`. Store `public/images/reference/` with `DEMO / STOCK REFERENCE` labeling in prototypes. No copyrighted competitor or car.gr photos are redistributed in this bundle.
 
+## Hero Video Asset (`public/videos/hero-loop.mp4`)
+
+| Title | Source page | Direct MP4 URL | Author | License | Local file | Usage |
+| --- | --- | --- | --- | --- | --- | --- |
+| Electric car driving in the dark woods (`5Ic0LgEUgE`) | https://coverr.co/videos/electric-car-driving-in-the-dark-woods-5ic0lgeuge | https://cdn.coverr.co/videos/coverr-electric-car-driving-in-the-dark-woods-668/1080p.mp4 | Coverr Stock Library contributor (`isAiGenerated: false`, `isPremium: false`) | [Coverr License](https://coverr.co/license) | `public/videos/hero-loop.mp4` | DEMO — decorative car-driving hero background only; not client inventory. |
+
+- Delivered specs: 1280×720 H.264 High L4.1 (`yuv420p`, `avc1`), 24 fps, 10.83 s loop, muted (no audio track), `-movflags +faststart`, 1,664,976 bytes (~1.23 Mbps).
+- License scope: Coverr Stock Library free license permits commercial and personal projects including websites and client work without watermarks or required attribution (prohibits standalone file resale/redistribution and AI training). Replace with client-owned/authorised footage before final launch if real fleet motion is desired.
+
 ## Fonts
 - **Inter**, licensed SIL Open Font License; Greek + Latin support: https://fonts.google.com/specimen/Inter and https://github.com/google/fonts/tree/main/ofl/inter
 - Preferred implementation is `next/font/google` with appropriate subsets; do not bundle font files in this ZIP.
