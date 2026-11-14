@@ -44,6 +44,8 @@ export type Vehicle = {
   luggage: number;
   fuel: VehicleFuel;
   powerHp?: number;
+  /** Set only when the owner has approved a daily rate; null/absent hides it. */
+  pricePerDay?: number | null;
   descriptionEl: string;
   descriptionEn: string;
   image: string;

@@ -34,7 +34,7 @@ const MOVES = [
   },
   {
     label: "[locale] catch-all page",
-    from: "src/app/[locale]/[...rest]",
+    from: "src/app/(site)/[locale]/[...rest]",
     held: "[...rest]"
   }
 ];
@@ -45,6 +45,8 @@ const REQUIRED_FILES = [
   "el/index.html",
   "en/index.html",
   "el/cars/index.html",
+  "el/services/index.html",
+  "en/services/index.html",
   "el/request/index.html",
   "images/reference/hero-greece-delphi-road.jpg",
   ".nojekyll",

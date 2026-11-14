@@ -6,6 +6,7 @@ import {cn} from "@/lib/utils";
 
 const navItems = [
   {href: "/cars", key: "cars"},
+  {href: "/services", key: "services"},
   {href: "/how-it-works", key: "howItWorks"},
   {href: "/faq", key: "faq"},
   {href: "/contact", key: "contact"}

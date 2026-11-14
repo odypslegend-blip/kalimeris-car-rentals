@@ -85,6 +85,14 @@ export function VehicleCard({
             <p className="mt-1 text-[0.75rem] leading-snug text-muted">
               {vehicle.modelNote}
             </p>
+            {typeof vehicle.pricePerDay === "number" ? (
+              <p className="mt-1.5 text-right text-[0.8125rem] font-semibold text-ink">
+                {vehicle.pricePerDay} €{" "}
+                <span className="text-muted">
+                  / {locale === "el" ? "ημέρα" : "day"}
+                </span>
+              </p>
+            ) : null}
           </div>
 
           <span

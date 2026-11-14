@@ -6,6 +6,8 @@ import {RequestPageClient} from "@/components/booking/request-page-client";
 import {Skeleton} from "@/components/ui/skeleton";
 import {getTransportStatus} from "@/lib/inquiry/transport";
 import {buildAlternates} from "@/lib/seo";
+import {getPublishedVehicles} from "@/lib/vehicles/store";
+import {toVehicleView} from "@/lib/vehicles/view";
 
 type RequestPageProps = {
   params: Promise<{locale: string}>;
@@ -55,6 +57,13 @@ export default async function RequestPage({params}: RequestPageProps) {
       ? {configured: false, devSink: false}
       : getTransportStatus();
 
+  // Published-only, same order as the public fleet. `RequestPageClient` reads
+  // the query string in the browser, so the resolved list is injected here
+  // instead of being fetched from a client component.
+  const vehicles = (await getPublishedVehicles()).map((vehicle) =>
+    toVehicleView(vehicle, locale)
+  );
+
   return (
     <section className="pb-16 pt-8 md:pb-24 md:pt-10">
       <div className="page-shell">
@@ -71,7 +80,7 @@ export default async function RequestPage({params}: RequestPageProps) {
         </header>
 
         <Suspense fallback={<RequestSkeleton />}>
-          <RequestPageClient transport={transport} />
+          <RequestPageClient transport={transport} vehicles={vehicles} />
         </Suspense>
       </div>
     </section>

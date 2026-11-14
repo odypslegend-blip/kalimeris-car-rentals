@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {ChevronRight, Menu} from "lucide-react";
+import {ChevronRight, Mail, Menu, Phone} from "lucide-react";
 import {useTranslations} from "next-intl";
 import {Button} from "@/components/ui/button";
 import {
@@ -13,11 +13,13 @@ import {
 } from "@/components/ui/dialog";
 import {LanguageSwitcher} from "@/components/layout/language-switcher";
 import {Link, usePathname} from "@/i18n/navigation";
+import {site} from "@/lib/site";
 import {cn} from "@/lib/utils";
 
 const mobileNavItems = [
   {href: "/", key: "home"},
   {href: "/cars", key: "cars"},
+  {href: "/services", key: "services"},
   {href: "/how-it-works", key: "howItWorks"},
   {href: "/faq", key: "faq"},
   {href: "/contact", key: "contact"}
@@ -99,10 +101,27 @@ export function MobileNav() {
         </nav>
 
         <div className="border-t border-hairline p-5">
+          <div className="flex flex-col">
+            <a
+              href={site.phone.href}
+              className="flex min-h-11 items-center gap-2 text-[0.9375rem] font-semibold text-ink hover:text-brand"
+            >
+              <Phone aria-hidden="true" className="size-4 text-brand" />
+              {site.phone.display}
+            </a>
+            <a
+              href={`mailto:${site.email}`}
+              className="flex min-h-11 items-center gap-2 text-[0.875rem] text-muted hover:text-ink"
+            >
+              <Mail aria-hidden="true" className="size-4 text-brand" />
+              {site.email}
+            </a>
+          </div>
+
           <LanguageSwitcher
             label={t("A11y.languageSwitcher")}
             onNavigate={close}
-            className="self-start"
+            className="mt-3"
           />
         </div>
       </DialogContent>

@@ -26,3 +26,20 @@ real JPEG files larger than 20 KB.
   vehicle card or a vehicle detail page.
 - Never use these images as the client's own fleet, staff, premises or reviews.
 - Keep this file in sync with whatever ships in `public/images/`.
+
+## Hero video credit — DEMO ONLY
+
+Decorative motion footage for the homepage hero, self-hosted at
+`public/videos/hero-loop.mp4`. It is a stand-in, exactly like the reference
+photographs above, and must be replaced with client-owned or client-authorised
+footage before any production launch.
+
+| Title | Source | Author | License | Local file | Status |
+| --- | --- | --- | --- | --- | --- |
+| Scenic Highway Drive at Sunset | https://www.pexels.com/video/scenic-highway-drive-at-sunset-40612791/ | Allan González | [Pexels License](https://www.pexels.com/license/) | `public/videos/hero-loop.mp4` | DEMO — decorative background only. |
+
+- Pexels video id: `40612791`
+- Delivered rendition: 1280×720, 30 fps, H.264 MP4 (~8.6 MB), 29 s loop. The
+  Pexels source is 3840×2160.
+- Licence: Pexels Licence — free for commercial use, no attribution required.
+- Decorative background footage only. It does not depict any vehicle offered for rent by Kalimeris.

@@ -108,7 +108,7 @@ function Notice({
     tone === "danger"
       ? "border-danger/25 bg-danger/5 text-danger"
       : tone === "warning"
-        ? "border-[#b45309]/25 bg-[#fef6e7] text-[#8a4a06]"
+        ? "border-notice-border bg-notice text-notice-ink"
         : "border-line bg-background text-ink";
 
   return (

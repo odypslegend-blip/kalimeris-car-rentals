@@ -1,8 +1,8 @@
 {
   "Meta": {
-    "brand": "KALIMERIS CAR RENTALS",
-    "title": "Kalimeris Car Rentals — Rent with confidence",
-    "description": "Car rental with plain information: choose a car, send a request, and agree the terms before anything is committed."
+    "brand": "KALIMERIS O.E.",
+    "title": "Kalimeris O.E. — Car rentals, Bosch Car Service & parts, Kozani",
+    "description": "Car rental, Bosch Car Service workshop, genuine parts and used cars in Kozani since 1980. 3rd km Kozani – Thessaloniki, +30 24610 28779."
   },
   "Common": {
     "brandName": "KALIMERIS",
@@ -14,24 +14,38 @@
     "label": "Main navigation",
     "home": "Home",
     "cars": "Our cars",
+    "services": "Services",
     "howItWorks": "How it works",
     "faq": "FAQ",
     "contact": "Contact"
   },
   "Footer": {
-    "tagline": "Rent with confidence.",
-    "status": "Fleet, photographs and terms are pending owner confirmation.",
-    "photoCredit": "Photographs: Unsplash and Pexels — temporary reference images, not this company's fleet.",
+    "tagline": "Car rentals, Bosch Car Service and parts in Kozani, since 1980.",
+    "status": "Kalimeris O.E. has been operating in Kozani since 1980. The rental fleet remains illustrative until its photographs and specifications are finally confirmed.",
+    "photoCredit": "Fleet photographs are licensed reference images and not necessarily the business's vehicles.",
     "rights": "All rights reserved.",
-    "disclosure": "The fleet is illustrative; photos, specifications, availability and terms await confirmation. No price is shown.",
+    "disclosure": "The rental fleet is illustrative; photographs and specifications await confirmation. No price is shown.",
     "disclosureLabel": "Fleet note",
     "explore": "Explore",
     "information": "Information",
+    "contactTitle": "Contact",
+    "addressLabel": "Address",
+    "phoneLabel": "Phone",
+    "reservationsLabel": "Reservations",
+    "emailLabel": "Email",
+    "hoursLabel": "Opening hours",
+    "legalLabel": "Company details",
+    "vatLabel": "VAT",
+    "gemiLabel": "GEMI",
+    "followLabel": "Follow us",
+    "parts": "Parts on car.gr",
+    "carsForSale": "Used cars on car.gr",
     "links": {
       "cars": "Our cars",
+      "services": "Services",
       "howItWorks": "How it works",
       "faq": "FAQ",
-      "about": "About",
+      "about": "Company",
       "contact": "Contact",
       "privacy": "Privacy",
       "rentalTerms": "Rental terms"
@@ -43,6 +57,10 @@
     "switchTo": "Switch language to Greek",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
+    "themeToggle": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
     "menuTitle": "Menu",
     "menuDescription": "Site navigation and language selection.",
     "currentLanguage": "Current language: {language}",
@@ -54,14 +72,38 @@
   },
   "Home": {
     "title": "Rent with confidence.",
-    "subtitle": "A clear, practical way to choose your car and send a request — no pressure, no promises we cannot keep.",
+    "subtitle": "Car rental in Kozani from Kalimeris O.E., based at the 3rd km of the Kozani–Thessaloniki road, with 24/7 support.",
     "fleet": {
-      "eyebrow": "Car rental",
+      "eyebrow": "Rental fleet",
       "title": "Our fleet",
-      "description": "Choose the car that fits your trip.",
+      "description": "Illustrative categories, from economy cars to nine-seat vans.",
       "demo": "DEMO",
       "note": "Illustrative fleet — photographs, specifications and availability await confirmation. No price is shown.",
       "viewAll": "View all cars"
+    },
+    "services": {
+      "eyebrow": "Services",
+      "title": "More than a rental.",
+      "description": "The same site houses a Bosch Car Service workshop, a parts department and the rental service.",
+      "items": [
+        {
+          "title": "Bosch Car Service",
+          "body": "Diagnostics, repairs and maintenance for every make, in a 600 m² workshop with 10 service bays."
+        },
+        {
+          "title": "Service & tuning",
+          "body": "LPG conversion, chip tuning, ECU cloning and solutions for DPF, EGR, AdBlue and NOx."
+        },
+        {
+          "title": "Parts",
+          "body": "Genuine parts and accessories for all makes, with a warranty."
+        },
+        {
+          "title": "Car rental",
+          "body": "Nine-seat vans, minivans with a driver, day trips, airport transfers and 24/7 support."
+        }
+      ],
+      "cta": "See our services"
     },
     "steps": {
       "eyebrow": "How it works",
@@ -82,11 +124,11 @@
       ]
     },
     "trust": {
-      "eyebrow": "Terms",
-      "title": "Clear terms, no surprises.",
-      "body": "Vehicle availability, insurance, deposit and pickup details are confirmed with you in writing before a rental is agreed.",
+      "eyebrow": "The company",
+      "title": "Since 1980, alongside your car.",
+      "body": "Kalimeris O.E. has been operating in Kozani since 1980. Availability, insurance, deposit and pickup details are confirmed with you in writing before a rental is agreed.",
       "cta": "Contact",
-      "note": "We publish no phone number or address until they are confirmed."
+      "note": "3rd km Kozani – Thessaloniki, 501 00 Kozani · +30 24610 28779 · info@kalimeriscars.gr"
     }
   },
   "Booking": {
@@ -97,7 +139,7 @@
     "sameAsPickup": "Same as pickup",
     "chooseLocation": "Choose location",
     "selectDates": "Select dates",
-    "helper": "Exact pickup address and operating area are pending confirmation.",
+    "helper": "Pickup is at our premises, 3rd km Kozani – Thessaloniki. Airport transfers on request.",
     "calendar": {
       "label": "Date selection calendar",
       "chooseStart": "Choose a pickup date.",
@@ -115,9 +157,9 @@
   "Fleet": {
     "eyebrow": "Car rental",
     "title": "Our fleet",
-    "description": "Choose the car that fits your trip. All details are illustrative until the owner confirms them.",
+    "description": "Choose the car that fits your trip. Categories and specifications are illustrative until the fleet is confirmed.",
     "metaTitle": "Our fleet — illustrative vehicles",
-    "metaDescription": "Choose the car that fits your trip. All details are illustrative until the owner confirms them.",
+    "metaDescription": "Choose the car that fits your trip. Categories and specifications are illustrative until the fleet is confirmed.",
     "filters": "Filters",
     "category": "Category",
     "transmission": "Transmission",
@@ -184,7 +226,7 @@
   },
   "Conditions": {
     "title": "Rental conditions",
-    "body": "Final rental terms — driver documents, age, deposit, insurance and mileage — are confirmed in writing before the rental. We do not publish terms that have not been approved.",
+    "body": "Final rental terms — driver documents, age, deposit, insurance and mileage — are confirmed in writing before the rental. Pickup is at our premises in Kozani.",
     "pending": "Pending confirmation"
   },
   "Request": {
@@ -311,7 +353,7 @@
       },
       {
         "question": "Where is pickup?",
-        "answer": "The location and exact address are pending confirmation. We do not publish an address that has not been verified."
+        "answer": "Pickup is at our premises, 3rd km Kozani – Thessaloniki, 501 00 Kozani. Opening hours are Monday–Friday 9:00–19:30 and Saturday 9:00–13:00. Airport transfers are available on request."
       },
       {
         "question": "What documents will I need?",
@@ -327,15 +369,15 @@
       },
       {
         "question": "Can I change or cancel my request?",
-        "answer": "Contact us with the request reference. Cancellation terms will be published after approval."
+        "answer": "Call +30 24610 28779 or email info@kalimeriscars.gr with the request reference. Cancellation terms are confirmed in writing before the rental."
       },
       {
         "question": "Are the fleet cars real?",
         "answer": "The fleet is illustrative. Photographs are licensed reference images and not necessarily the business's vehicles. The final list and photographs will be replaced after owner confirmation."
       },
       {
-        "question": "When will the site be complete?",
-        "answer": "We are preparing it. Contact details, terms and the final fleet will be published only after confirmation."
+        "question": "Do you also offer service and parts?",
+        "answer": "Yes. The same site houses a 600 m² Bosch Car Service workshop with 10 service bays and a genuine-parts department. Call +30 24610 28779 to book."
       }
     ],
     "ctaTitle": "Didn't find what you were looking for?",
@@ -343,44 +385,166 @@
     "ctaPrimary": "Send a request"
   },
   "About": {
-    "eyebrow": "About",
-    "title": "A clear rental experience.",
-    "intro": "KALIMERIS CAR RENTALS is preparing a modern, practical car-rental service. The business identity, operating area and contact details are pending confirmation.",
-    "metaTitle": "About — a clear rental experience",
-    "metaDescription": "KALIMERIS CAR RENTALS is preparing a modern, practical car-rental service. Identity, operating area and contact details are pending confirmation.",
-    "principlesTitle": "Three principles",
-    "principles": [
+    "eyebrow": "The company",
+    "title": "Since 1980, alongside your car.",
+    "intro": "Kalimeris O.E. has been repairing and selling cars in Kozani since 1980. Today it runs a used-car showroom, a Bosch Car Service workshop, a parts department and a car-rental service.",
+    "metaTitle": "The company — Kalimeris O.E., Kozani",
+    "metaDescription": "In Kozani since 1980: used cars, a 600 m² Bosch Car Service workshop, genuine parts and car rentals.",
+    "activitiesTitle": "Four activities, one site",
+    "activities": [
       {
-        "title": "Clarity",
-        "body": "We state what applies before anything is committed."
+        "title": "Used cars",
+        "body": "Checked, carefully selected vehicles with a full technical inspection and a mechanical warranty."
       },
       {
-        "title": "Honesty",
-        "body": "We do not publish prices, availability or terms that have not been approved."
+        "title": "Bosch Car Service",
+        "body": "A 600 m² workshop with 10 service bays, for every make and model."
       },
       {
-        "title": "Practicality",
-        "body": "You choose based on seats, luggage and transmission, not advertising slogans."
+        "title": "Parts",
+        "body": "Genuine parts and accessories for all makes, with a genuine-parts warranty."
+      },
+      {
+        "title": "Car rental",
+        "body": "Nine-seat vans, minivans with a driver, day trips and airport transfers."
       }
     ],
-    "markNote": "The K mark is an original proposal pending approval.",
-    "identityTitle": "Identity pending confirmation",
-    "identityNote": "The business name, operating area and contact details have not been confirmed.",
-    "disclosure": "The fleet, photographs and business details are illustrative and await confirmation. We do not publish prices."
+    "boschTitle": "Part of the Bosch Car Service network",
+    "boschBody": "Kalimeris O.E. is a member of the Bosch Car Service network, with more than 6,000 workshops in Europe and 11,000 worldwide. Bosch expertise, specialised technicians and genuine parts.",
+    "stats": [
+      {
+        "value": "1980",
+        "label": "Founded"
+      },
+      {
+        "value": "600 m²",
+        "label": "Workshop"
+      },
+      {
+        "value": "10",
+        "label": "Service bays"
+      },
+      {
+        "value": "230",
+        "label": "Google reviews"
+      }
+    ],
+    "factsTitle": "Company details",
+    "factLegalLabel": "Legal name",
+    "factLegalValue": "KALIMERIS & SIA O.E.",
+    "factAddressLabel": "Address",
+    "factAddressValue": "3rd km Kozani – Thessaloniki, 501 00 Kozani, Greece",
+    "factPhoneLabel": "Phone",
+    "factPhoneValue": "+30 24610 28779",
+    "factEmailLabel": "Email",
+    "factEmailValue": "info@kalimeriscars.gr",
+    "factVatLabel": "VAT number",
+    "factVatValue": "099768245",
+    "factGemiLabel": "GEMI number",
+    "factGemiValue": "11036836000",
+    "factHoursLabel": "Opening hours",
+    "factHoursValue": "Monday–Friday 9:00–19:30 · Saturday 9:00–13:00",
+    "disclosure": "Fleet photographs and specifications are illustrative until final confirmation. No prices are published.",
+    "ctaTitle": "Come and meet us.",
+    "ctaBody": "3rd km Kozani – Thessaloniki, 501 00 Kozani.",
+    "ctaPrimary": "Contact",
+    "ctaSecondary": "See our services"
+  },
+  "Services": {
+    "eyebrow": "Services",
+    "title": "Service, parts and rentals.",
+    "intro": "Everything your car needs — from a Bosch Car Service appointment to the rental for your next trip — at the same site in Kozani.",
+    "metaTitle": "Services — Bosch Car Service, Service & Tuning, Car rental",
+    "metaDescription": "Bosch Car Service workshop, diagnostics, LPG conversion, chip tuning, genuine parts and car rentals in Kozani.",
+    "workshop": {
+      "eyebrow": "Bosch Car Service",
+      "title": "A workshop for every make and model",
+      "body": "As a member of the Bosch Car Service network, our 600 m² workshop with 10 service bays offers maintenance and repairs with genuine parts and specialised technicians.",
+      "items": [
+        "Diagnostics, repairs and scheduled maintenance",
+        "MOT (KTEO) preparation and technical inspection",
+        "Engine maintenance, oil and filter changes",
+        "Brakes, batteries, lights and multi-point checks",
+        "Air-conditioning service",
+        "Tyres: fitting, balancing, alignment and seasonal storage",
+        "Spring and winter vehicle checks",
+        "Diagnosis and repair of electronic systems"
+      ]
+    },
+    "performance": {
+      "eyebrow": "Service & Tuning",
+      "title": "LPG, chip tuning and emissions solutions",
+      "body": "We carry out specialist work with modern diagnostic and programming equipment, always within the engine's factory safety margins.",
+      "items": [
+        "LPG conversion",
+        "Chip tuning and ECU remapping",
+        "Engine control unit (ECU) cloning",
+        "Solutions for DPF, OPF, EGR, catalytic converters, AdBlue and NOx",
+        "Electronic system diagnosis and testing"
+      ]
+    },
+    "rental": {
+      "eyebrow": "Car rental",
+      "title": "Rentals for every journey",
+      "body": "Modern, safe and reliable vehicles for individuals and businesses, with 24/7 support.",
+      "items": [
+        "Nine-seat vans for groups and families",
+        "Minivans with a driver",
+        "Car rental",
+        "Family and business day trips",
+        "Airport transfers",
+        "Flexible schedules and 24/7 support"
+      ],
+      "cta": "View the fleet",
+      "reserve": "Reservations: +30 694 818 1888"
+    },
+    "parts": {
+      "eyebrow": "Parts",
+      "title": "Genuine parts and accessories",
+      "body": "A wide range of parts for all makes, with a genuine-parts warranty and competitive prices.",
+      "cta": "Browse parts on car.gr"
+    },
+    "ctaTitle": "Book a service or request a quote.",
+    "ctaBody": "Call +30 24610 28779 or send us a request. For rental reservations: +30 694 818 1888.",
+    "ctaPrimary": "Send a request",
+    "ctaSecondary": "Contact"
   },
   "Contact": {
-    "eyebrow": "Contact details",
+    "eyebrow": "Contact",
     "title": "Contact",
-    "intro": "Contact details — phone, email and address — are pending confirmation and are not published yet.",
-    "metaTitle": "Contact",
-    "metaDescription": "Contact details are pending confirmation. The only live channel is the request form.",
-    "channelTitle": "How can we get in touch now?",
-    "channelBody": "Send a request through the form. We will reply to the email or phone number you provide.",
+    "intro": "Kalimeris O.E. is based at the 3rd km of the Kozani–Thessaloniki road. Call us for a rental, a service or parts.",
+    "metaTitle": "Contact — Kalimeris O.E., Kozani",
+    "metaDescription": "Phone +30 24610 28779, email info@kalimeriscars.gr, 3rd km Kozani–Thessaloniki, 501 00 Kozani. Open Monday–Friday 9:00–19:30, Saturday 9:00–13:00.",
+    "detailsTitle": "Contact details",
+    "phoneLabel": "Phone",
+    "reservationsLabel": "Rental reservations",
+    "reservationsManager": "Manager: Paschalis Kalimeris",
+    "emailLabel": "Email",
+    "serviceEmailLabel": "Service email",
+    "addressLabel": "Address",
+    "hoursLabel": "Opening hours",
+    "hoursWeekdays": "Monday – Friday: 9:00 am – 7:30 pm",
+    "hoursSaturday": "Saturday: 9:00 am – 1:00 pm",
+    "companyTitle": "Company details",
+    "companyNameLabel": "Legal name",
+    "companyName": "KALIMERIS & SIA O.E.",
+    "activityLabel": "Activities",
+    "activityValue": "Car sales · Bosch Car Service · Parts · Car rental",
+    "vatLabel": "VAT number",
+    "gemiLabel": "GEMI number",
+    "mapCta": "Get directions",
+    "formTitle": "Send a request",
+    "formBody": "Fill in the form for a rental and we will come back with availability and terms. For service or parts, call +30 24610 28779.",
     "cta": "Send a request",
-    "pendingTitle": "What is not published yet",
-    "pendingItems": ["Phone", "Email", "Address"],
-    "pendingValue": "Pending confirmation",
-    "hours": "Opening hours: not confirmed."
+    "servicesTitle": "What we can do for you",
+    "services": [
+      "Car and nine-seat van rental",
+      "Minivan with a driver and day trips",
+      "Airport transfers",
+      "Bosch Car Service workshop",
+      "LPG conversion and chip tuning",
+      "Genuine parts and accessories"
+    ]
   },
   "Privacy": {
     "eyebrow": "Legal",
@@ -388,7 +552,7 @@
     "intro": "How we collect and use the data you send us with a request.",
     "metaTitle": "Privacy policy (draft)",
     "metaDescription": "Draft privacy policy: data, purpose, legal basis, retention, sharing, cookies, rights and security.",
-    "notice": "Draft — pending legal review and owner confirmation.",
+    "notice": "Draft — pending legal review.",
     "contents": "On this page",
     "sections": [
       {
@@ -423,8 +587,8 @@
         "id": "retention",
         "title": "Retention",
         "paragraphs": [
-          "The retention period is pending owner confirmation. Until it is set, requests are kept only as long as needed to answer them.",
-          "Once the period is set, it will be published on this page."
+          "The retention period will be set and published on this page.",
+          "Until it is set, requests are kept only as long as needed to answer them."
         ]
       },
       {
@@ -454,7 +618,9 @@
       {
         "id": "security",
         "title": "Security",
-        "paragraphs": ["The following measures are in place:"],
+        "paragraphs": [
+          "The following measures are in place:"
+        ],
         "bullets": [
           "Server-side validation of incoming data.",
           "Rate limiting per IP address and a global limit.",
@@ -465,7 +631,7 @@
         "id": "contact",
         "title": "Contact",
         "paragraphs": [
-          "Contact details for data-protection matters are pending confirmation and are not published yet. Until then, use the request form."
+          "For data-protection matters: info@kalimeriscars.gr, +30 24610 28779, 3rd km Kozani – Thessaloniki, 501 00 Kozani, Greece."
         ]
       }
     ]
@@ -473,7 +639,7 @@
   "RentalTerms": {
     "eyebrow": "Legal",
     "title": "Rental terms",
-    "intro": "The terms below are a draft. Every topic will be confirmed in writing before the rental.",
+    "intro": "The specific terms below are a draft and will be confirmed in writing before the rental.",
     "metaTitle": "Rental terms (draft)",
     "metaDescription": "Draft rental terms: driver, documents, deposit, insurance, fuel, mileage, cancellation, damage, pickup and vehicle substitution.",
     "notice": "Draft — pending legal review and owner confirmation.",
@@ -544,7 +710,8 @@
         "id": "pickup-return",
         "title": "Pickup and return",
         "paragraphs": [
-          "The location, exact address and pickup and return hours are pending confirmation. They will be given in writing before the rental."
+          "Pickup and return take place at our premises, 3rd km Kozani – Thessaloniki, 501 00 Kozani, Greece.",
+          "Opening hours: Monday–Friday 9:00–19:30, Saturday 9:00–13:00."
         ]
       },
       {

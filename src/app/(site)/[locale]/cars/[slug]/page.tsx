@@ -16,14 +16,19 @@ import {VehicleSpecRow} from "@/components/fleet/vehicle-spec-row";
 import {Badge} from "@/components/ui/badge";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {Link} from "@/i18n/navigation";
-import {getVehicleBySlug, getVehicleName, vehicles} from "@/lib/data/fleet";
+import {getVehicleName} from "@/lib/data/fleet";
 import {buildAlternates} from "@/lib/seo";
+import {getPublishedVehicles, getVehicleForPublic} from "@/lib/vehicles/store";
+import {toVehicleView} from "@/lib/vehicles/view";
 
 type VehiclePageProps = {
   params: Promise<{locale: string; slug: string}>;
 };
 
-export function generateStaticParams() {
+export const revalidate = 30;
+
+export async function generateStaticParams() {
+  const vehicles = await getPublishedVehicles();
   return vehicles.map((vehicle) => ({slug: vehicle.slug}));
 }
 
@@ -31,12 +36,13 @@ export async function generateMetadata({
   params
 }: VehiclePageProps): Promise<Metadata> {
   const {locale, slug} = await params;
-  const vehicle = getVehicleBySlug(slug);
+  const record = await getVehicleForPublic(slug);
 
-  if (!vehicle) {
+  if (!record) {
     return {title: "404"};
   }
 
+  const vehicle = toVehicleView(record, locale);
   const name = getVehicleName(vehicle);
   const description =
     locale === "el" ? vehicle.descriptionEl : vehicle.descriptionEn;
@@ -52,11 +58,13 @@ export default async function VehiclePage({params}: VehiclePageProps) {
   const {locale, slug} = await params;
   setRequestLocale(locale);
 
-  const vehicle = getVehicleBySlug(slug);
+  const record = await getVehicleForPublic(slug);
 
-  if (!vehicle) {
+  if (!record) {
     notFound();
   }
+
+  const vehicle = toVehicleView(record, locale);
 
   const [tv, tnav, tcommon, categories, transmissions, fuels, conditions] =
     await Promise.all([
@@ -175,6 +183,12 @@ export default async function VehiclePage({params}: VehiclePageProps) {
           <p className="mt-1.5 text-[0.9375rem] text-muted">
             {vehicle.modelNote}
           </p>
+          {vehicle.pricePerDay != null ? (
+            <p className="mt-2 text-[1.0625rem] font-semibold text-ink">
+              {vehicle.pricePerDay} € /{" "}
+              {locale === "el" ? "ημέρα" : "day"}
+            </p>
+          ) : null}
           <p className="mt-4 max-w-[60ch] text-[0.9375rem] leading-relaxed text-muted sm:text-base">
             {description}
           </p>

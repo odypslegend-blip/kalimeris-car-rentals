@@ -11,11 +11,7 @@ import {
 import {Badge} from "@/components/ui/badge";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/base-path";
-import {
-  getVehicleBySlug,
-  getVehicleName,
-  vehicles
-} from "@/lib/data/fleet";
+import {getVehicleName, type Vehicle} from "@/lib/data/fleet";
 import {findLocation, getLocationName, locations} from "@/lib/data/locations";
 import {formatIsoDateLabel} from "@/lib/dates";
 import {
@@ -36,9 +32,12 @@ function firstString(value: string | null | undefined): string | undefined {
  * summary + form layout the server page used to build.
  */
 export function RequestPageClient({
-  transport
+  transport,
+  vehicles
 }: {
   transport: RequestFormTransport;
+  /** Published vehicles, injected by the server page in public ordering. */
+  vehicles: Vehicle[];
 }) {
   const t = useTranslations("Request");
   const common = useTranslations("Common");
@@ -52,7 +51,9 @@ export function RequestPageClient({
   );
 
   const requestedSlug = firstString(rawParams.get("vehicle"));
-  const vehicle = requestedSlug ? getVehicleBySlug(requestedSlug) : undefined;
+  const vehicle = requestedSlug
+    ? vehicles.find((item) => item.slug === requestedSlug)
+    : undefined;
 
   const pickup = findLocation(search.pickup) ?? locations[0];
   const returnLocation = findLocation(search.return) ?? pickup;
