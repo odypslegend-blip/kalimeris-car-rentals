@@ -722,7 +722,7 @@ export function RequestForm({vehicles, defaults, transport}: RequestFormProps) {
               <>
                 <Loader2
                   aria-hidden="true"
-                  className="animate-spin motion-reduce:animate-none"
+                  className="animate-spin"
                 />
                 {t("submitting")}
               </>

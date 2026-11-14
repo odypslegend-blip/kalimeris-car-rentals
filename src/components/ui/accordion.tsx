@@ -47,7 +47,7 @@ function AccordionTrigger({
         <span className="min-w-0 flex-1">{children}</span>
         <Plus
           aria-hidden="true"
-          className="mt-0.5 size-4 shrink-0 text-brand transition-transform duration-[var(--token-duration-normal)] ease-brand motion-reduce:transition-none"
+          className="mt-0.5 size-4 shrink-0 text-brand transition-transform duration-[var(--token-duration-normal)] ease-brand"
         />
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>

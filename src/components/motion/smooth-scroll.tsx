@@ -51,9 +51,6 @@ export function SmoothScrollProvider() {
 
   useEffect(() => {
     const root = document.documentElement;
-    const reducedMotionQuery = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    );
     const finePointerQuery = window.matchMedia(
       "(hover: hover) and (pointer: fine)"
     );
@@ -83,17 +80,13 @@ export function SmoothScrollProvider() {
       }
 
       if (scrollY < 900) {
-        const parallaxY = reducedMotionQuery.matches
-          ? 0
-          : Math.min(scrollY * 0.12, 36);
+        const parallaxY = Math.min(scrollY * 0.12, 36);
         root.style.setProperty("--hero-parallax-y", `${parallaxY.toFixed(1)}px`);
       }
 
       const delta = Math.abs(scrollY - lastScrollY);
       lastScrollY = scrollY;
-      const velocity = reducedMotionQuery.matches
-        ? 0
-        : Math.min(1, delta / 48);
+      const velocity = Math.min(1, delta / 48);
       root.style.setProperty("--scroll-velocity", velocity.toFixed(3));
 
       if (velocityResetTimer !== null) {
@@ -144,7 +137,6 @@ export function SmoothScrollProvider() {
 
     const handleWheel = (event: WheelEvent) => {
       if (
-        reducedMotionQuery.matches ||
         !finePointerQuery.matches ||
         navigator.webdriver ||
         event.ctrlKey ||

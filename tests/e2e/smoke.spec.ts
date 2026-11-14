@@ -217,17 +217,55 @@ test.describe("Greek home", () => {
 
       await reducedPage.setViewportSize({width: 1440, height: 900});
       await reducedPage.goto("/el", {waitUntil: "networkidle"});
+      await expect(reducedPage.locator("h1.hero-load-rise")).toHaveCSS(
+        "animation-name",
+        "hero-rise"
+      );
+      await expect(reducedPage.locator(".hero-underline-path")).toHaveCSS(
+        "animation-name",
+        "hero-stroke"
+      );
+
+      const reducedCard = reducedPage.locator(".spotlight-card").first();
+      await reducedCard.scrollIntoViewIfNeeded();
+      const reducedCardBox = await reducedCard.boundingBox();
+      expect(reducedCardBox).not.toBeNull();
+      if (reducedCardBox) {
+        await reducedPage.mouse.move(
+          reducedCardBox.x + reducedCardBox.width / 3,
+          reducedCardBox.y + reducedCardBox.height / 3
+        );
+        await reducedPage.evaluate(
+          () =>
+            new Promise<void>((resolve) =>
+              requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+            )
+        );
+        const [mouseX, tiltX] = await reducedCard.evaluate((el) => [
+          el.style.getPropertyValue("--mouse-x"),
+          el.style.getPropertyValue("--tilt-x")
+        ]);
+        expect(mouseX).toMatch(/px$/);
+        expect(tiltX).toMatch(/deg$/);
+      }
+
+      const reducedSteps = reducedPage.locator("[data-animated-steps]");
+      await reducedSteps.scrollIntoViewIfNeeded();
       await reducedPage.evaluate(
         () =>
           new Promise<void>((resolve) =>
             requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
           )
       );
-      const reducedSteps = reducedPage.locator("[data-animated-steps]");
-      await reducedSteps.scrollIntoViewIfNeeded();
       await expect(reducedSteps).toHaveAttribute("data-steps-active", "true");
-      const firstReveal = reducedPage.locator("[data-reveal]").first();
-      await expect(firstReveal).toHaveCSS("opacity", "1");
+      const parallaxY = await reducedPage.evaluate(() =>
+        document.documentElement.style.getPropertyValue("--hero-parallax-y")
+      );
+      expect(parallaxY).toMatch(/px$/);
+      expect(parseFloat(parallaxY)).toBeGreaterThan(0);
+
+      const visibleReveal = reducedPage.locator('[data-reveal="visible"]').first();
+      await expect(visibleReveal).toHaveCSS("opacity", "1");
       expect(reducedErrors).toEqual([]);
     } finally {
       await reducedContext.close();

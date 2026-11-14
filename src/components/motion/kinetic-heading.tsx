@@ -24,9 +24,6 @@ export function HeroKineticHeading({
     const element = headingRef.current;
     if (!element) return;
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reducedMotion.matches) return;
-
     let rafId: number | null = null;
     let lastScrollY = window.scrollY;
     let targetShift = 0;
@@ -52,7 +49,6 @@ export function HeroKineticHeading({
     };
 
     const onScroll = () => {
-      if (reducedMotion.matches) return;
       const scrollY = window.scrollY;
 
       if (scrollY > 520) {

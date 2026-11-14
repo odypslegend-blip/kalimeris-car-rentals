@@ -23,18 +23,9 @@ export function SpotlightCard({
 }: SpotlightCardProps) {
   const cardRef = React.useRef<HTMLDivElement>(null);
   const rafRef = React.useRef<number | null>(null);
-  const reducedMotionRef = React.useRef(false);
 
   React.useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    reducedMotionRef.current = query.matches;
-    const onChange = (event: MediaQueryListEvent) => {
-      reducedMotionRef.current = event.matches;
-    };
-    query.addEventListener("change", onChange);
-
     return () => {
-      query.removeEventListener("change", onChange);
       if (rafRef.current !== null) {
         window.cancelAnimationFrame(rafRef.current);
       }
@@ -42,7 +33,7 @@ export function SpotlightCard({
   }, []);
 
   function handlePointerMove(event: React.PointerEvent<HTMLDivElement>) {
-    if (event.pointerType !== "mouse" || reducedMotionRef.current) return;
+    if (event.pointerType !== "mouse") return;
 
     const element = cardRef.current;
     if (!element) return;

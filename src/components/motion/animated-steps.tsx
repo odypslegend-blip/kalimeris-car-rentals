@@ -34,8 +34,7 @@ export function AnimatedSteps({
     const element = listRef.current;
     if (!element) return;
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reducedMotion.matches || typeof IntersectionObserver === "undefined") {
+    if (typeof IntersectionObserver === "undefined") {
       const frame = window.requestAnimationFrame(() => setActive(true));
       return () => window.cancelAnimationFrame(frame);
     }
