@@ -54,7 +54,18 @@ test.describe("Greek home", () => {
   });
 
   test("language switch moves to English", async ({page}) => {
-    await page.goto("/el");
+    const consoleErrors: string[] = [];
+    page.on("console", (msg) => {
+      if (msg.type() === "error") consoleErrors.push(msg.text());
+    });
+    page.on("pageerror", (err) => consoleErrors.push(err.message));
+
+    const response = await page.goto("/el");
+    expect(response?.status()).toBe(200);
+    const ssrHtml = await response?.text();
+    expect(ssrHtml).toMatch(
+      /<script[^>]*id="theme-init"[^>]*>[^<]*kalimeris-theme/
+    );
 
     await page.locator('header a[lang="en"]').first().click();
 
@@ -62,6 +73,7 @@ test.describe("Greek home", () => {
       "Rent with confidence."
     );
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    expect(consoleErrors).toEqual([]);
   });
 });
 
