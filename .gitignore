@@ -26,6 +26,8 @@
 
 # misc
 .DS_Store
+Thumbs.db
+desktop.ini
 *.pem
 
 # debug
@@ -48,6 +50,11 @@ screenshots/**/*.pid
 screenshots/**/build.log
 screenshots/**/metrics.json
 
+# ad-hoc capture runs: machine-local, large and regenerable. Curated evidence
+# stays tracked under screenshots/{final,live,phase*,visual-gate}.
+/screenshots/local/
+/screenshots/theme-audit/
+
 # playwright
 /test-results/
 /playwright-report/
@@ -60,3 +67,6 @@ screenshots/**/metrics.json
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# agent / language-server state (Serena MCP)
+/.serena/
