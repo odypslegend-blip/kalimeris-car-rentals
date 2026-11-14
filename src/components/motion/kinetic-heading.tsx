@@ -34,13 +34,13 @@ export function HeroKineticHeading({
       currentShift += (targetShift - currentShift) * 0.15;
 
       if (Math.abs(targetShift - currentShift) < 0.002 && targetShift === 0) {
-        element.style.letterSpacing = "-0.03em";
+        element.style.letterSpacing = "-0.025em";
         element.style.transform = "";
         rafId = null;
         return;
       }
 
-      const trackingEm = (-0.03 + currentShift * 0.015).toFixed(4);
+      const trackingEm = (-0.025 + currentShift * 0.015).toFixed(4);
       const translateY = (-currentShift * 4).toFixed(2);
       element.style.letterSpacing = `${trackingEm}em`;
       element.style.transform = `translate3d(0, ${translateY}px, 0)`;
@@ -88,7 +88,7 @@ export function HeroKineticHeading({
     <h1
       ref={headingRef}
       className={cn(
-        "hero-load-rise max-w-full font-display text-[length:var(--step-display)] font-extrabold leading-[1.04] tracking-[-0.03em] text-ink",
+        "hero-load-rise max-w-full font-display text-[length:var(--step-display)] font-bold leading-[1.12] tracking-[-0.025em] text-ink",
         className
       )}
     >

@@ -172,12 +172,12 @@
   --color-notice-border: var(--token-notice-border);
   --color-notice-ink: var(--token-notice-ink);
 
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system,
-    "Segoe UI", Roboto, Arial, sans-serif;
+  --font-sans: var(--font-syne), var(--font-manrope), ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --font-display: var(--font-syne), var(--font-manrope), ui-sans-serif,
     system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular,
-    Menlo, monospace;
+  --font-mono: var(--font-syne), var(--font-manrope), ui-sans-serif,
+    system-ui, sans-serif;
 
   --radius-field: var(--token-radius-input);
   --radius-card: var(--token-radius-card);
@@ -213,6 +213,7 @@
     background-color: var(--token-bg);
     color: var(--token-ink);
     font-family: var(--font-sans);
+    letter-spacing: -0.015em;
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -234,15 +235,15 @@
 
   h1,
   h2,
-  h3 {
-    font-family: var(--font-display, var(--font-syne), var(--font-manrope), ui-sans-serif, system-ui, sans-serif);
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
     letter-spacing: -0.025em;
     /* Keep enough ascender clearance so Greek accents (ά/έ/ή/ί/ό/ύ/ώ) never clip. */
     line-height: 1.12;
-  }
-
-  :where(footer) h2 {
-    font-family: var(--font-sans);
   }
 
   h1,

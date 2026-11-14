@@ -150,7 +150,7 @@ test.describe("Greek home", () => {
       };
     });
     expect(loadedFonts.h1Font).toMatch(/Syne/i);
-    expect(loadedFonts.bodyFont).toMatch(/Manrope/i);
+    expect(loadedFonts.bodyFont).toMatch(/Syne/i);
 
     const progress = page.locator("[data-scroll-progress]");
     await expect(progress).toBeAttached();

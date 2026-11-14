@@ -57,7 +57,7 @@ export function MobileNav() {
           <DialogDescription className="sr-only">
             {t("A11y.menuDescription")}
           </DialogDescription>
-          <p className="mt-2 text-[1.0625rem] font-extrabold tracking-[0.1em] text-ink">
+          <p className="mt-2 text-[1.0625rem] font-bold tracking-[0.1em] text-ink">
             {t("Common.brandName")}
           </p>
           <p className="mt-1 text-[0.5rem] font-bold tracking-[0.36em] text-muted">

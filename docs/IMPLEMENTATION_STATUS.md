@@ -1,6 +1,6 @@
 # Implementation status — Kalimeris Car Rentals
 
-Last updated: 2026-11-14 · Status: Light-Mode Editorial Redesign & Pairing A typography implemented (`17/17` Playwright E2E passing); **published on Vercel (`https://kalimeris-car-rentals.vercel.app`) and as a static preview on GitHub Pages**; launch still blocked on client facts/approvals.
+Last updated: 2026-11-14 · Status: Light-Mode Editorial Redesign & unified Syne (400–700) typography implemented (`17/17` Playwright E2E passing); **published on Vercel (`https://kalimeris-car-rentals.vercel.app`) and as a static preview on GitHub Pages**; launch still blocked on client facts/approvals.
 
 ---
 
@@ -10,7 +10,7 @@ Last updated: 2026-11-14 · Status: Light-Mode Editorial Redesign & Pairing A ty
 | --- | --- |
 | Next.js App Router + TypeScript + Tailwind v4 scaffold | Done |
 | Dual-theme design tokens from `design/tokens.json` (`#F5F2EA` editorial light mode + preserved `.dark` monochrome) wired into `@theme inline` | Done |
-| Pairing A typography: `Syne` + `Manrope` + `JetBrains Mono` (Greek + Latin subsets) | Done |
+| Unified typography: `Syne` (400/500/600/700, Greek + Latin subsets) across `--font-display`, `--font-sans`, and `--font-mono` | Done |
 | next-intl routing (`el` default, `en`), `src/proxy.ts`, dictionaries | Done |
 | Header (`1980` badge, orange active indicator), language switcher, `.road-divider` footer, editorial hero | Done |
 | Automotive accents (`HeritageBadge`, `RouteIndicator`, `TechnicalDivider`, `ChassisIllustration`) | Done |
@@ -651,6 +651,7 @@ Following the typography and layout upgrade (Pairing A `Syne` + `Manrope` + `Jet
 - **`src/components/layout/` & Home (`src/app/(site)/[locale]/page.tsx`)**: Header features `1980` heritage pill and orange active nav indicator (`dark:bg-brand`); footer uses `.road-divider`; homepage pairs the editorial Hero telemetry strip and spotlight search dock with the `1+2` Flagship Fleet Bento, Style 2 `AnimatedSteps`, Asymmetric Split Services Ledger (`bg-surface-warm/60`, `ChassisIllustration`), and Company Heritage Spread (`1980`, `600 m²`, `24/7`).
 - **Inner Pages & Fleet (`cars`, `cars/[slug]`, `services`, `how-it-works`, `about`, `contact`, `faq`)**: Updated with `TechnicalDivider`, text-only route indicators, automotive-framed cards, and `1.03` image hover scaling; decorative/index numbers (`01`, `02`, `01–03`, `STAGE 01`, `GR-50100`, FAQ/ledger pills) removed across sections while retaining essential factual figures (`1980`, `600 m²`, `24/7`, contact details, and vehicle specs).
 - **Parallax Fix (`src/components/motion/smooth-scroll.tsx`)**: Removed the `if (scrollY < 900)` gate on `--hero-parallax-y` so direct jumps past `900px` still clamp smoothly up to `36.0px`.
+- **Unified `Syne` Typography (`layout.tsx`, `globals.css`, `kinetic-heading.tsx`, `wordmark.tsx`, `mobile-nav.tsx`, `design/tokens.json`)**: Restricted `Syne` weights to proportional `400`/`500`/`600`/`700` (eliminating the expanded `800` master on hero/wordmark), mapped `--font-sans`, `--font-display`, and `--font-mono` to `var(--font-syne)` across all elements, applied `font-weight: 700` / `-0.025em` tracking / `1.12` line-height across `h1`–`h6`, and set `-0.015em` body tracking.
 
 ### Verification (Playwright E2E & Static Checks)
 - `npm run typecheck` (`tsc --noEmit`): **exit 0**

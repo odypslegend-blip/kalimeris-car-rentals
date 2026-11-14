@@ -27,11 +27,11 @@ Inspired by Virtuo's **clarity**, not its proprietary code or layout. Original, 
 - Border `#333333`, hairline `#282828`.
 - `--token-surface-warm`, `--token-accent-orange*`, and `--token-accent-yellow*` map to monochrome dark tokens in `.dark` so light-mode warmth never leaks into dark mode.
 
-### Typography (Pairing A)
-- Display headings: `Syne` (`--font-syne`, weights 600/700/800, Greek + Latin subsets, tight editorial tracking).
-- Body & UI copy: `Manrope` (`--font-manrope`, weights 400/500/600/700, Greek + Latin subsets).
-- Technical labels & section indices: `JetBrains Mono` (`--font-jetbrains-mono`, weights 500/600, tracked uppercase telemetry).
-- H1 desktop 52-64 px / line 1.06; mobile 34-40 px / 1.12.
+### Typography (Unified Syne)
+- All webpage elements (`--font-display`, `--font-sans`, `--font-mono`): `Syne` (`--font-syne`, proportional weights 400/500/600/700, Greek + Latin subsets; `800` extra-expanded master excluded).
+- Headings (`h1`–`h6`): `Syne` weight `700`, tight editorial tracking `-0.025em`, line-height `1.12`.
+- Body & UI copy: `Syne` weights `400`/`500`/`600` with `-0.015em` tracking (with `Manrope` retained only as an emergency CSS fallback).
+- H1 desktop 52-64 px / line 1.12; mobile 34-40 px / 1.12.
 - H2 desktop 32-40 px; section descriptions 16-18 px.
 - Body 15-16 px with line-height 1.5. Label 12-13 px.
 - Max text line width about 56-64 characters.
