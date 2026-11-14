@@ -1,0 +1,8 @@
+User-Agent: *
+Allow: /
+Disallow: /kalimeris-car-rentals/api/
+Disallow: /kalimeris-car-rentals/el/request
+Disallow: /kalimeris-car-rentals/en/request
+
+Host: https://odypslegend-blip.github.io/kalimeris-car-rentals
+Sitemap: https://odypslegend-blip.github.io/kalimeris-car-rentals/sitemap.xml
