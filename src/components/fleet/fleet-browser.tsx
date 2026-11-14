@@ -12,6 +12,7 @@ import {
   withFleetParams,
   withoutFleetFilters
 } from "@/lib/search-params";
+import {cn} from "@/lib/utils";
 
 type FleetBrowserProps = {
   vehicles: readonly Vehicle[];
@@ -50,23 +51,41 @@ export function FleetBrowser({vehicles, className}: FleetBrowserProps) {
   const clearHref = withFleetParams("/cars", withoutFleetFilters(search));
 
   return (
-    <div className={className}>
-      <FleetFilters params={search} className="mt-8" />
+    <div className={cn("min-w-0", className)}>
+      <div
+        className={cn(
+          "mt-8 min-w-0 rounded-card border border-hairline bg-surface/85 p-3.5 shadow-card backdrop-blur-md transition-colors duration-[var(--token-duration-normal)] ease-brand sm:p-4 md:sticky md:top-[calc(var(--token-header-h)+0.75rem)] md:z-20",
+          "[&_nav]:overflow-visible [&_nav]:pb-0 [&_nav_ul]:w-full [&_nav_ul]:max-w-full [&_nav_ul]:flex-wrap [&_nav_ul]:gap-1 [&_nav_ul]:rounded-field [&_nav_ul]:border [&_nav_ul]:border-hairline [&_nav_ul]:bg-background/80 [&_nav_ul]:p-1",
+          "[&_nav_a]:min-h-9 [&_nav_a]:rounded-[7px] [&_nav_a]:px-3 [&_nav_a]:text-[0.8125rem]",
+          "[&_nav_a:not([aria-current=page])]:border-transparent [&_nav_a:not([aria-current=page])]:bg-transparent [&_nav_a:not([aria-current=page])]:text-muted [&_nav_a:not([aria-current=page])]:hover:bg-surface/85 [&_nav_a:not([aria-current=page])]:hover:text-ink",
+          "[&_nav_a[aria-current=page]]:border-brand-strong [&_nav_a[aria-current=page]]:bg-brand-strong [&_nav_a[aria-current=page]]:text-brand-ink [&_nav_a[aria-current=page]]:shadow-xs"
+        )}
+      >
+        <FleetFilters params={search} />
 
-      <div className="mt-6 flex flex-col gap-2 border-t border-line pt-4 sm:flex-row sm:items-center sm:justify-between">
-        <p aria-live="polite" className="text-[0.875rem] font-semibold text-ink">
-          {t("count", {count: filtered.length})}
-        </p>
-        <p className="max-w-[56ch] text-[0.75rem] leading-relaxed text-muted">
-          {t("demoNote")}
-        </p>
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-field border border-hairline bg-background/70 px-3 py-2">
+          <p
+            aria-live="polite"
+            className="inline-flex items-center gap-2 font-mono text-[0.8125rem] font-semibold tabular-nums text-ink"
+          >
+            <span
+              aria-hidden="true"
+              className="inline-block size-1.5 shrink-0 rounded-full bg-brand"
+            />
+            {t("count", {count: filtered.length})}
+          </p>
+        </div>
       </div>
+
+      <p className="mt-4 max-w-[min(56ch,100%)] text-[0.75rem] leading-relaxed text-muted">
+        {t("demoNote")}
+      </p>
 
       {filtered.length > 0 ? (
         <ul className="mt-5 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {filtered.map((vehicle, index) => (
             <li key={vehicle.slug} className="min-w-0">
-              <Reveal delay={(index % 6) * 55} variant="scale">
+              <Reveal delay={(index % 6) * 55} variant="scale" className="h-full">
                 <VehicleCard
                   vehicle={vehicle}
                   locale={locale}

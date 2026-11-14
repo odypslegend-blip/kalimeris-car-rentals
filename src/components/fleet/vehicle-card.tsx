@@ -60,7 +60,7 @@ export function VehicleCard({
       <Link
         href={href}
         prefetch={false}
-        className="group block h-full overflow-hidden rounded-card focus-visible:outline-offset-[-2px]"
+        className="group flex h-full flex-col overflow-hidden rounded-card focus-visible:outline-offset-[-2px]"
       >
       <div className="relative aspect-[4/3] overflow-hidden bg-background">
         <Image
@@ -77,22 +77,22 @@ export function VehicleCard({
         </Badge>
       </div>
 
-      <div className="p-5">
+      <div className="flex flex-1 flex-col p-5">
         <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <p className="text-[0.625rem] font-bold uppercase tracking-[0.16em] text-brand">
+          <div className="min-w-0 flex-1">
+            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.16em] tabular-nums text-brand">
               {categories(vehicle.category)}
             </p>
-            <h3 className="mt-2 text-[1.0625rem] font-semibold leading-snug text-ink">
+            <h3 className="mt-2 font-display text-[1.125rem] font-bold leading-[1.18] tracking-[-0.02em] text-ink">
               {name}
             </h3>
-            <p className="mt-1 text-[0.75rem] leading-snug text-muted">
+            <p className="mt-1 font-mono text-[0.75rem] leading-snug tabular-nums text-muted">
               {vehicle.modelNote}
             </p>
             {typeof vehicle.pricePerDay === "number" ? (
-              <p className="mt-1.5 text-right text-[0.8125rem] font-semibold text-ink">
+              <p className="mt-2 text-right font-mono text-[0.875rem] font-semibold tabular-nums text-ink">
                 {vehicle.pricePerDay} €{" "}
-                <span className="text-muted">
+                <span className="font-sans text-[0.75rem] font-normal text-muted">
                   / {locale === "el" ? "ημέρα" : "day"}
                 </span>
               </p>
@@ -107,21 +107,26 @@ export function VehicleCard({
           </span>
         </div>
 
-        <ul className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.8125rem] text-muted">
-          {facts.map((fact) => {
-            const Icon = fact.icon;
-
-            return (
-              <li key={fact.value} className="inline-flex items-center gap-1.5">
-                <Icon aria-hidden="true" className="size-3.5 text-muted" />
-                {fact.value}
-              </li>
-            );
-          })}
-        </ul>
-
         <span className="sr-only"> — {t("cardCta")}</span>
       </div>
+
+      <ul className="grid grid-cols-3 divide-x divide-hairline border-t border-hairline bg-background/50">
+        {facts.map((fact) => {
+          const Icon = fact.icon;
+
+          return (
+            <li
+              key={fact.value}
+              className="flex min-w-0 flex-col items-center justify-center gap-1 px-2 py-2.5 text-center"
+            >
+              <Icon aria-hidden="true" className="size-3.5 shrink-0 text-brand" />
+              <span className="min-w-0 max-w-full break-words font-mono text-[0.6875rem] font-medium leading-tight tabular-nums text-muted">
+                {fact.value}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
       </Link>
     </SpotlightCard>
   );

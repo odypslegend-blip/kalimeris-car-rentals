@@ -20,6 +20,7 @@
 :root {
   --token-bg: #f7f8f7;
   --token-surface: #ffffff;
+  --token-surface-elevated: #eff3f1;
   --token-ink: #0e1720;
   --token-muted: #58646b;
   /* Accent for TEXT, icons and borders (4.6:1 on bg, 4.9:1 on surface). */
@@ -72,6 +73,11 @@
   --token-shadow-panel: 0 18px 45px rgb(14 23 32 / 0.1);
   --token-shadow-modal: 0 24px 70px rgb(14 23 32 / 0.22);
   --token-shadow-menu: 0 18px 45px rgb(14 23 32 / 0.16);
+
+  /* Fluid modular typography scale */
+  --step-display: clamp(2.5rem, 4.4vw + 0.75rem, 4.75rem);
+  --step-head: clamp(1.75rem, 2.2vw + 0.5rem, 2.85rem);
+  --step-subhead: clamp(1.2rem, 1.1vw + 0.45rem, 1.65rem);
 }
 
 /* ---------------------------------------------------------------------------
@@ -85,6 +91,7 @@
 .dark {
   --token-bg: #1c1c1c;
   --token-surface: #242424;
+  --token-surface-elevated: #2c2c2c;
   --token-ink: #f5f5f5;
   --token-muted: #a3a3a3;
   /* Pure white accents for text, icons, rings, underlines and borders on charcoal. */
@@ -126,6 +133,7 @@
 @theme inline {
   --color-background: var(--token-bg);
   --color-surface: var(--token-surface);
+  --color-surface-elevated: var(--token-surface-elevated);
   --color-ink: var(--token-ink);
   --color-muted: var(--token-muted);
   --color-brand: var(--token-brand);
@@ -143,8 +151,12 @@
   --color-notice-border: var(--token-notice-border);
   --color-notice-ink: var(--token-notice-ink);
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, Arial, sans-serif;
+  --font-display: var(--font-syne), var(--font-manrope), ui-sans-serif,
+    system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular,
+    Menlo, monospace;
 
   --radius-field: var(--token-radius-input);
   --radius-card: var(--token-radius-card);
@@ -201,9 +213,26 @@
 
   h1,
   h2,
+  h3 {
+    font-family: var(--font-display, var(--font-syne), var(--font-manrope), ui-sans-serif, system-ui, sans-serif);
+    letter-spacing: -0.025em;
+    /* Keep enough ascender clearance so Greek accents (ά/έ/ή/ί/ό/ύ/ώ) never clip. */
+    line-height: 1.12;
+  }
+
+  :where(footer) h2 {
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
   h3,
   h4 {
     text-wrap: balance;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
   }
 
   p {

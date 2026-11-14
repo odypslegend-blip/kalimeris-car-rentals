@@ -142,6 +142,16 @@ test.describe("Greek home", () => {
     );
     await expect(page.locator(".hero-underline-path")).toBeAttached();
 
+    const loadedFonts = await page.evaluate(async () => {
+      await document.fonts.ready;
+      return {
+        h1Font: getComputedStyle(document.querySelector("h1")!).fontFamily,
+        bodyFont: getComputedStyle(document.body).fontFamily
+      };
+    });
+    expect(loadedFonts.h1Font).toMatch(/Syne/i);
+    expect(loadedFonts.bodyFont).toMatch(/Manrope/i);
+
     const progress = page.locator("[data-scroll-progress]");
     await expect(progress).toBeAttached();
     await expect(progress).toHaveCSS("opacity", "0");
@@ -185,6 +195,12 @@ test.describe("Greek home", () => {
     );
     await expect(steps).toHaveAttribute("data-steps-active", "true");
     await expect(progress).toHaveCSS("opacity", "1");
+
+    const stepTabs = steps.getByRole("tab");
+    await expect(stepTabs).toHaveCount(3);
+    await stepTabs.nth(1).click();
+    await expect(stepTabs.nth(1)).toHaveAttribute("aria-selected", "true");
+    await expect(steps.getByRole("tabpanel")).toContainText(/STAGE 02/i);
 
     const desktopOverflow = await page.evaluate(
       () =>

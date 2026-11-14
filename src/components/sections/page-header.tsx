@@ -23,15 +23,15 @@ export function PageHeader({
 }: PageHeaderProps) {
   return (
     <header className={cn("border-b border-hairline", className)}>
-      <div className="page-shell pb-10 pt-10 md:pb-14 md:pt-16">
-        <p className="text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-brand">
+      <div className="page-shell min-w-0 pb-10 pt-10 md:pb-14 md:pt-16">
+        <p className="min-w-0 max-w-full font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-brand">
           {eyebrow}
         </p>
-        <h1 className="mt-3 max-w-[24ch] text-[2rem] font-semibold leading-[1.1] tracking-[-0.025em] text-ink sm:text-[2.25rem] lg:text-[2.5rem]">
+        <h1 className="mt-3 min-w-0 max-w-[min(24ch,100%)] font-display text-[length:calc(var(--step-head)*1.08)] font-bold leading-[1.12] tracking-[-0.025em] text-ink">
           {title}
         </h1>
         {intro ? (
-          <p className="mt-4 max-w-[62ch] text-[1rem] leading-relaxed text-muted sm:text-[1.0625rem]">
+          <p className="mt-4 min-w-0 max-w-[min(62ch,100%)] text-[1rem] leading-relaxed text-muted sm:text-[1.0625rem]">
             {intro}
           </p>
         ) : null}

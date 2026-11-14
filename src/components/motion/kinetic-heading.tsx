@@ -88,7 +88,7 @@ export function HeroKineticHeading({
     <h1
       ref={headingRef}
       className={cn(
-        "hero-load-rise text-[2.375rem] font-extrabold leading-[1.07] tracking-[-0.03em] text-ink sm:text-[3rem] lg:text-[3.875rem] lg:leading-[1.04]",
+        "hero-load-rise max-w-full font-display text-[length:var(--step-display)] font-extrabold leading-[1.04] tracking-[-0.03em] text-ink",
         className
       )}
     >

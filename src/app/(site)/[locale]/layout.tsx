@@ -1,5 +1,5 @@
 import type {Metadata, Viewport} from "next";
-import {Inter} from "next/font/google";
+import {JetBrains_Mono, Manrope, Syne} from "next/font/google";
 import {notFound} from "next/navigation";
 import {hasLocale, NextIntlClientProvider} from "next-intl";
 import {getTranslations, setRequestLocale} from "next-intl/server";
@@ -14,10 +14,24 @@ import {buildAlternates} from "@/lib/seo";
 import {themeInitScript} from "@/lib/theme/theme-init";
 import "../../globals.css";
 
-const inter = Inter({
+const syne = Syne({
   subsets: ["latin", "greek"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-inter",
+  weight: ["600", "700", "800"],
+  variable: "--font-syne",
+  display: "swap"
+});
+
+const manrope = Manrope({
+  subsets: ["latin", "greek"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-manrope",
+  display: "swap"
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin", "greek"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-jetbrains-mono",
   display: "swap"
 });
 
@@ -96,7 +110,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={inter.variable}
+      className={`${syne.variable} ${manrope.variable} ${jetbrainsMono.variable}`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >

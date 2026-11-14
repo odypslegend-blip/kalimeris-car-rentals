@@ -1,5 +1,6 @@
 import type {Metadata} from "next";
-import {ArrowRight, ArrowUpRight, Check, Wrench} from "lucide-react";
+import type {LucideIcon} from "lucide-react";
+import {ArrowRight, ArrowUpRight, Car, Gauge, Wrench} from "lucide-react";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {BookCallButton} from "@/components/motion/book-call-button";
 import {Reveal} from "@/components/motion/reveal";
@@ -24,23 +25,67 @@ type ServiceGroup = {
   reserve?: string;
 };
 
-/** Two-column checklist used by every service group. */
-function CheckList({items}: {items: string[]}) {
+type ServiceLedgerSectionProps = {
+  group: ServiceGroup;
+  icon: LucideIcon;
+  surfaceClassName?: string;
+  actions?: React.ReactNode;
+};
+
+/** 12-column asymmetric split ledger shared across all three service pillars. */
+function ServiceLedgerSection({
+  group,
+  icon: Icon,
+  surfaceClassName = "py-12 md:py-16",
+  actions
+}: ServiceLedgerSectionProps) {
   return (
-    <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-      {items.map((item) => (
-        <li
-          key={item}
-          className="flex gap-3 text-[0.9375rem] leading-relaxed text-ink"
-        >
-          <Check
-            aria-hidden="true"
-            className="size-4 shrink-0 translate-y-0.5 text-brand"
-          />
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
+    <section className={surfaceClassName}>
+      <div className="page-shell">
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
+          <div className="min-w-0 lg:sticky lg:top-24 lg:col-span-4">
+            <Reveal>
+              <span
+                aria-hidden="true"
+                className="mb-4 inline-flex size-10 items-center justify-center rounded-full bg-brand-subtle text-brand"
+              >
+                <Icon className="size-5" />
+              </span>
+              <SectionHeading
+                eyebrow={group.eyebrow}
+                title={group.title}
+                description={group.body}
+              />
+            </Reveal>
+          </div>
+
+          <div className="min-w-0 lg:col-span-8">
+            <ol className="divide-y divide-hairline border-y border-hairline">
+              {group.items.map((item, index) => (
+                <li key={item} className="py-1">
+                  <Reveal delay={Math.min(index * 45, 220)}>
+                    <div className="group grid gap-2 rounded-xl px-3 py-4 transition-colors duration-[var(--token-duration-fast)] ease-brand hover:bg-surface-elevated/70 sm:grid-cols-[3.5rem_1fr] sm:items-baseline sm:gap-4 sm:px-5 sm:py-5">
+                      <span className="font-mono text-xs font-semibold tracking-[0.14em] tabular-nums text-brand">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <p className="font-display text-[1.0625rem] font-bold leading-snug text-ink sm:text-lg">
+                        {item}
+                      </p>
+                    </div>
+                  </Reveal>
+                </li>
+              ))}
+            </ol>
+
+            {actions ? (
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                {actions}
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -91,68 +136,35 @@ export default async function ServicesPage({params}: ServicesPageProps) {
         }
       />
 
-      <section className="py-12 md:py-16">
-        <div className="page-shell">
-          <Reveal>
-            <div className="flex items-start gap-4 md:gap-5">
-              <span
-                aria-hidden="true"
-                className="hidden size-10 shrink-0 place-items-center rounded-full bg-brand-subtle text-brand sm:grid"
-              >
-                <Wrench className="size-5" />
-              </span>
-              <SectionHeading
-                eyebrow={workshop.eyebrow}
-                title={workshop.title}
-                description={workshop.body}
+      <ServiceLedgerSection group={workshop} icon={Wrench} />
+
+      <ServiceLedgerSection
+        group={performance}
+        icon={Gauge}
+        surfaceClassName="border-y border-line bg-surface py-12 md:py-16"
+      />
+
+      <ServiceLedgerSection
+        group={rental}
+        icon={Car}
+        actions={
+          <>
+            <Button asChild size="lg">
+              <Link href="/cars" prefetch={false}>
+                {rental.cta}
+                <ArrowRight aria-hidden="true" />
+              </Link>
+            </Button>
+            {rental.reserve ? (
+              <BookCallButton
+                href={site.reservationsPhone.href}
+                label={rental.reserve}
+                className="min-h-12 justify-center sm:justify-start"
               />
-            </div>
-            <CheckList items={workshop.items} />
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="border-y border-line bg-surface py-12 md:py-16">
-        <div className="page-shell">
-          <Reveal>
-            <SectionHeading
-              eyebrow={performance.eyebrow}
-              title={performance.title}
-              description={performance.body}
-            />
-            <CheckList items={performance.items} />
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="py-12 md:py-16">
-        <div className="page-shell">
-          <Reveal>
-            <SectionHeading
-              eyebrow={rental.eyebrow}
-              title={rental.title}
-              description={rental.body}
-            />
-            <CheckList items={rental.items} />
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button asChild size="lg">
-                <Link href="/cars" prefetch={false}>
-                  {rental.cta}
-                  <ArrowRight aria-hidden="true" />
-                </Link>
-              </Button>
-              {rental.reserve ? (
-                <BookCallButton
-                  href={site.reservationsPhone.href}
-                  label={rental.reserve}
-                  className="min-h-12 justify-center sm:justify-start"
-                />
-              ) : null}
-            </div>
-          </Reveal>
-        </div>
-      </section>
+            ) : null}
+          </>
+        }
+      />
 
       <section className="pb-12 md:pb-16">
         <div className="page-shell">
@@ -161,11 +173,11 @@ export default async function ServicesPage({params}: ServicesPageProps) {
               tilt={false}
               className="border border-line bg-brand-subtle p-6 md:p-8 lg:flex lg:items-center lg:justify-between lg:gap-10"
             >
-              <div>
+              <div className="min-w-0">
                 <p className="text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-muted">
                   {parts.eyebrow}
                 </p>
-                <h2 className="mt-3 text-[1.375rem] font-semibold leading-snug tracking-[-0.015em] text-ink md:text-[1.625rem]">
+                <h2 className="mt-3 font-display text-[1.375rem] font-bold leading-snug tracking-[-0.015em] text-ink md:text-[1.625rem]">
                   {parts.title}
                 </h2>
                 <p className="mt-3 max-w-[52ch] text-[0.9375rem] leading-relaxed text-muted">
@@ -198,8 +210,8 @@ export default async function ServicesPage({params}: ServicesPageProps) {
               tilt={false}
               className="border border-line bg-surface p-6 md:p-8 lg:flex lg:items-center lg:justify-between lg:gap-10"
             >
-              <div>
-                <h2 className="text-[1.375rem] font-semibold leading-snug tracking-[-0.015em] text-ink md:text-[1.625rem]">
+              <div className="min-w-0">
+                <h2 className="font-display text-[1.375rem] font-bold leading-snug tracking-[-0.015em] text-ink md:text-[1.625rem]">
                   {t("ctaTitle")}
                 </h2>
                 <p className="mt-3 max-w-[52ch] text-[0.9375rem] leading-relaxed text-muted">

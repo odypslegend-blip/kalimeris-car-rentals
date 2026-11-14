@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import {ArrowRight, Check, Minus} from "lucide-react";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {AnimatedSteps} from "@/components/motion/animated-steps";
+import {SpotlightCard} from "@/components/motion/spotlight-card";
 import {PageHeader} from "@/components/sections/page-header";
 import {Button} from "@/components/ui/button";
 import {Link} from "@/i18n/navigation";
@@ -64,55 +65,86 @@ export default async function HowItWorksPage({
         }
       />
 
-      {/* Three steps as one equal-edge composition. */}
+      {/* Three steps — interactive live process switcher. */}
       <section className="py-12 md:py-16">
         <div className="page-shell">
           <AnimatedSteps steps={steps} variant="page" headingLevel="h2" />
         </div>
       </section>
 
-      {/* What we need / what the request is not. */}
+      {/* What we need / what the request is not — 12-column asymmetric split. */}
       <section className="border-y border-line bg-surface py-12 md:py-16">
-        <div className="page-shell grid gap-10 md:grid-cols-2 md:gap-16">
-          <div>
-            <h2 className="text-[1.25rem] font-semibold leading-snug tracking-[-0.01em] text-ink md:text-[1.375rem]">
-              {t("needs.title")}
-            </h2>
-            <ul className="mt-6 border-y border-line">
-              {needs.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-baseline gap-3 border-b border-hairline py-3.5 last:border-b-0"
-                >
-                  <Check
-                    aria-hidden="true"
-                    className="size-4 shrink-0 translate-y-0.5 text-brand"
-                  />
-                  <span className="text-[0.9375rem] leading-relaxed text-ink/85">
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ul>
+        <div className="page-shell grid gap-8 lg:grid-cols-12 lg:items-start lg:gap-10">
+          <div className="min-w-0 lg:col-span-7">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <h2 className="font-display text-[1.25rem] font-bold leading-snug tracking-[-0.015em] text-ink md:text-[1.5rem]">
+                {t("needs.title")}
+              </h2>
+              <span className="font-mono text-xs font-semibold tabular-nums tracking-[0.14em] text-muted">
+                01–{String(needs.length).padStart(2, "0")}
+              </span>
+            </div>
+
+            <div className="mt-6 overflow-hidden rounded-card border border-line bg-background">
+              <ol className="divide-y divide-hairline">
+                {needs.map((item, index) => (
+                  <li
+                    key={item}
+                    className="flex items-center justify-between gap-4 px-5 py-4 sm:px-6"
+                  >
+                    <div className="flex min-w-0 items-baseline gap-4">
+                      <span className="font-mono text-xs font-bold tabular-nums tracking-[0.14em] text-brand">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className="text-[0.9375rem] font-medium leading-relaxed text-ink">
+                        {item}
+                      </span>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      className="inline-flex size-7 shrink-0 items-center justify-center rounded-full border border-brand/25 bg-brand-subtle text-brand"
+                    >
+                      <Check className="size-3.5" />
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
 
-          <div className="rounded-card border border-line bg-background p-6 md:p-8">
-            <h2 className="text-[1.25rem] font-semibold leading-snug tracking-[-0.01em] text-ink md:text-[1.375rem]">
-              {t("not.title")}
-            </h2>
-            <ul className="mt-5 flex flex-col gap-3">
-              {notItems.map((item) => (
-                <li key={item} className="flex items-baseline gap-3">
-                  <Minus
-                    aria-hidden="true"
-                    className="size-4 shrink-0 translate-y-0.5 text-brand"
-                  />
-                  <span className="text-[0.9375rem] leading-relaxed text-muted">
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ul>
+          <div className="min-w-0 lg:col-span-5">
+            <SpotlightCard
+              tilt={false}
+              className="border border-line bg-brand-subtle p-6 shadow-card md:p-8"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="font-display text-[1.25rem] font-bold leading-snug tracking-[-0.015em] text-ink md:text-[1.375rem]">
+                  {t("not.title")}
+                </h2>
+                <span className="font-mono text-xs font-bold tabular-nums tracking-[0.14em] text-brand">
+                  {String(notItems.length).padStart(2, "0")}
+                </span>
+              </div>
+
+              <ul className="mt-6 divide-y divide-line/70 border-t border-line/70">
+                {notItems.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-center gap-3.5 py-3.5 first:pt-4 last:pb-1"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="inline-flex size-6 shrink-0 items-center justify-center rounded-full border border-line bg-surface text-brand"
+                    >
+                      <Minus className="size-3.5" />
+                    </span>
+                    <span className="text-[0.9375rem] font-medium leading-relaxed text-ink/90">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </SpotlightCard>
           </div>
         </div>
       </section>
@@ -121,7 +153,7 @@ export default async function HowItWorksPage({
         <div className="page-shell">
           <div className="flex flex-col gap-6 rounded-card border border-line bg-surface p-6 md:flex-row md:items-center md:justify-between md:p-8">
             <div>
-              <h2 className="text-[1.25rem] font-semibold leading-snug tracking-[-0.01em] text-ink">
+              <h2 className="font-display text-[1.25rem] font-semibold leading-snug tracking-[-0.01em] text-ink">
                 {t("ctaTitle")}
               </h2>
               <p className="mt-1.5 max-w-[52ch] text-[0.9375rem] leading-relaxed text-muted">

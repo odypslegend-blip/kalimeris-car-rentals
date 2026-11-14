@@ -3,6 +3,7 @@ import Image from "next/image";
 import {
   ArrowRight,
   Car,
+  Cog,
   Fuel,
   Gauge,
   Package,
@@ -51,12 +52,17 @@ export default async function HomePage({params}: HomePageProps) {
   const {locale} = await params;
   setRequestLocale(locale);
 
-  const t = await getTranslations("Home");
-  const meta = await getTranslations("Meta");
-  const bookingT = await getTranslations("Booking");
-  const fleetT = await getTranslations("Fleet");
-  const categories = await getTranslations("Categories");
-  const fuels = await getTranslations("Fuel");
+  const [t, meta, bookingT, fleetT, vehicleT, categories, transmissions, fuels] =
+    await Promise.all([
+      getTranslations("Home"),
+      getTranslations("Meta"),
+      getTranslations("Booking"),
+      getTranslations("Fleet"),
+      getTranslations("Vehicle"),
+      getTranslations("Categories"),
+      getTranslations("Transmission"),
+      getTranslations("Fuel")
+    ]);
   const steps = t.raw("steps.items") as Step[];
   const services = t.raw("services.items") as ServiceItem[];
 
@@ -69,6 +75,7 @@ export default async function HomePage({params}: HomePageProps) {
   ]
     .slice(0, 3)
     .map((vehicle) => toVehicleView(vehicle, locale));
+  const [flagship, ...secondaryFleet] = featuredFleet;
 
   // Sitewide identity only: the WebSite node plus the single verified business
   // entity behind the rental, workshop and parts pages. No pricing,
@@ -210,89 +217,219 @@ export default async function HomePage({params}: HomePageProps) {
             </Link>
           </div>
 
-          <ul className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3 sm:[&>li:nth-child(3)]:hidden xl:[&>li:nth-child(3)]:block">
-            {featuredFleet.map((vehicle, index) => {
-              const name = getVehicleName(vehicle);
-              const alt =
-                locale === "el"
-                  ? vehicle.gallery[0].altEl
-                  : vehicle.gallery[0].altEn;
-              const facts = [
-                `${vehicle.seats} ${fleetT("seatsShort")}`,
-                fuels(vehicle.fuel)
-              ];
-
-              return (
-                <li key={vehicle.slug}>
-                  <Reveal delay={index * 70} variant="scale">
-                    <SpotlightCard className="h-full border border-line bg-surface shadow-card transition-shadow duration-[var(--token-duration-normal)] ease-brand hover:shadow-panel">
-                      <Link
-                        href={`/cars/${vehicle.slug}`}
-                        prefetch={false}
-                        className="group block h-full overflow-hidden rounded-card focus-visible:outline-offset-[-2px]"
-                      >
-                      <div className="relative aspect-[4/3] overflow-hidden bg-background">
+          {flagship ? (
+            <div className="mt-10 grid gap-6 lg:grid-cols-12 lg:items-stretch">
+              <div
+                className={
+                  secondaryFleet.length > 0
+                    ? "min-w-0 lg:col-span-7"
+                    : "min-w-0 lg:col-span-12"
+                }
+              >
+                <Reveal delay={0} variant="scale" className="h-full">
+                  <SpotlightCard className="h-full border border-line bg-surface shadow-card transition-shadow duration-[var(--token-duration-normal)] ease-brand hover:shadow-panel">
+                    <Link
+                      href={`/cars/${flagship.slug}`}
+                      prefetch={false}
+                      className="group flex h-full flex-col overflow-hidden rounded-card focus-visible:outline-offset-[-2px]"
+                    >
+                      <div className="relative aspect-[16/10] w-full overflow-hidden bg-background sm:aspect-[16/9]">
                         <Image
-                          src={assetPath(vehicle.image)}
-                          alt={alt}
+                          src={assetPath(flagship.image)}
+                          alt={
+                            locale === "el"
+                              ? flagship.gallery[0].altEl
+                              : flagship.gallery[0].altEn
+                          }
                           fill
                           quality={90}
-                          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                          sizes="(min-width: 1024px) 58vw, 100vw"
                           className="object-cover transition-transform duration-[var(--token-duration-slow)] ease-brand group-hover:scale-[1.02]"
                         />
                         <Badge
                           variant="demo"
-                          className="absolute left-3 top-3 shadow-sm"
+                          className="absolute left-4 top-4 shadow-sm"
                         >
                           {t("fleet.demo")}
                         </Badge>
                       </div>
 
-                      <div className="flex items-start justify-between gap-3 p-5">
-                        <div className="min-w-0">
-                          <p className="text-[0.625rem] font-bold uppercase tracking-[0.16em] text-brand">
-                            {categories(vehicle.category)}
-                          </p>
-                          <h3 className="mt-2 text-[1.0625rem] font-semibold leading-snug text-ink">
-                            {name}
-                          </h3>
-                          <ul className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.8125rem] text-muted">
-                            {facts.map((fact, index) => (
-                              <li
-                                key={fact}
-                                className="inline-flex items-center gap-1.5"
-                              >
-                                {index === 0 ? (
-                                  <UsersRound
-                                    aria-hidden="true"
-                                    className="size-3.5 text-muted"
-                                  />
-                                ) : (
-                                  <Fuel
-                                    aria-hidden="true"
-                                    className="size-3.5 text-muted"
-                                  />
-                                )}
-                                {fact}
-                              </li>
-                            ))}
-                          </ul>
+                      <div className="flex flex-1 flex-col justify-between">
+                        <div className="flex items-start justify-between gap-4 p-5 sm:p-6">
+                          <div className="min-w-0">
+                            <p className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.16em] tabular-nums text-brand">
+                              01 · {categories(flagship.category)}
+                            </p>
+                            <h3 className="mt-2 font-display text-2xl font-bold leading-tight tracking-[-0.02em] text-ink sm:text-3xl">
+                              {getVehicleName(flagship)}
+                            </h3>
+                            {flagship.modelNote ? (
+                              <p className="mt-1.5 text-[0.875rem] leading-snug text-muted">
+                                {flagship.modelNote}
+                              </p>
+                            ) : null}
+                            <span className="sr-only">
+                              {" "}
+                              — {fleetT("cardCta")}
+                            </span>
+                          </div>
+
+                          <div className="flex shrink-0 flex-col items-end gap-2">
+                            {typeof flagship.pricePerDay === "number" ? (
+                              <p className="font-mono text-sm font-semibold tabular-nums text-ink">
+                                {flagship.pricePerDay} €{" "}
+                                <span className="font-normal text-muted">
+                                  / {locale === "el" ? "ημέρα" : "day"}
+                                </span>
+                              </p>
+                            ) : null}
+                            <span
+                              aria-hidden="true"
+                              className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-line text-brand transition-colors duration-[var(--token-duration-fast)] ease-brand group-hover:border-brand group-hover:bg-brand-subtle"
+                            >
+                              <ArrowRight className="size-4" />
+                            </span>
+                          </div>
                         </div>
 
-                        <span
-                          aria-hidden="true"
-                          className="mt-1 inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line text-brand transition-colors duration-[var(--token-duration-fast)] ease-brand group-hover:border-brand group-hover:bg-brand-subtle"
-                        >
-                          <ArrowRight className="size-4" />
-                        </span>
+                        <dl className="grid grid-cols-3 divide-x divide-hairline border-t border-hairline">
+                          <div className="min-w-0 px-3 py-3 sm:px-6 sm:py-3.5">
+                            <dt className="flex items-center gap-1.5 text-[0.625rem] font-semibold uppercase tracking-[0.08em] text-muted sm:tracking-[0.12em]">
+                              <UsersRound
+                                aria-hidden="true"
+                                className="hidden size-3.5 shrink-0 text-muted sm:inline-block"
+                              />
+                              <span>{vehicleT("labels.seats")}</span>
+                            </dt>
+                            <dd className="mt-1 truncate font-mono text-[0.75rem] font-medium tabular-nums text-ink sm:text-[0.8125rem]">
+                              {flagship.seats} {fleetT("seatsShort")}
+                            </dd>
+                          </div>
+                          <div className="min-w-0 px-3 py-3 sm:px-6 sm:py-3.5">
+                            <dt className="flex items-center gap-1.5 text-[0.625rem] font-semibold uppercase tracking-[0.08em] text-muted sm:tracking-[0.12em]">
+                              <Cog
+                                aria-hidden="true"
+                                className="hidden size-3.5 shrink-0 text-muted sm:inline-block"
+                              />
+                              <span>{vehicleT("labels.transmission")}</span>
+                            </dt>
+                            <dd className="mt-1 truncate font-mono text-[0.75rem] font-medium tabular-nums text-ink sm:text-[0.8125rem]">
+                              {transmissions(flagship.transmission)}
+                            </dd>
+                          </div>
+                          <div className="min-w-0 px-3 py-3 sm:px-6 sm:py-3.5">
+                            <dt className="flex items-center gap-1.5 text-[0.625rem] font-semibold uppercase tracking-[0.08em] text-muted sm:tracking-[0.12em]">
+                              <Fuel
+                                aria-hidden="true"
+                                className="hidden size-3.5 shrink-0 text-muted sm:inline-block"
+                              />
+                              <span>{vehicleT("labels.fuel")}</span>
+                            </dt>
+                            <dd className="mt-1 truncate font-mono text-[0.75rem] font-medium tabular-nums text-ink sm:text-[0.8125rem]">
+                              {fuels(flagship.fuel)}
+                            </dd>
+                          </div>
+                        </dl>
                       </div>
-                      </Link>
-                    </SpotlightCard>
-                  </Reveal>
-                </li>
-              );
-            })}
-          </ul>
+                    </Link>
+                  </SpotlightCard>
+                </Reveal>
+              </div>
+
+              {secondaryFleet.length > 0 ? (
+                <ul className="flex min-w-0 flex-col gap-6 lg:col-span-5">
+                  {secondaryFleet.map((vehicle, index) => {
+                    const name = getVehicleName(vehicle);
+                    const alt =
+                      locale === "el"
+                        ? vehicle.gallery[0].altEl
+                        : vehicle.gallery[0].altEn;
+                    const cardIndex = String(index + 2).padStart(2, "0");
+
+                    return (
+                      <li key={vehicle.slug} className="flex min-w-0 flex-1">
+                        <Reveal
+                          delay={(index + 1) * 70}
+                          variant="scale"
+                          className="h-full w-full"
+                        >
+                          <SpotlightCard className="h-full border border-line bg-surface shadow-card transition-shadow duration-[var(--token-duration-normal)] ease-brand hover:shadow-panel">
+                            <Link
+                              href={`/cars/${vehicle.slug}`}
+                              prefetch={false}
+                              className="group grid h-full items-stretch overflow-hidden rounded-card focus-visible:outline-offset-[-2px] sm:grid-cols-[11rem_1fr] lg:grid-cols-[9.5rem_1fr] xl:grid-cols-[11.5rem_1fr]"
+                            >
+                              <div className="relative aspect-[4/3] w-full overflow-hidden bg-background sm:aspect-auto sm:h-full sm:min-h-[11rem]">
+                                <Image
+                                  src={assetPath(vehicle.image)}
+                                  alt={alt}
+                                  fill
+                                  quality={90}
+                                  sizes="(min-width: 1280px) 184px, (min-width: 1024px) 152px, (min-width: 640px) 176px, 100vw"
+                                  className="object-cover transition-transform duration-[var(--token-duration-slow)] ease-brand group-hover:scale-[1.02]"
+                                />
+                                <Badge
+                                  variant="demo"
+                                  className="absolute left-3 top-3 shadow-sm"
+                                >
+                                  {t("fleet.demo")}
+                                </Badge>
+                              </div>
+
+                              <div className="flex min-w-0 flex-col justify-between gap-4 p-5">
+                                <div className="flex items-start justify-between gap-3">
+                                  <div className="min-w-0">
+                                    <p className="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.16em] tabular-nums text-brand">
+                                      {cardIndex} · {categories(vehicle.category)}
+                                    </p>
+                                    <h3 className="mt-1.5 font-display text-lg font-bold leading-snug text-ink sm:text-xl">
+                                      {name}
+                                    </h3>
+                                    {vehicle.modelNote ? (
+                                      <p className="mt-1 text-[0.8125rem] leading-snug text-muted">
+                                        {vehicle.modelNote}
+                                      </p>
+                                    ) : null}
+                                    <span className="sr-only">
+                                      {" "}
+                                      — {fleetT("cardCta")}
+                                    </span>
+                                  </div>
+
+                                  <span
+                                    aria-hidden="true"
+                                    className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line text-brand transition-colors duration-[var(--token-duration-fast)] ease-brand group-hover:border-brand group-hover:bg-brand-subtle"
+                                  >
+                                    <ArrowRight className="size-4" />
+                                  </span>
+                                </div>
+
+                                <div className="flex flex-wrap items-baseline justify-between gap-2 border-t border-hairline pt-3">
+                                  <p className="font-mono text-[0.75rem] leading-relaxed tabular-nums text-muted">
+                                    {vehicle.seats} {fleetT("seatsShort")} ·{" "}
+                                    {transmissions(vehicle.transmission)} ·{" "}
+                                    {fuels(vehicle.fuel)}
+                                  </p>
+                                  {typeof vehicle.pricePerDay === "number" ? (
+                                    <p className="font-mono text-[0.8125rem] font-semibold tabular-nums text-ink">
+                                      {vehicle.pricePerDay} €{" "}
+                                      <span className="font-normal text-muted">
+                                        / {locale === "el" ? "ημέρα" : "day"}
+                                      </span>
+                                    </p>
+                                  ) : null}
+                                </div>
+                              </div>
+                            </Link>
+                          </SpotlightCard>
+                        </Reveal>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : null}
+            </div>
+          ) : null}
 
           <p className="mt-5 max-w-[76ch] text-[0.75rem] leading-relaxed text-muted">
             {t("fleet.note")}
@@ -324,68 +461,67 @@ export default async function HomePage({params}: HomePageProps) {
       {/* 4. Services — workshop, tuning, parts and rental at the same site. */}
       <section className="py-16 md:py-24">
         <div className="page-shell">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <Reveal>
-              <SectionHeading
-                eyebrow={t("services.eyebrow")}
-                title={t("services.title")}
-                description={t("services.description")}
-              />
-            </Reveal>
-            <Link
-              href="/services"
-              prefetch={false}
-              className="group hidden min-h-11 shrink-0 items-center gap-2 text-[0.875rem] font-semibold text-brand transition-colors duration-[var(--token-duration-fast)] hover:text-brand-hover md:inline-flex"
-            >
-              {t("services.cta")}
-              <ArrowRight
-                aria-hidden="true"
-                className="size-4 transition-transform duration-[var(--token-duration-normal)] ease-brand group-hover:translate-x-0.5"
-              />
-            </Link>
-          </div>
+          <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
+            <div className="min-w-0 lg:sticky lg:top-24 lg:col-span-4">
+              <Reveal>
+                <SectionHeading
+                  eyebrow={t("services.eyebrow")}
+                  title={t("services.title")}
+                  description={t("services.description")}
+                />
+                <Link
+                  href="/services"
+                  prefetch={false}
+                  className="group mt-6 inline-flex min-h-11 items-center gap-2 text-[0.875rem] font-semibold text-brand transition-colors duration-[var(--token-duration-fast)] hover:text-brand-hover"
+                >
+                  {t("services.cta")}
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="size-4 transition-transform duration-[var(--token-duration-normal)] ease-brand group-hover:translate-x-0.5"
+                  />
+                </Link>
+              </Reveal>
+            </div>
 
-          <ul className="mt-10 grid gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-            {services.map((item, index) => {
-              const Icon = serviceIcons[index] ?? Wrench;
+            <ul className="min-w-0 divide-y divide-hairline border-y border-hairline lg:col-span-8">
+              {services.map((item, index) => {
+                const Icon = serviceIcons[index] ?? Wrench;
+                const rowIndex = String(index + 1).padStart(2, "0");
 
-              return (
-                <li key={item.title} className="bg-surface">
-                  <SpotlightCard
-                    tilt={false}
-                    className="h-full rounded-none bg-surface p-6"
-                  >
+                return (
+                  <li key={item.title} className="py-1">
                     <Reveal delay={index * 60}>
-                      <span
-                        aria-hidden="true"
-                        className="inline-flex size-10 items-center justify-center rounded-full bg-brand-subtle text-brand"
+                      <SpotlightCard
+                        tilt={false}
+                        className="group grid gap-4 rounded-xl bg-transparent px-3 py-5 transition-colors duration-[var(--token-duration-fast)] ease-brand hover:bg-surface-elevated/70 sm:grid-cols-[4.25rem_1fr] sm:items-start sm:px-5 sm:py-6"
                       >
-                        <Icon className="size-5" />
-                      </span>
-                      <h3 className="mt-4 text-[1.0625rem] font-semibold leading-snug text-ink">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">
-                        {item.body}
-                      </p>
-                    </Reveal>
-                  </SpotlightCard>
-                </li>
-              );
-            })}
-          </ul>
+                        <div className="flex items-center gap-2.5 sm:pt-0.5">
+                          <span className="font-mono text-xs font-semibold tracking-[0.12em] tabular-nums text-brand">
+                            {rowIndex}
+                          </span>
+                          <span
+                            aria-hidden="true"
+                            className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-subtle text-brand transition-colors duration-[var(--token-duration-fast)] ease-brand group-hover:bg-brand group-hover:text-brand-ink"
+                          >
+                            <Icon className="size-4" />
+                          </span>
+                        </div>
 
-          <Link
-            href="/services"
-            prefetch={false}
-            className="group mt-6 inline-flex min-h-11 items-center gap-2 text-[0.875rem] font-semibold text-brand transition-colors duration-[var(--token-duration-fast)] hover:text-brand-hover md:hidden"
-          >
-            {t("services.cta")}
-            <ArrowRight
-              aria-hidden="true"
-              className="size-4 transition-transform duration-[var(--token-duration-normal)] ease-brand group-hover:translate-x-0.5"
-            />
-          </Link>
+                        <div className="min-w-0">
+                          <h3 className="font-display text-lg font-bold leading-snug text-ink">
+                            {item.title}
+                          </h3>
+                          <p className="mt-1.5 max-w-[62ch] text-[0.9375rem] leading-relaxed text-muted">
+                            {item.body}
+                          </p>
+                        </div>
+                      </SpotlightCard>
+                    </Reveal>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </section>
 
